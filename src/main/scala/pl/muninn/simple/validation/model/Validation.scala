@@ -34,8 +34,8 @@ object Validation extends Implicits {
   }
 
   implicit class NumericValidation[T](field: Validation[T])(implicit numeric: Numeric[T]) {
-    def min(value: T): ValidationWithValidators[T]   = field.is(minimalNumber(value))
-    def max(value: T): ValidationWithValidators[T]   = field.is(maximalNumber(value))
+    def min(value: T): ValidationWithValidators[T]   = field.is(minimalNumberValue(value))
+    def max(value: T): ValidationWithValidators[T]   = field.is(maximalNumberValue(value))
     def equal(value: T): ValidationWithValidators[T] = field.is(expectedNumber(value))
   }
 

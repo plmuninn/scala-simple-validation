@@ -18,6 +18,10 @@ object CommonValidators {
     if (f(value)) valid else invalid(InvalidField.custom(key, code, reason(value)))
   }
 
+  val emptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
+    if (value.isBlank) valid else invalid(InvalidField.ExpectedEmpty(key))
+  }
+
   val nonEmptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
     if (value.isBlank) invalid(InvalidField.EmptyField(key)) else valid
   }
@@ -105,11 +109,11 @@ object CommonValidators {
     if (value.size == expected) valid else invalid(InvalidField.ExpectedLength(key, expected, value.size))
   }
 
-  def minimalNumber[T](expected: T)(implicit numeric: Numeric[T]): ValueValidator[T] = ValueValidator.instance { (key, value) =>
+  def minimalNumberValue[T](expected: T)(implicit numeric: Numeric[T]): ValueValidator[T] = ValueValidator.instance { (key, value) =>
     if (numeric.gteq(value, expected)) valid else invalid(InvalidField.MinimalValue(key, expected, value))
   }
 
-  def maximalNumber[T](expected: T)(implicit numeric: Numeric[T]): ValueValidator[T] = ValueValidator.instance { (key, value) =>
+  def maximalNumberValue[T](expected: T)(implicit numeric: Numeric[T]): ValueValidator[T] = ValueValidator.instance { (key, value) =>
     if (numeric.lteq(value, expected)) valid else invalid(InvalidField.MaximalValue(key, expected, value))
   }
 
