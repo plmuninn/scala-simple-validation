@@ -1,0 +1,1 @@
+# scala-simple-validation
