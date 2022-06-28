@@ -15,7 +15,7 @@ object CommonValidators {
   }
 
   def customValid[T](code: String, reason: T => String)(f: T => Boolean): ValueValidator[T] = ValueValidator.instance { (key, value) =>
-    if (f(value)) valid else invalid(InvalidField.custom(key, code, reason(value)))
+    if (f(value)) valid else invalid(InvalidField.custom(key, reason(value), code))
   }
 
   val emptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
@@ -117,7 +117,7 @@ object CommonValidators {
     if (numeric.lteq(value, expected)) valid else invalid(InvalidField.MaximalValue(key, expected, value))
   }
 
-  def expectedNumber[T](expected: T)(implicit numeric: Numeric[T]): ValueValidator[T] = ValueValidator.instance { (key, value) =>
+  def numberEqual[T](expected: T)(implicit numeric: Numeric[T]): ValueValidator[T] = ValueValidator.instance { (key, value) =>
     if (numeric.equiv(value, expected)) valid else invalid(InvalidField.ExpectedValue(key, expected, value))
   }
 }

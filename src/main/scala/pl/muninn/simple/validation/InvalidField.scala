@@ -61,7 +61,7 @@ object InvalidField {
 
   case class MaximalLength[E, R](field: String, expected: E, value: R) extends InvalidField {
     val reason: String = s"Length must be lower or equal $expected. Got $value"
-    val code: String   = "minimal_length"
+    val code: String   = "maximal_length"
   }
 
   case class ExpectedLength[E, R](field: String, expected: E, value: R) extends InvalidField {
