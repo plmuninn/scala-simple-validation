@@ -1,0 +1,21 @@
+package pl.muninn.simple.validation
+
+import cats.data.ValidatedNec
+import cats.implicits.catsSyntaxValidatedIdBinCompat0
+
+trait ValueValidator[-T] {
+  def validate(key: String, value: T): ValidatedNec[InvalidField, Unit]
+}
+
+object ValueValidator extends Implicits {
+
+  def validate[T](name: String, value: T, fieldValidator: ValueValidator[T]): ValidatedNec[InvalidField, Unit] =
+    fieldValidator.validate(name, value)
+
+  def instance[T](f: => (String, T) => ValidatedNec[InvalidField, Unit]): ValueValidator[T] = new ValueValidator[T] {
+    override def validate(key: String, value: T): ValidatedNec[InvalidField, Unit] = f(key, value)
+  }
+
+  val valid: ValidatedNec[InvalidField, Unit]                        = ().validNec
+  def invalid(error: InvalidField): ValidatedNec[InvalidField, Unit] = error.invalidNec
+}
