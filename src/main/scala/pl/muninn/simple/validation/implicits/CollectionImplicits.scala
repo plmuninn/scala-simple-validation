@@ -1,4 +1,4 @@
-package pl.muninn.simple.validation.composition
+package pl.muninn.simple.validation.implicits
 
 import scala.collection.IterableOps
 
@@ -6,8 +6,8 @@ import cats.data.NonEmptyList
 
 import pl.muninn.simple.validation.ValueValidator
 import pl.muninn.simple.validation.model.{Validation, ValidationWithValidators}
+import pl.muninn.simple.validation.validators.CollectionValidators
 import pl.muninn.simple.validation.validators.CollectionValidators.{
-  all,
   collectionLength,
   collectionMaximalLength,
   collectionMinimalLength,
@@ -15,15 +15,17 @@ import pl.muninn.simple.validation.validators.CollectionValidators.{
   noneEmptyCollection
 }
 
-trait CollectionComposition {
+trait CollectionImplicits {
 
   implicit class CollectionValidation[A, CC[x] <: Iterable[x]](field: Validation[IterableOps[A, CC, CC[A]]]) {
 
     type CollectionType = IterableOps[A, CC, CC[A]]
 
-    def every(fieldValidators: NonEmptyList[ValueValidator[A]]): ValidationWithValidators[CollectionType] = field.is(all[A, CC](fieldValidators))
-    def nonEmpty: ValidationWithValidators[CollectionType]                                                = field.is(noneEmptyCollection[A, CC])
-    def empty: ValidationWithValidators[CollectionType]                                                   = field.is(emptyCollection[A, CC])
+    def all(fieldValidators: NonEmptyList[ValueValidator[A]]): ValidationWithValidators[CollectionType] =
+      field.is(CollectionValidators.all[A, CC](fieldValidators))
+
+    def nonEmpty: ValidationWithValidators[CollectionType]                      = field.is(noneEmptyCollection[A, CC])
+    def empty: ValidationWithValidators[CollectionType]                         = field.is(emptyCollection[A, CC])
     def minimalLength(expected: Int): ValidationWithValidators[CollectionType]  = field.is(collectionMinimalLength[A, CC](expected))
     def maximumLength(expected: Int): ValidationWithValidators[CollectionType]  = field.is(collectionMaximalLength[A, CC](expected))
     def expectedLength(expected: Int): ValidationWithValidators[CollectionType] = field.is(collectionLength[A, CC](expected))
@@ -42,4 +44,4 @@ trait CollectionComposition {
       extends CollectionValidation[A, Vector](field.asInstanceOf[Validation[IterableOps[A, Vector, Vector[A]]]])
 }
 
-object CollectionComposition extends CollectionComposition
+object CollectionImplicits extends CollectionImplicits

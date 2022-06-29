@@ -1,20 +1,25 @@
 package pl.muninn.simple.validation
 
-import all._
-
-case class TestClass(value: String, values: List[String])
+import pl.muninn.simple.validation.all._
+import pl.muninn.simple.validation.test.{OptionalTestClass, PairTestClass, TypeTestClass}
 
 class ImplicitSuite extends munit.FunSuite {
 
-  test("allow implicit composition") {
-    val schema =
-      ValidationSchemaContext.createSchema[TestClass] { context =>
-        context.field("value")(_.value).isNonEmptyString +
-          (context.field("values")(_.values).nonEmpty and all(nonEmptyString))
-      }
+  trait Suit {
+    val typeTestClassSchema: Schema[TypeTestClass] = createSchema { context =>
+      context.field("stringValue")(_.stringValue).nonEmptyString +
+        context.field("intValue")(_.intValue).min(10) +
+        (context.field("listValue")(_.listValue).nonEmpty and all(nonEmptyString)) +
+        context.field("mapValue")(_.mapValue).containsKey("test")
+    }
 
-    assert(schema.validate(new TestClass("test", List.empty)).isInvalid)
-    assert(schema.validate(new TestClass("test", List(""))).isInvalid)
-    assert(schema.validate(new TestClass("test", List("test"))).isValid)
+    val pairTestClassSchema: Schema[PairTestClass] = createSchema { context =>
+      context.pair("value1")(_.value1)("value2")(_.value2).fieldsEqual
+    }
+
+    val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
+      (context.field("stringValue")(_.stringValue).isDefined and ifDefined(nonEmptyString)) +
+        context.field("intValue")(_.intValue).ifDefined(minimalNumberValue(10))
+    }
   }
 }

@@ -8,6 +8,14 @@ trait InvalidField {
 
 object InvalidField {
 
+  def custom(filedNameFailed: String, reasonOfError: String, codeOfError: String): InvalidField = new InvalidField {
+    val field: String = filedNameFailed
+
+    val reason: String = reasonOfError
+
+    val code: String = codeOfError
+  }
+
   case class EqualValue[T](field: String, expected: T, value: T) extends InvalidField {
     val reason: String = s"Value not equal $expected. Got $value"
     val code: String   = "equal_field"
@@ -69,11 +77,27 @@ object InvalidField {
     val code: String   = "expected_length"
   }
 
-  def custom(filedNameFailed: String, reasonOfError: String, codeOfError: String): InvalidField = new InvalidField {
-    val field: String = filedNameFailed
+  case class KeyMissing[K](field: String, expected: K) extends InvalidField {
+    val reason: String = s"Key $expected is missing"
 
-    val reason: String = reasonOfError
+    val code: String = "key_missing"
+  }
 
-    val code: String = codeOfError
+  case class KeysMissing[K](field: String, expected: Iterable[K]) extends InvalidField {
+    val reason: String = s"Keys ${expected.mkString(", ")} are missing"
+
+    val code: String = "keys_missing"
+  }
+
+  case class UnexpectedKey[K](field: String, unexpectedKey: K) extends InvalidField {
+    val reason: String = s"Unexpected key $unexpectedKey found"
+
+    val code: String = "unexpected_key"
+  }
+
+  case class UnexpectedKeys[K](field: String, unexpectedKeys: Iterable[K]) extends InvalidField {
+    val reason: String = s"Unexpected keys ${unexpectedKeys.mkString(", ")} found"
+
+    val code: String = "unexpected_keys"
   }
 }

@@ -7,9 +7,9 @@ import pl.muninn.simple.validation.Validators
 class OptionValidatorsSpec extends munit.FunSuite {
 
   test("forOpt should test only value when is defined, otherwise it should pass it as valid") {
-    assert(Validators.forOpt(Validators.nonEmptyString).validate("forOpt", Some("")).isInvalid)
-    assert(Validators.forOpt(Validators.nonEmptyString).validate("forOpt", Some("some")).isValid)
-    assert(Validators.forOpt(Validators.nonEmptyString).validate("forOpt", None).isValid)
+    assert(Validators.ifDefined(Validators.nonEmptyString).validate("forOpt", Some("")).isInvalid)
+    assert(Validators.ifDefined(Validators.nonEmptyString).validate("forOpt", Some("some")).isValid)
+    assert(Validators.ifDefined(Validators.nonEmptyString).validate("forOpt", None).isValid)
   }
 
   test("isDefined should fail if is not defined optional value") {

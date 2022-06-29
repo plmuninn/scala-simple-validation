@@ -7,7 +7,7 @@ trait ValueValidator[-T] {
   def validate(key: String, value: T): ValidatedNec[InvalidField, Unit]
 }
 
-object ValueValidator extends Implicits {
+object ValueValidator extends ValidationImplicits {
 
   def validate[T](name: String, value: T, fieldValidator: ValueValidator[T]): ValidatedNec[InvalidField, Unit] =
     fieldValidator.validate(name, value)

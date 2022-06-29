@@ -6,12 +6,12 @@ import pl.muninn.simple.validation.ValueValidator.{invalid, valid}
 import pl.muninn.simple.validation.{InvalidField, ValueValidator}
 
 trait OptionValidators {
-  def forOpt[T](validators: NonEmptyList[ValueValidator[T]]): ValueValidator[Option[T]] = ValueValidator.instance[Option[T]] { (key, value) =>
+  def ifDefined[T](validators: NonEmptyList[ValueValidator[T]]): ValueValidator[Option[T]] = ValueValidator.instance[Option[T]] { (key, value) =>
     value.fold(valid)(value => validators.runAndCombine(key, value))
   }
 
-  def forOpt[T](validators: ValueValidator[T]): ValueValidator[Option[T]] =
-    forOpt[T](NonEmptyList.of(validators))
+  def ifDefined[T](validators: ValueValidator[T]): ValueValidator[Option[T]] =
+    ifDefined[T](NonEmptyList.of(validators))
 
   def isDefined[T]: ValueValidator[Option[T]] = ValueValidator.instance { (key, value) =>
     if (value.isDefined) valid else invalid(InvalidField.EmptyField(key))

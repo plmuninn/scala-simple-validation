@@ -16,7 +16,7 @@ trait ValidationSchemaContext[T] {
   def custom(f: => T => NonEmptyList[ValidationWithValidators[_]]): NonEmptyList[ValidationWithValidators[_]] = f(value)
 }
 
-object ValidationSchemaContext extends Implicits {
+object ValidationSchemaContext extends ValidationImplicits {
 
   type ValidationSchema[T] = ValidationSchemaContext[T] => NonEmptyList[ValidationWithValidators[_]]
 

@@ -7,7 +7,7 @@ import cats.data.{NonEmptyList, ValidatedNec}
 import pl.muninn.simple.validation.ValidationSchemaContext.ValidationSchema
 import pl.muninn.simple.validation.model.ValidationWithValidators
 
-private[validation] trait Implicits {
+private[validation] trait ValidationImplicits {
 
   implicit def convertValidatorToList[T](result: ValueValidator[T]): NonEmptyList[ValueValidator[T]] = NonEmptyList.one(result)
 
@@ -47,4 +47,4 @@ private[validation] trait Implicits {
   }
 }
 
-private[validation] object Implicits extends Implicits
+private[validation] object ValidationImplicits extends ValidationImplicits
