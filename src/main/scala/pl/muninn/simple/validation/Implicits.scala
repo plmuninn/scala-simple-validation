@@ -11,7 +11,7 @@ private[validation] trait Implicits {
 
   implicit def convertValidatorToList[T](result: ValueValidator[T]): NonEmptyList[ValueValidator[T]] = NonEmptyList.one(result)
 
-  implicit def convertValidationWithValidatorsToList(result: ValidationWithValidators[_]): NonEmptyList[ValidationWithValidators[_]] =
+  implicit def convertValidationWithValidatorsToList[T](result: ValidationWithValidators[T]): NonEmptyList[ValidationWithValidators[T]] =
     NonEmptyList.one(result)
 
   implicit class ValueValidatorOps[T](validator: ValueValidator[T]) {
@@ -26,15 +26,19 @@ private[validation] trait Implicits {
     def +(otherResult: ValidationWithValidators[_]): NonEmptyList[ValidationWithValidators[_]] = result.concatNel(otherResult)
 
     def +(otherResults: NonEmptyList[ValidationWithValidators[_]]): NonEmptyList[ValidationWithValidators[_]] = result.concatNel(otherResults)
-  }
 
-  implicit class ValidationSchemaOps[T](value: T)(implicit schema: ValidationSchema[T]) {
-    def validate: ValidatedNec[InvalidField, Unit] = {
-      val validators = schema.apply(ValidationSchemaContext(value))
-      validators.tail.foldLeft(validators.head.validate) { case (acc, validator) =>
+    def run: ValidatedNec[InvalidField, Unit] =
+      result.tail.foldLeft(result.head.validate) { case (acc, validator) =>
         acc.combine(validator.validate)
       }
-    }
+  }
+
+  implicit class ValueSchemaOps[T](value: T)(implicit schema: ValidationSchema[T]) {
+    def validate: ValidatedNec[InvalidField, Unit] = schema.apply(ValidationSchemaContext(value)).run
+  }
+
+  implicit class SchemaOps[T](schema: ValidationSchema[T]) {
+    def validate(value: T): ValidatedNec[InvalidField, Unit] = schema.apply(ValidationSchemaContext(value)).run
   }
 
   implicit class CollectionOfValidationOps[T](validators: NonEmptyList[ValueValidator[T]]) {
