@@ -7,9 +7,9 @@ import pl.muninn.simple.validation.test.{OptionalTestClass, PairTestClass, TypeT
 class CompositionSuite extends munit.FunSuite {
   trait Suit {
     val typeTestClassSchema: Schema[TypeTestClass] = createSchema { context =>
-      context.field("stringValue")(_.stringValue).is(nonEmptyString) +
+      context.field("stringValue")(_.stringValue).is(noneEmptyString) +
         context.field("intValue")(_.intValue).is(minimalNumberValue(10)) +
-        context.field("listValue")(_.listValue).is(noneEmptyCollection and all(nonEmptyString)) +
+        context.field("listValue")(_.listValue).is(noneEmptyCollection and all(noneEmptyString)) +
         context.field("mapValue")(_.mapValue).is(containsKey("test"))
     }
 
@@ -18,7 +18,7 @@ class CompositionSuite extends munit.FunSuite {
     }
 
     val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
-      context.field("stringValue")(_.stringValue).is(ifDefined(nonEmptyString) and isDefined) +
+      context.field("stringValue")(_.stringValue).is(ifDefined(noneEmptyString) and isDefined) +
         context.field("intValue")(_.intValue).is(ifDefined(minimalNumberValue(10)))
     }
   }

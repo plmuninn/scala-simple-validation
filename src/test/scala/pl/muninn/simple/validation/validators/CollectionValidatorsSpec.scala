@@ -7,10 +7,10 @@ import pl.muninn.simple.validation.Validators
 class CollectionValidatorsSpec extends munit.FunSuite {
 
   test("all should run validator on all values") {
-    assert(Validators.all(Validators.nonEmptyString).validate("all", List("test", "")).isInvalid)
-    assert(Validators.all(Validators.nonEmptyString).validate("all", List("test", "test2")).isValid)
+    assert(Validators.all(Validators.noneEmptyString).validate("all", List("test", "")).isInvalid)
+    assert(Validators.all(Validators.noneEmptyString).validate("all", List("test", "test2")).isValid)
 
-    Validators.all(Validators.nonEmptyString).validate("all", List("test", "", "test2", "", "test3", "")) match {
+    Validators.all(Validators.noneEmptyString).validate("all", List("test", "", "test2", "", "test3", "")) match {
       case Validated.Valid(_) => fail("Result should be invalid")
       case Validated.Invalid(errors) =>
         assertEquals(errors.length, 3L)

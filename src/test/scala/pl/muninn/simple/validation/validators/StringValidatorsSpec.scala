@@ -20,17 +20,17 @@ class StringValidatorsSpec extends munit.FunSuite {
     }
   }
 
-  test("nonEmptyString should fail if string is empty and pass if isn't") {
-    assert(Validators.nonEmptyString.validate("nonEmptyStringTest", "").isInvalid)
-    assert(Validators.nonEmptyString.validate("nonEmptyStringTest", "t").isValid)
+  test("noneEmptyString should fail if string is empty and pass if isn't") {
+    assert(Validators.noneEmptyString.validate("noneEmptyString", "").isInvalid)
+    assert(Validators.noneEmptyString.validate("noneEmptyString", "t").isValid)
 
-    Validators.nonEmptyString.validate("nonEmptyStringTest", "") match {
+    Validators.noneEmptyString.validate("noneEmptyString", "") match {
       case Validated.Valid(_) => fail("Result should be invalid")
       case Validated.Invalid(errors) =>
         assertEquals(errors.length, 1L)
         assertEquals(errors.head.code, "empty_field")
         assertEquals(errors.head.reason, "Non empty value required")
-        assertEquals(errors.head.field, "nonEmptyStringTest")
+        assertEquals(errors.head.field, "noneEmptyString")
     }
   }
 

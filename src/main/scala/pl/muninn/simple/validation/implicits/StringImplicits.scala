@@ -7,7 +7,7 @@ import pl.muninn.simple.validation.validators.StringValidators.{stringLength, st
 trait StringImplicits {
 
   implicit class StringValidation(validation: Validation[String]) {
-    def nonEmptyString: ValidationWithValidators[String]                = validation.is(StringValidators.nonEmptyString)
+    def noneEmptyString: ValidationWithValidators[String]               = validation.is(StringValidators.noneEmptyString)
     def emailString: ValidationWithValidators[String]                   = validation.is(StringValidators.emailString)
     def complexPassword: ValidationWithValidators[String]               = validation.is(StringValidators.complexPassword)
     def minimalLength(expected: Int): ValidationWithValidators[String]  = validation.is(stringMinimalLength(expected))

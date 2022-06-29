@@ -8,7 +8,7 @@ trait StringValidators {
     if (value.isBlank) valid else invalid(InvalidField.ExpectedEmpty(key))
   }
 
-  val nonEmptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
+  val noneEmptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
     if (value.isBlank) invalid(InvalidField.EmptyField(key)) else valid
   }
 
