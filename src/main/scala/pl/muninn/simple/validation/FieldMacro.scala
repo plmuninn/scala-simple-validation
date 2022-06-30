@@ -11,23 +11,29 @@ object FieldMacro {
     import c.universe._
 
     def selectorPath(tree: Tree): List[String] = {
-      @tailrec
       def select(tree: Tree, acc: List[String] = Nil): List[String] =
         tree match {
-          case Ident(_: TermName)                                                    => acc
-          case Select(This(_), _: TermName)                                          => acc
-          case Select(rest, name: TermName)                                          => select(rest, name.toString :: acc)
-          case Apply(Select(rest, TermName("apply")), List(Literal(Constant(name)))) => select(rest, name.toString :: acc)
-          case Apply(Select(rest, TermName("apply")), List(Literal(Constant(name)))) => select(rest, name.toString :: acc)
-          case t => c.abort(c.enclosingPosition, s"Invalid selector: $t - ${show(t)}")
+          case Ident(_: TermName)                                                       => acc
+          case Select(This(_), _: TermName)                                             => acc
+          case Select(rest, name: TermName) if !tree.symbol.toString.contains("method") => select(rest, name.toString :: acc)
+          case Select(rest, _: TermName) if tree.symbol.toString.contains("method")     => select(rest, acc)
+          case Apply(Select(rest, TermName("apply")), List(Literal(Constant(name))))    => select(rest, name.toString :: acc)
+          case Apply(body, params) =>
+            params.flatMap(param => select(param, acc)) ++ select(body, acc)
+          case Function(params, body) =>
+            params.flatMap(param => select(param, acc)) ++ select(body, acc)
+          case TypeApply(body, params) =>
+            params.flatMap(param => select(param, acc)) ++ select(body, acc)
+          case _ => acc
         }
 
-      select(tree)
+      val result = select(tree)
+      if (result.isEmpty) c.abort(c.enclosingPosition, s"Invalid selector: $tree") else result.reverse
     }
 
     val self = c.prefix
 
-    val name = selectorPath(f.tree.children.tail.head).mkString(".")
+    val name = selectorPath(f.tree).mkString(".")
     println(name)
     val R = weakTypeOf[R]
     c.Expr[Validation[R]] {
