@@ -1,7 +1,7 @@
 package pl.muninn.simple.validation
 
 import pl.muninn.simple.validation.all._
-import pl.muninn.simple.validation.test.{OptionalTestClass, PairTestClass, TypeTestClass}
+import pl.muninn.simple.validation.test.{CombinedClass, OptionalTestClass, PairTestClass, TypeTestClass}
 
 class ImplicitSuite extends munit.FunSuite {
 
@@ -21,5 +21,20 @@ class ImplicitSuite extends munit.FunSuite {
       (context.field("stringValue")(_.stringValue).isDefined and ifDefined(noneEmptyString)) +
         context.field("intValue")(_.intValue).ifDefined(minimalNumberValue(10))
     }
+  }
+
+  test("macro") {
+    val schema2 = createSchema[CombinedClass] { context =>
+      context.field(_.innerClass.map(_.stringValue)).isDefined
+    }
+
+    val schema =
+      createSchema[OptionalTestClass] { context =>
+        context.field(_.stringValue).isDefined
+      }
+
+    val result = schema.validate(new OptionalTestClass(None, None))
+    assert(result.isInvalid)
+
   }
 }

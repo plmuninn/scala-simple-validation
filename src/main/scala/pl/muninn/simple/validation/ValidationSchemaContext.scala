@@ -1,5 +1,7 @@
 package pl.muninn.simple.validation
 
+import scala.language.experimental.macros
+
 import cats.data.NonEmptyList
 
 import pl.muninn.simple.validation.model.{Validation, ValidationWithValidators}
@@ -9,6 +11,8 @@ trait ValidationSchemaContext[T] {
 
   def field[R](name: String)(f: => T => R): Validation[R] =
     new Validation[R](name, f(value))
+
+  def field[R](f: T => R): Validation[R] = macro FieldMacro.fieldSelector[T, R]
 
   def pair[R](firstName: String)(f: T => R)(secondName: String)(f2: T => R): Validation[(R, R)] =
     new Validation[(R, R)](s"$firstName and $secondName", (f(value), f2(value)))
