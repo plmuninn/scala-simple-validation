@@ -1,3 +1,5 @@
+import scala.sys.process._
+
 import ReleaseTransformations._
 import xerial.sbt.Sonatype._
 
@@ -33,6 +35,8 @@ lazy val cats        = Seq("org.typelevel" %% "cats-core" % catsVersion)
 lazy val munitVersion = "0.7.29"
 lazy val tests        = Seq("org.scalameta" %% "munit" % munitVersion % Test)
 
+lazy val generateDocumentation = taskKey[Unit]("Generate documentation")
+
 lazy val root = (project in file("."))
   .enablePlugins(MicrositesPlugin)
   .settings(publishSettings: _*)
@@ -40,6 +44,11 @@ lazy val root = (project in file("."))
   .settings(name := "scala-simple-validation")
   .settings(libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value)
   .settings(libraryDependencies ++= (cats ++ tests))
+  .settings(
+    generateDocumentation := {
+      Seq("sh", ((ThisBuild / baseDirectory).value / "scripts" / "generate-docs.sh").toPath.toString) !
+    }
+  )
 
 lazy val documentationSettings = Seq(
   mdocVariables := Map(
@@ -92,6 +101,7 @@ lazy val publishSettings = Seq(
     // For non cross-build projects, use releaseStepCommand("publishSigned")
     releaseStepCommandAndRemaining("publishSigned"),
     releaseStepCommand("sonatypeBundleRelease"),
+    releaseStepCommand("generateDocumentation"),
     releaseStepCommand("publishMicrosite"),
     setNextVersion,
     commitNextVersion,
