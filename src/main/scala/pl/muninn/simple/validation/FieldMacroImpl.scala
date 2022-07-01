@@ -6,7 +6,7 @@ import pl.muninn.simple.validation.model.Validation
 
 class FieldMacroImpl(val c: blackbox.Context) {
 
-  private val DEBUG = flase
+  private val DEBUG = false
 
   import c.universe._
 
