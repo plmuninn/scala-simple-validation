@@ -3,7 +3,7 @@ package pl.muninn.simple.validation
 import cats.data.{Validated, ValidatedNec}
 
 import pl.muninn.simple.validation.all._
-import pl.muninn.simple.validation.test.{CombinedClass, ListCombinedClass, OptionalTestClass, PairTestClass, SimpleCombinedClass, TypeTestClass}
+import pl.muninn.simple.validation.test._
 
 class MacroSuite extends munit.FunSuite {
 

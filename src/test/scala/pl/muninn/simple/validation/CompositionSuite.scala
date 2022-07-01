@@ -1,8 +1,8 @@
 package pl.muninn.simple.validation
 
-import all._
 import cats.data.{Validated, ValidatedNec}
 
+import pl.muninn.simple.validation.all._
 import pl.muninn.simple.validation.test.{OptionalTestClass, PairTestClass, TypeTestClass}
 
 class CompositionSuite extends munit.FunSuite {
