@@ -1,5 +1,4 @@
 import ReleaseTransformations._
-import microsites._
 import xerial.sbt.Sonatype._
 
 val compilerOptions = Seq(
@@ -44,16 +43,17 @@ lazy val root = (project in file("."))
 
 lazy val documentationSettings = Seq(
   mdocVariables := Map(
-    "VERSION" -> version.value
+    "VERSION"      -> version.value,
+    "CATS_VERSION" -> catsVersion
   ),
-  micrositeName           := "scala-md-tag",
-  micrositeDescription    := "Simple library to generate Markdown Tags",
+  micrositeName           := repo,
+  micrositeDescription    := "Simple scala validation library",
   micrositeUrl            := "https://plmuninn.github.io",
-  micrositeBaseUrl        := "/scala-md-tag",
-  micrositeHomepage       := "https://plmuninn.github.io/scala-md-tag/",
+  micrositeBaseUrl        := s"/$repo",
+  micrositeHomepage       := s"https://plmuninn.github.io/repo/",
   micrositeAuthor         := "Maciej Romański Muninn Software",
-  micrositeGithubOwner    := "plmuninn",
-  micrositeGithubRepo     := "scala-md-tag",
+  micrositeGithubOwner    := username,
+  micrositeGithubRepo     := repo,
   micrositeHighlightTheme := "atom-one-light",
   micrositePushSiteWith   := GHPagesPlugin
 )
