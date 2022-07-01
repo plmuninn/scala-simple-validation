@@ -1,7 +1,3 @@
-//> using scala "3.1"
-//> using lib "com.lihaoyi::pprint:0.7.3"
-//> using lib "com.lihaoyi::os-lib:0.8.1"
-
 import pl.muninn.markdown.common.MarkdownFragment.MarkdownDocument
 import pl.muninn.markdown.Markdown.*
 import os.*
