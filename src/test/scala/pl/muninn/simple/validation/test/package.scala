@@ -5,4 +5,6 @@ package object test {
   case class PairTestClass(value1: String, value2: String)
   case class OptionalTestClass(stringValue: Option[String], intValue: Option[Int])
   case class CombinedClass(innerClass: Option[OptionalTestClass])
+  case class SimpleCombinedClass(innerClass: OptionalTestClass)
+  case class ListCombinedClass(values: List[CombinedClass])
 }
