@@ -54,4 +54,18 @@ class ImplicitSuite extends munit.FunSuite {
       }
     }
   }
+
+  test("classes return list of fields in array") {
+    new Suit {
+      val result: ValidatedNec[InvalidField, Unit] =
+        typeTestClassSchema.validate(TypeTestClass("test", 11, List("", "test", "", "test2"), Map("test" -> "test")))
+      assert(result.isInvalid)
+      result match {
+        case Validated.Valid(_) => fail("Results should be invalid")
+        case Validated.Invalid(e) =>
+          assertEquals(e.length, 2L)
+          assertEquals(e.map(_.field).iterator.toList, List("listValue.0", "listValue.2"))
+      }
+    }
+  }
 }

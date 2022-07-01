@@ -5,6 +5,9 @@ import pl.muninn.simple.validation.ValueValidator.{invalid, valid}
 import pl.muninn.simple.validation.{InvalidField, ValueValidator}
 
 trait AnyTypeValidators {
+
+  val emptyValidator: ValueValidator[Any] = ValueValidator.instance { (_, _: Any) => valid }
+
   def equalValue[T](expected: T): ValueValidator[T] = ValueValidator.instance { (key, value) =>
     if (value == expected) valid else invalid(InvalidField.EqualValue(key, expected, value))
   }
