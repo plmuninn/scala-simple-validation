@@ -55,16 +55,17 @@ lazy val documentationSettings = Seq(
     "VERSION"      -> version.value,
     "CATS_VERSION" -> catsVersion
   ),
-  micrositeName           := repo,
-  micrositeDescription    := "Simple scala validation library",
-  micrositeUrl            := "https://plmuninn.github.io",
-  micrositeBaseUrl        := s"/$repo",
-  micrositeHomepage       := s"https://plmuninn.github.io/repo/",
-  micrositeAuthor         := "Maciej Romański Muninn Software",
-  micrositeGithubOwner    := username,
-  micrositeGithubRepo     := repo,
-  micrositeHighlightTheme := "atom-one-light",
-  micrositePushSiteWith   := GHPagesPlugin
+  micrositeName             := repo,
+  micrositeDescription      := "Simple scala validation library",
+  micrositeUrl              := "https://plmuninn.github.io",
+  micrositeBaseUrl          := s"/$repo",
+  micrositeHomepage         := s"https://plmuninn.github.io/repo/",
+  micrositeAuthor           := "Maciej Romański Muninn Software",
+  micrositeGithubOwner      := username,
+  micrositeGithubRepo       := repo,
+  micrositeHighlightTheme   := "atom-one-light",
+  micrositePushSiteWith     := GHPagesPlugin,
+  micrositeDocumentationUrl := "docs"
 )
 
 lazy val publishSettings = Seq(

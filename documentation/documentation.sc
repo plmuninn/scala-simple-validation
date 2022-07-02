@@ -6,16 +6,20 @@
 //> using lib "com.lihaoyi::os-lib:0.8.1"
 
 import pages.index
+import docs.validators
 import utils.files.*
-import utils.layout.HomeLayout
+import utils.layout.*
 
 import pl.muninn.markdown.common.Configuration.DefaultConfiguration
 import pl.muninn.markdown.common.Configuration
 
 given Configuration = DefaultConfiguration().withEscapeLiterals(false).withSafeInserting(false).withTableStrictPrinting(false)
 
+val basePath =  os.pwd / "docs"
+
 val markdowns = Map(
-  "index.md" -> HomeLayout("home", "About", "about", 1).layoutString(index.markdown)
+  basePath / "index.md" -> HomeLayout("home", "About", "about", 1).layoutString(index.markdown),
+  basePath / "docs" / "validators.md" -> DocumentLayout("Validators", permalink = Some("docs/")).layoutString(validators.markdown)
 )
 
 pprint.pprintln("Starting scala-cli - generating files")

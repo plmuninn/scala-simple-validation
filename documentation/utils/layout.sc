@@ -7,7 +7,7 @@ trait Layout {
     def layoutString(document:MarkdownDocument):String
 }
 
-case class Page(title:String, section:String, position:Int) extends Layout:
+case class PageLayout(title:String, section:String, position:Int) extends Layout:
     lazy val layoutDescription:String =
         List(
             Some("---"),
@@ -20,13 +20,14 @@ case class Page(title:String, section:String, position:Int) extends Layout:
         
     override def layoutString(document:MarkdownDocument):String =  s"$layoutDescription\n${generateUnsafe(document)}"
 
-case class Document(title:String, section:Option[String]) extends Layout:
+case class DocumentLayout(title:String, permalink:Option[String], section:Option[String] = None) extends Layout:
     lazy val layoutDescription:String =
         List(
             Option("---"),
             Option("layout: docs"),
             Option(s"title: \"$title\""),
             section.map(s => s"section: \"$s\""),
+            permalink.map(p => s"permalink: $p"),
             Option("---")
         ).flatten.mkString("\n")
 
