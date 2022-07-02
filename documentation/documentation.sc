@@ -9,6 +9,11 @@ import pages.index
 import utils.files.*
 import utils.layout.HomeLayout
 
+import pl.muninn.markdown.common.Configuration.DefaultConfiguration
+import pl.muninn.markdown.common.Configuration
+
+given Configuration = DefaultConfiguration().withEscapeLiterals(false).withSafeInserting(false).withTableStrictPrinting(false)
+
 val markdowns = Map(
   "index.md" -> HomeLayout("home", "About", "about", 1).layoutString(index.markdown)
 )
