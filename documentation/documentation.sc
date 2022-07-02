@@ -5,11 +5,11 @@
 //> using lib "com.lihaoyi::pprint:0.7.3"
 //> using lib "com.lihaoyi::os-lib:0.8.1"
 
-import docs.readme
+import docs.index
 import utils.files.*
 
 val pages = Map(
-  "readme.md" -> readme.markdown
+  "index.md" -> index.markdown
 )
 
 pprint.pprintln("Starting scala-cli - generating files")

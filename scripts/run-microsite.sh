@@ -1,4 +1,4 @@
 #!/bin/bash -e
 
-cd target/jekyll
-jekyll serve
+cd target/site
+jekyll serve -b /scala-simple-validation
