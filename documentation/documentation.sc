@@ -7,7 +7,6 @@
 
 import pages.index
 import utils.files.*
-
 import utils.layout.HomeLayout
 
 val markdowns = Map(
