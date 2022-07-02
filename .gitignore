@@ -3,3 +3,6 @@
 target/
 .bsp
 .scala-build
+.metals
+.vscode
+.ammonite
