@@ -59,4 +59,11 @@ def markdown(using Configuration) =
             |""".stripMargin
         )
     }
+    h1("Dependencies")
+    p{
+      m"Libraray is build using " 
+      a("cats", "https://typelevel.org/cats/" , "cats")
+      m" in version " 
+      b(m"@CATS_VERSION@")
+    }
   }
