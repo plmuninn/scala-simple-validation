@@ -5,13 +5,15 @@
 //> using lib "com.lihaoyi::pprint:0.7.3"
 //> using lib "com.lihaoyi::os-lib:0.8.1"
 
-import docs.index
+import pages.index
 import utils.files.*
 
-val pages = Map(
-  "index.md" -> index.markdown
+import utils.layout.HomeLayout
+
+val markdowns = Map(
+  "index.md" -> HomeLayout("home", "About", "about", 1).layoutString(index.markdown)
 )
 
 pprint.pprintln("Starting scala-cli - generating files")
-generateFiles(pages)
+generateFiles(markdowns)
 pprint.pprintln("Files generated")
