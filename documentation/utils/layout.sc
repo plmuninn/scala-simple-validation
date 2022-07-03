@@ -3,7 +3,7 @@
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.MarkdownFragment.MarkdownDocument
 
-trait Layout {
+sealed trait Layout {
     def layoutString(document:MarkdownDocument):String
 }
 
@@ -20,14 +20,14 @@ case class PageLayout(title:String, section:String, position:Int) extends Layout
         
     override def layoutString(document:MarkdownDocument):String =  s"$layoutDescription\n${generateUnsafe(document)}"
 
-case class DocumentLayout(title:String, permalink:Option[String], section:Option[String] = None) extends Layout:
+case class DocumentLayout(title:String, permalink:String, section:Option[String] = None) extends Layout:
     lazy val layoutDescription:String =
         List(
             Option("---"),
             Option("layout: docs"),
             Option(s"title: \"$title\""),
             section.map(s => s"section: \"$s\""),
-            permalink.map(p => s"permalink: $p"),
+            Option(s"permalink: $permalink"),
             Option("---")
         ).flatten.mkString("\n")
 

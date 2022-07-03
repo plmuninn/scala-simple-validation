@@ -7,7 +7,7 @@ import pl.muninn.markdown.common.basic.block.Table.TableElement
 case class Validator(name:String, forType:Span, compositionUsage:Span, implicitUsage:Span)
 
 val validators = List(
-  Validator("", partial.text(""), partial.text(""), partial.text(""))
+  Validator("what", partial.text("what"), partial.text("what"), partial.text("what"))
 )
 
 def mapValidatorToRow(validator:Validator):TableElement =
@@ -24,14 +24,17 @@ def markdown(using Configuration) =
     p {
       m"Validators provided by library:"
       br
-      table {
-        headers {
-          col("Name")
-          col("For what type")
-          col("Composition usage")
-          col("Implicit usage")
+      p{
+        table {
+          headers {
+            col("Name")
+            col("For what type")
+            col("Composition usage")
+            col("Implicit usage")
+          }
+          validators.map(mapValidatorToRow).map(add).last
         }
-        validators.map(mapValidatorToRow).map(add).last
       }
+      br
     }
   }

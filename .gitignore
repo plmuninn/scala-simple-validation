@@ -6,3 +6,5 @@ target/
 .metals
 .vscode
 .ammonite
+**/*/menu.yaml
+docs
