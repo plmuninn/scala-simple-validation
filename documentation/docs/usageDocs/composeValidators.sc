@@ -4,7 +4,7 @@ import pl.muninn.markdown.common.Configuration
 def markdown(using Configuration) = md {
   h1("Compose validators")
   p {
-    m"You can easily define own validator for specific task. For example:"
+    m"You can easily compose own validator using defined already validators. For example:"
     br
     codeBlock(
       "scala mdoc",

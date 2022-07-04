@@ -2,7 +2,7 @@ import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
 
 def markdown(using Configuration) = md {
-  h1("Custom validators")
+  h1("Quick custom validators")
   p{
     m"You can easily create custom validators on fly - it's really helpful during working on new or custom validators"
     br
@@ -84,6 +84,37 @@ def markdown(using Configuration) = md {
         |     )
         |   )
         | )
+        |
+        |""".stripMargin
+    )
+  }
+  br
+  h1("Custom validators")
+  p {
+    m"You can define full own validators and errors"
+    br
+    codeBlock(
+      "scala mdoc",
+      """
+        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation.InvalidField
+        | import pl.muninn.simple.validation.ValueValidator
+        |
+        | case class MyError(field:String) extends InvalidField {
+        |   override def reason: String = "Because I think this filed is invalid"
+        |   override def code: String = "error_code"
+        | }
+        |
+        | val myOwnValidator:ValueValidator[String] = ValueValidator.instance { case (key, value) =>
+        |   if (value.contains("not error")) valid else invalid(MyError(key))
+        | }
+        |
+        | val customValidatorSchema:Schema[Field] = createSchema { context =>
+        |   context.field(_.name).is(myOwnValidator)
+        | }
+        |
+        | customValidatorSchema.validate(Field("error",""))
+        | customValidatorSchema.validate(Field("not error",""))
         |
         |""".stripMargin
     )

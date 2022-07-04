@@ -32,11 +32,10 @@ def markdown(using Configuration) = md {
   br
   h1(m"Library provides")
   p{
-    m"Library allows to use two different ways of creating validation schema:"
-    br
-    ol {
-      li(a("by composition of functions", "composition/"))
-      li(a("by implicits of data types", "implicits/"))
+    div {
+      m"Library allows to use two different ways of creating validation "
+      a("schema", "schema/")
+      m" ."
     }
     br(true)
     m"It also provides simple way of"
