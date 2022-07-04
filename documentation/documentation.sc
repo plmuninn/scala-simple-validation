@@ -6,6 +6,7 @@
 //> using lib "com.lihaoyi::os-lib:0.8.1"
 
 import docs.*
+import docs.usageDocs.*
 import docs.validatorsTypes.*
 import pages.index
 import utils.files.*
@@ -22,6 +23,20 @@ val basePath = os.pwd / "docs"
 val markdowns = List(
   (basePath / "index.md", HomeLayout("home", "Quickstart", "quickstart", 1), index.markdown),
   (basePath / "docs" / "about.md", DocumentLayout("About", "docs/"), about.markdown),
+  (basePath / "docs" / "usage.md", DocumentLayout("Usage", "docs/usage/"), usage.markdown),
+  (basePath / "docs" / "usage" / "composition.md", DocumentLayout("Composition API", "docs/usage/composition/"), composition.markdown),
+  (
+    basePath / "docs" / "usage" / "composeValidators.md",
+    DocumentLayout("Compose validators", "docs/usage/compose-validators/"),
+    composeValidators.markdown
+  ),
+  (
+    basePath / "docs" / "usage" / "implicits.md",
+    DocumentLayout("Compose validators", "docs/usage/implicits/"),
+    implicits.markdown
+  ),
+  (basePath / "docs" / "usage" / "custom.md", DocumentLayout("Custom validations", "docs/usage/custom/"), custom.markdown),
+  (basePath / "docs" / "usage" / "fieldNames.md", DocumentLayout("Field names", "docs/usage/field-names/"), fieldNames.markdown),
   (basePath / "docs" / "installation.md", DocumentLayout("Install", "docs/install/"), install.markdown),
   (basePath / "docs" / "validators.md", DocumentLayout("Validators", "docs/validators/"), validators.markdown),
   (basePath / "docs" / "validators" / "any.md", DocumentLayout("Any type validators", "docs/validators/any/"), any.markdown),

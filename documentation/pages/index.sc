@@ -19,24 +19,5 @@ def markdown(using Configuration) =
         m"And you can start using it"
       }
       br
-      h1("Usage example")
-      p{
-        codeBlock(
-          "scala mdoc",
-          """
-            | import pl.muninn.simple.validation.all._
-            |
-            | case class LoginRequest(login:String, password:String)
-            |
-            | val schema:Schema[LoginRequest] = createSchema { context =>
-            |   context.field(_.login).noneEmptyString +
-            |     context.field(_.password).noneEmptyString
-            | }
-            |
-            | val result = schema.validate(LoginRequest("admin", "admin"))
-            |
-            | assert(result.isValid)
-            |""".stripMargin
-        )
-    }
+      add(docs.usage.usageExample)
   }
