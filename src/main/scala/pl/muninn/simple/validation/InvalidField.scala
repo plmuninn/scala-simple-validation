@@ -21,7 +21,7 @@ object InvalidField {
     }
 
   case class EqualValue[T](field: String, expected: T, value: T) extends InvalidField {
-    val reason: String = s"Value not equal $expected. Got $value"
+    val reason: String = s"Value must equal $expected. Got $value"
 
     val code: String = "equal_field"
 
@@ -70,16 +70,6 @@ object InvalidField {
   case class MaximalValue[E, R](field: String, expected: E, value: R) extends InvalidField {
     val reason: String = s"Value must be lower or equal $expected. Got $value"
     val code: String   = "maximal_value"
-
-    override val metadata: Map[String, String] = Map(
-      "expected" -> expected.toString,
-      "value"    -> value.toString
-    )
-  }
-
-  case class ExpectedValue[E, R](field: String, expected: E, value: R) extends InvalidField {
-    val reason: String = s"Value must be equal $expected. Got $value"
-    val code: String   = "expected_value"
 
     override val metadata: Map[String, String] = Map(
       "expected" -> expected.toString,

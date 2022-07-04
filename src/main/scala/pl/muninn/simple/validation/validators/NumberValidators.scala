@@ -13,7 +13,7 @@ trait NumberValidators {
   }
 
   def numberEqual[T](expected: T)(implicit numeric: Numeric[T]): ValueValidator[T] = ValueValidator.instance { (key, value) =>
-    if (numeric.equiv(value, expected)) valid else invalid(InvalidField.ExpectedValue(key, expected, value))
+    if (numeric.equiv(value, expected)) valid else invalid(InvalidField.EqualValue(key, expected, value))
   }
 }
 

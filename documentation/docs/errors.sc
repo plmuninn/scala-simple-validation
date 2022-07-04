@@ -11,7 +11,6 @@ private val errorCodesWithDescription = List (
   ("fields_not_equal" , "Two fields were not equal",List("tuple")),
   ("minimal_value" , "Value was expected to greater or equal minimal value",List("number")),
   ("maximal_value" , "Value was expected to lower or equal maximal value",List("number")),
-  ("expected_value" , "Value was expected to contains some value",List("number")),
   ("minimal_length" , "Value was expected to have length greater or equal minimal value",List("string", "collection")),
   ("maximal_length" , "Value was expected to have length lower or equal maximal value",List("string", "collection")),
   ("expected_length" , "Value was expected to exact length",List("string", "collection")),

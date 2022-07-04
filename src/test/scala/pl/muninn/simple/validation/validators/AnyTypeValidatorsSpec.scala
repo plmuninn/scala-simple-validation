@@ -17,7 +17,7 @@ class AnyTypeValidatorsSpec extends munit.FunSuite {
       case Validated.Invalid(errors) =>
         assertEquals(errors.length, 1L)
         assertEquals(errors.head.code, "equal_field")
-        assertEquals(errors.head.reason, "Value not equal test. Got t")
+        assertEquals(errors.head.reason, "Value must equal test. Got t")
         assertEquals(errors.head.field, "equalValue")
     }
   }

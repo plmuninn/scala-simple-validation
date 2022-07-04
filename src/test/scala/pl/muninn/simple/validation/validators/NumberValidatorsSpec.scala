@@ -45,8 +45,8 @@ class NumberValidatorsSpec extends munit.FunSuite {
       case Validated.Valid(_) => fail("Result should be invalid")
       case Validated.Invalid(errors) =>
         assertEquals(errors.length, 1L)
-        assertEquals(errors.head.code, "expected_value")
-        assertEquals(errors.head.reason, "Value must be equal 10. Got 11")
+        assertEquals(errors.head.code, "equal_field")
+        assertEquals(errors.head.reason, "Value must equal 10. Got 11")
         assertEquals(errors.head.field, "numberEqual")
     }
   }
