@@ -1,0 +1,118 @@
+<!DOCTYPE html><html><head><title>scala-simple-validation: Errors</title><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Maciej Romański Muninn Software" /><meta name="description" content="Simple scala validation library" /><meta name="og:image" content="/scala-simple-validation/img/poster.png" /><meta name="image" property="og:image" content="/scala-simple-validation/img/poster.png" /><meta name="og:title" content="scala-simple-validation: Errors" /><meta name="title" property="og:title" content="scala-simple-validation: Errors" /><meta name="og:site_name" content="scala-simple-validation" /><meta name="og:url" content="https://plmuninn.github.io/scala-simple-validation/" /><meta name="og:type" content="website" /><meta name="og:description" content="Simple scala validation library" /><link rel="icon" type="image/png" href="/scala-simple-validation/img/favicon.png" /><meta name="twitter:title" content="scala-simple-validation: Errors" /><meta name="twitter:image" content="https://plmuninn.github.io/scala-simple-validation/img/poster.png" /><meta name="twitter:description" content="Simple scala validation library" /><meta name="twitter:card" content="summary_large_image" /><link rel="icon" type="image/png" sizes="16x16" href="/scala-simple-validation/img/favicon16x16.png" /><link rel="icon" type="image/png" sizes="24x24" href="/scala-simple-validation/img/favicon24x24.png" /><link rel="icon" type="image/png" sizes="32x32" href="/scala-simple-validation/img/favicon32x32.png" /><link rel="icon" type="image/png" sizes="48x48" href="/scala-simple-validation/img/favicon48x48.png" /><link rel="icon" type="image/png" sizes="57x57" href="/scala-simple-validation/img/favicon57x57.png" /><link rel="icon" type="image/png" sizes="60x60" href="/scala-simple-validation/img/favicon60x60.png" /><link rel="icon" type="image/png" sizes="64x64" href="/scala-simple-validation/img/favicon64x64.png" /><link rel="icon" type="image/png" sizes="70x70" href="/scala-simple-validation/img/favicon70x70.png" /><link rel="icon" type="image/png" sizes="72x72" href="/scala-simple-validation/img/favicon72x72.png" /><link rel="icon" type="image/png" sizes="76x76" href="/scala-simple-validation/img/favicon76x76.png" /><link rel="icon" type="image/png" sizes="96x96" href="/scala-simple-validation/img/favicon96x96.png" /><link rel="icon" type="image/png" sizes="114x114" href="/scala-simple-validation/img/favicon114x114.png" /><link rel="icon" type="image/png" sizes="120x120" href="/scala-simple-validation/img/favicon120x120.png" /><link rel="icon" type="image/png" sizes="128x128" href="/scala-simple-validation/img/favicon128x128.png" /><link rel="icon" type="image/png" sizes="144x144" href="/scala-simple-validation/img/favicon144x144.png" /><link rel="icon" type="image/png" sizes="150x150" href="/scala-simple-validation/img/favicon150x150.png" /><link rel="icon" type="image/png" sizes="152x152" href="/scala-simple-validation/img/favicon152x152.png" /><link rel="icon" type="image/png" sizes="196x196" href="/scala-simple-validation/img/favicon196x196.png" /><link rel="icon" type="image/png" sizes="310x310" href="/scala-simple-validation/img/favicon310x310.png" /><link rel="icon" type="image/png" sizes="310x150" href="/scala-simple-validation/img/favicon310x150.png" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/scala-simple-validation/highlight/styles/atom-one-light.css" /><link rel="stylesheet" href="/scala-simple-validation/css/light-style.css" /></head><body class="docs"><div id="wrapper"><div id="sidebar-wrapper"><div id="sidebar-brand"><a href="/scala-simple-validation/" class="brand"><div class="brand-wrapper"></div><span>scala-simple-validation</span></a><button id="main-toggle" class="sidebar-toggle"><span class="close"></span></button></div><div class="sidebar-nav"><li><a href="/scala-simple-validation/docs/validators/" class="">Validators</a></li><li><a href="/scala-simple-validation/docs/validators/any/" class="">Any type validators</a></li><li><a href="/scala-simple-validation/docs/validators/collection/" class="">Collection validators</a></li><li><a href="/scala-simple-validation/docs/usage/compose-validators/" class="">Compose validators</a></li><li><a href="/scala-simple-validation/docs/usage/custom/" class="">Custom validations</a></li><li><a href="/scala-simple-validation/docs/errors/" class="active">Errors</a></li><li><a href="/scala-simple-validation/docs/usage/field-names/" class="">Field names</a></li><li><a href="/scala-simple-validation/docs/install/" class="">Install</a></li><li><a href="/scala-simple-validation/css/light-style.css" class=""></a></li><li><a href="/scala-simple-validation/docs/validators/map/" class="">Map validators</a></li><li><a href="/scala-simple-validation/docs/validators/number/" class="">Number validators</a></li><li><a href="/scala-simple-validation/docs/validators/option/" class="">Option validators</a></li><li><a href="/scala-simple-validation/docs/usage/schema/" class="">Schema definitions</a></li><li><a href="/scala-simple-validation/js/search.js" class=""></a></li><li><a href="/scala-simple-validation/docs/validators/string/" class="">String validators</a></li><li><a href="/scala-simple-validation/docs/usage/" class="">Usage</a></li><li><a href="/scala-simple-validation/docs/" class="">About</a></li></div></div><div id="page-content-wrapper"><div class="nav"><div class="container-fluid"><div class="row"><div class="col-lg-12"><div class="action-menu pull-left clearfix"><a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a></div><ul class="pull-right"><li class="search-nav"><div id="search-dropdown"><label><i class="fa fa-search"></i>Search</label><input id="search-bar" type="text" placeholder="Enter keywords here..." onclick="displayToggleSearch(event)" /><ul id="search-dropdown-content" class="dropdown dropdown-content"></ul></div></li><li id="gh-eyes-item" class="hidden-xs to-uppercase"><a href="https://github.com/plmuninn/scala-simple-validation" target="_blank" rel="noopener noreferrer"><i class="fa fa-eye"></i><span>Watchers<span id="eyes" class="label label-default">--</span></span></a></li><li id="gh-stars-item" class="hidden-xs to-uppercase"><a href="https://github.com/plmuninn/scala-simple-validation" target="_blank" rel="noopener noreferrer"><i class="fa fa-star-o"></i><span>Stars<span id="stars" class="label label-default">--</span></span></a></li></ul></div></div></div></div><div id="content" data-github-owner="plmuninn" data-github-repo="scala-simple-validation"><div class="content-wrapper"><section><h1 id="errors">Errors</h1>
+
+<p>Error structure is reperesented by simple trait:</p>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">trait</span> <span class="nc">InvalidField</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="nf">field</span><span class="k">:</span> <span class="kt">String</span>
+  <span class="k">def</span> <span class="nf">reason</span><span class="k">:</span> <span class="kt">String</span>
+  <span class="k">def</span> <span class="nf">code</span><span class="k">:</span> <span class="kt">String</span>
+  <span class="k">def</span> <span class="nf">metadata</span><span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nv">Map</span><span class="o">.</span><span class="py">empty</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>Where each filed represents:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">field</code>  - name of validated field</li>
+  <li><code class="language-plaintext highlighter-rouge">reason</code>  - descriptive reason of failure</li>
+  <li><code class="language-plaintext highlighter-rouge">code</code>  - code of error</li>
+  <li><code class="language-plaintext highlighter-rouge">metadata</code>  - list of meta information of error ex. when number was expected to be lower then 10 you will find there what was expected value</li>
+</ul>
+
+<h1 id="list-of-error-codes">List of error codes</h1>
+
+<p>Here is build in list of errors codes with descriptions:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Code</strong></th>
+      <th><strong>Description</strong></th>
+      <th><strong>Data types</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>equal_field</strong></td>
+      <td>Value was not equal expected value</td>
+      <td><code class="language-plaintext highlighter-rouge">any</code></td>
+    </tr>
+    <tr>
+      <td><strong>empty_field</strong></td>
+      <td>Value was expected to be not empty</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code><code class="language-plaintext highlighter-rouge">option</code><code class="language-plaintext highlighter-rouge">collection</code></td>
+    </tr>
+    <tr>
+      <td><strong>empty_expected</strong></td>
+      <td>Value was expected to be empty</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code><code class="language-plaintext highlighter-rouge">option</code><code class="language-plaintext highlighter-rouge">collection</code></td>
+    </tr>
+    <tr>
+      <td><strong>email_field</strong></td>
+      <td>Value was expected to be email</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code></td>
+    </tr>
+    <tr>
+      <td><strong>password_complexity</strong></td>
+      <td>Value was expected to complex password</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code></td>
+    </tr>
+    <tr>
+      <td><strong>fields_not_equal</strong></td>
+      <td>Two fields were not equal</td>
+      <td><code class="language-plaintext highlighter-rouge">tuple</code></td>
+    </tr>
+    <tr>
+      <td><strong>minimal_value</strong></td>
+      <td>Value was expected to greater or equal minimal value</td>
+      <td><code class="language-plaintext highlighter-rouge">number</code></td>
+    </tr>
+    <tr>
+      <td><strong>maximal_value</strong></td>
+      <td>Value was expected to lower or equal maximal value</td>
+      <td><code class="language-plaintext highlighter-rouge">number</code></td>
+    </tr>
+    <tr>
+      <td><strong>minimal_length</strong></td>
+      <td>Value was expected to have length greater or equal minimal value</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code><code class="language-plaintext highlighter-rouge">collection</code></td>
+    </tr>
+    <tr>
+      <td><strong>maximal_length</strong></td>
+      <td>Value was expected to have length lower or equal maximal value</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code><code class="language-plaintext highlighter-rouge">collection</code></td>
+    </tr>
+    <tr>
+      <td><strong>expected_length</strong></td>
+      <td>Value was expected to exact length</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code><code class="language-plaintext highlighter-rouge">collection</code></td>
+    </tr>
+    <tr>
+      <td><strong>key_missing</strong></td>
+      <td>Value was expected to have specific key</td>
+      <td><code class="language-plaintext highlighter-rouge">map</code></td>
+    </tr>
+    <tr>
+      <td><strong>keys_missing</strong></td>
+      <td>Value was expected to have specific list of keys</td>
+      <td><code class="language-plaintext highlighter-rouge">map</code></td>
+    </tr>
+  </tbody>
+</table>
+
+</section></div></div></div></div><script src="/scala-simple-validation/highlight/highlight.pack.js"></script><script src="/scala-simple-validation/lunr/lunr.js"></script><script>
+// For all code blocks, copy the language from the containing div
+// to the inner code tag (where hljs expects it to be)
+const langPrefix = 'language-';
+document.querySelectorAll(`div[class^='${langPrefix}']`).forEach(function(div) {
+  div.classList.forEach(function(cssClass) {
+    if (cssClass.startsWith(langPrefix)) {
+      const lang = cssClass.substring(langPrefix.length);
+      div.querySelectorAll('pre code').forEach(function(code) {
+        code.classList.add(lang);
+      });
+    }
+  });
+});
+
+hljs.configure({languages:['scala','java','bash']});
+hljs.initHighlightingOnLoad();
+      </script><script>console.info('\x57\x65\x62\x73\x69\x74\x65\x20\x62\x75\x69\x6c\x74\x20\x77\x69\x74\x68\x3a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x5f\x5f\x20\x20\x20\x20\x5f\x5f\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x5f\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x5f\x20\x5f\x5f\x0a\x20\x20\x20\x5f\x5f\x5f\x5f\x5f\x2f\x20\x2f\x5f\x20\x20\x2f\x20\x2f\x5f\x20\x20\x20\x20\x20\x20\x5f\x5f\x5f\x5f\x20\x5f\x5f\x5f\x20\x20\x28\x5f\x29\x5f\x5f\x5f\x5f\x5f\x5f\x5f\x5f\x5f\x5f\x5f\x5f\x5f\x20\x20\x5f\x5f\x5f\x5f\x5f\x28\x5f\x29\x20\x2f\x5f\x5f\x5f\x5f\x20\x20\x5f\x5f\x5f\x5f\x5f\x0a\x20\x20\x2f\x20\x5f\x5f\x5f\x2f\x20\x5f\x5f\x20\x5c\x2f\x20\x5f\x5f\x2f\x5f\x5f\x5f\x5f\x5f\x2f\x20\x5f\x5f\x20\x60\x5f\x5f\x20\x5c\x2f\x20\x2f\x20\x5f\x5f\x5f\x2f\x20\x5f\x5f\x5f\x2f\x20\x5f\x5f\x20\x5c\x2f\x20\x5f\x5f\x5f\x2f\x20\x2f\x20\x5f\x5f\x2f\x20\x5f\x20\x5c\x2f\x20\x5f\x5f\x5f\x2f\x0a\x20\x28\x5f\x5f\x20\x20\x29\x20\x2f\x5f\x2f\x20\x2f\x20\x2f\x5f\x2f\x5f\x5f\x5f\x5f\x5f\x2f\x20\x2f\x20\x2f\x20\x2f\x20\x2f\x20\x2f\x20\x2f\x20\x2f\x5f\x5f\x2f\x20\x2f\x20\x20\x2f\x20\x2f\x5f\x2f\x20\x28\x5f\x5f\x20\x20\x29\x20\x2f\x20\x2f\x5f\x2f\x20\x20\x5f\x5f\x28\x5f\x5f\x20\x20\x29\x0a\x2f\x5f\x5f\x5f\x5f\x2f\x5f\x2e\x5f\x5f\x5f\x2f\x5c\x5f\x5f\x2f\x20\x20\x20\x20\x20\x2f\x5f\x2f\x20\x2f\x5f\x2f\x20\x2f\x5f\x2f\x5f\x2f\x5c\x5f\x5f\x5f\x2f\x5f\x2f\x20\x20\x20\x5c\x5f\x5f\x5f\x5f\x2f\x5f\x5f\x5f\x5f\x2f\x5f\x2f\x5c\x5f\x5f\x2f\x5c\x5f\x5f\x5f\x2f\x5f\x5f\x5f\x5f\x2f\x0a\x0a\x68\x74\x74\x70\x73\x3a\x2f\x2f\x34\x37\x64\x65\x67\x2e\x67\x69\x74\x68\x75\x62\x2e\x69\x6f\x2f\x73\x62\x74\x2d\x6d\x69\x63\x72\x6f\x73\x69\x74\x65\x73')</script><script>((window.gitter = {}).chat = {}).options = {
+room: 'plmuninn/scala-simple-validation'};</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js"></script><script src="/scala-simple-validation/js/search.js"></script><script src="/scala-simple-validation/js/docs.js"></script></body></html>
