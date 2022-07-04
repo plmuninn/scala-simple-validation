@@ -2,21 +2,21 @@ import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
 import scala.collection.immutable.ListMap
 
-private val errorCodesWithDescription = ListMap (
-  "equal_field" -> "Value was not equal expected value",
-  "empty_field" -> "Value was expected to be not empty",
-  "empty_expected" -> "Value was expected to be empty",
-  "email_field" -> "Value was expected to be email",
-  "password_complexity" -> "Value was expected to complex password",
-  "fields_not_equal" -> "Two fields were not equal",
-  "minimal_value" -> "Value was expected to greater or equal minimal value",
-  "maximal_value" -> "Value was expected to lower or equal maximal value",
-  "expected_value" -> "Value was expected to contains some value",
-  "minimal_length" -> "Value was expected to have length greater or equal minimal value",
-  "maximal_length" -> "Value was expected to have length lower or equal maximal value",
-  "expected_length" -> "Value was expected to exact length",
-  "key_missing" -> "Value was expected to have specific key",
-  "keys_missing" -> "Value was expected to have specific list of keys",
+private val errorCodesWithDescription = List (
+  ("equal_field", "Value was not equal expected value", List("any")),
+  ("empty_field" , "Value was expected to be not empty",List("string", "option", "collection")),
+  ("empty_expected", "Value was expected to be empty",List("string", "option", "collection")),
+  ("email_field" , "Value was expected to be email",List("string")),
+  ("password_complexity" , "Value was expected to complex password",List("string")),
+  ("fields_not_equal" , "Two fields were not equal",List("tuple")),
+  ("minimal_value" , "Value was expected to greater or equal minimal value",List("number")),
+  ("maximal_value" , "Value was expected to lower or equal maximal value",List("number")),
+  ("expected_value" , "Value was expected to contains some value",List("number")),
+  ("minimal_length" , "Value was expected to have length greater or equal minimal value",List("string", "collection")),
+  ("maximal_length" , "Value was expected to have length lower or equal maximal value",List("string", "collection")),
+  ("expected_length" , "Value was expected to exact length",List("string", "collection")),
+  ("key_missing" , "Value was expected to have specific key",List("map")),
+  ("keys_missing" , "Value was expected to have specific list of keys",List("map")),
 )
 
 def markdown(using Configuration) = md {
@@ -64,12 +64,16 @@ def markdown(using Configuration) = md {
           headers {
             col(b(m"Code"))
             col(b(m"Description"))
+            col(b(m"Data types"))
           }
 
-          val rows = for ((code, description) <- errorCodesWithDescription) yield {
+          val rows = for ((errorCode, description, dataTypes) <- errorCodesWithDescription) yield {
             row {
-              col(b(code))
+              col(b(errorCode))
               col(text(description))
+              col(div(
+                dataTypes.map(dt => code(dt)).last
+              ))
             }
           }
 

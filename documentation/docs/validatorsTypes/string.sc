@@ -4,8 +4,6 @@ import pl.muninn.markdown.common.Configuration
 import validatorsPage.*
 import validatorsPage.Validator
 
-//case class Validator(name:String, compositionUsage:Span, implicitUsage:Span, description:String)
-
 def markdown(using Configuration) = pageMarkdown("String", List(
   ("Empty string", partial.code("emptyString"), partial.code(".emailString"), "Fails if string is not empty"),
   ("None empty string", partial.code("noneEmptyString"), partial.code(".noneEmptyString"), "Fails if string is empty"),

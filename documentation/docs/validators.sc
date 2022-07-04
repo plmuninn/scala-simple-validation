@@ -4,7 +4,9 @@ import pl.muninn.markdown.common.MarkdownNode.Span
 import pl.muninn.markdown.common.basic.block.Table.Row
 import pl.muninn.markdown.common.basic.block.Table.TableElement
 
-val validators = Map(
+import scala.collection.immutable.ListMap
+
+val validators = ListMap(
   "Any type values" -> "any",
   "Optional values" -> "option",
   "Strings" -> "string",

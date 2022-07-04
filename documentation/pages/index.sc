@@ -1,6 +1,6 @@
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
-import parts.*
+import docs.install.installPart
 
 def markdown(using Configuration) =
   md {
@@ -10,7 +10,7 @@ def markdown(using Configuration) =
       p {
         m"Add to yours " + code("build.sbt") + m":"
         br
-        add(install.markdown)
+        add(installPart)
         br
         m"Then you need to only add in your code:"
         br

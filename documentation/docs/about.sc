@@ -22,7 +22,7 @@ def markdown(using Configuration) = md {
     add(shortAbout)
     p{
      m"Library was designed in a way to be easy to use and quite elastic. It was created because using"
-     m" cats" + a("Validated", "https://typelevel.org/cats/datatypes/validated.html") + m" was really"
+     m" cats " + a("Validated", "https://typelevel.org/cats/datatypes/validated.html") + m" was really"
      m" repetitive and other libraries too \"complicated\" in my opinion."
      m" I wanted to create something simple and easy to understand."
     }
