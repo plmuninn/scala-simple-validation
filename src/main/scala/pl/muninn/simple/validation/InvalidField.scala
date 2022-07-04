@@ -46,10 +46,49 @@ object InvalidField {
     val code: String   = "email_field"
   }
 
-  case class NotComplexPassword(field: String) extends InvalidField {
-    val reason: String =
-      "Password needs to be at least 8 characters long and contains 1 number and 1 special symbol and big and small letters"
-    val code: String = "password_complexity"
+  case class MinCountOfSymbols(field: String, expected: Int, found: Int, symbols: List[Char]) extends InvalidField {
+    val reason: String = s"Count of symbols must be greater or equal $expected. Got $found"
+
+    val code: String = "min_count_symbols"
+
+    override val metadata: Map[String, String] = Map(
+      "expected"         -> expected.toString,
+      "count"            -> found.toString,
+      "expected_symbols" -> symbols.map(symbol => s"'$symbol'").mkString(";")
+    )
+  }
+
+  case class MinCountOfDigits(field: String, expected: Int, found: Int) extends InvalidField {
+    val reason: String = s"Count of digits must be greater or equal $expected. Got $found"
+
+    val code: String = "min_count_digits"
+
+    override val metadata: Map[String, String] = Map(
+      "expected" -> expected.toString,
+      "count"    -> found.toString
+    )
+  }
+
+  case class MinCountOfLowerCases(field: String, expected: Int, found: Int) extends InvalidField {
+    val reason: String = s"Count of lower cases must be greater or equal $expected. Got $found"
+
+    val code: String = "min_count_lower_case"
+
+    override val metadata: Map[String, String] = Map(
+      "expected" -> expected.toString,
+      "count"    -> found.toString
+    )
+  }
+
+  case class MinCountOfUpperCases(field: String, expected: Int, found: Int) extends InvalidField {
+    val reason: String = s"Count of upper cases must be greater or equal $expected. Got $found"
+
+    val code: String = "min_count_upper_case"
+
+    override val metadata: Map[String, String] = Map(
+      "expected" -> expected.toString,
+      "count"    -> found.toString
+    )
   }
 
   case class FieldsNotEqual(field: String) extends InvalidField {

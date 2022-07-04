@@ -18,6 +18,10 @@ private[validation] trait ValidationImplicits {
     def and(otherValidator: ValueValidator[T]): NonEmptyList[ValueValidator[T]] = NonEmptyList.of(validator, otherValidator)
   }
 
+  implicit class ValueValidatorListOps[T](validators: NonEmptyList[ValueValidator[T]]) {
+    def and(otherValidators: NonEmptyList[ValueValidator[T]]): NonEmptyList[ValueValidator[T]] = validators ::: otherValidators
+  }
+
   implicit class SingleValidationWithValidatorOps(result: ValidationWithValidators[_]) {
     def +(otherResult: ValidationWithValidators[_]): NonEmptyList[ValidationWithValidators[_]] = NonEmptyList(result, List(otherResult))
   }

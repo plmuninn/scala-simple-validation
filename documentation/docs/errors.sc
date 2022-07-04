@@ -1,13 +1,15 @@
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
-import scala.collection.immutable.ListMap
 
 private val errorCodesWithDescription = List (
   ("equal_field", "Value was not equal expected value", List("any")),
   ("empty_field" , "Value was expected to be not empty",List("string", "option", "collection")),
   ("empty_expected", "Value was expected to be empty",List("string", "option", "collection")),
   ("email_field" , "Value was expected to be email",List("string")),
-  ("password_complexity" , "Value was expected to complex password",List("string")),
+  ("min_count_symbols" , "Value was expected contains count of symbols",List("string")),
+  ("min_count_digits" , "Value was expected contains count of digits",List("string")),
+  ("min_count_lower_case" , "Value was contains count of lower case characters",List("string")),
+  ("min_count_upper_case" , "Value was expected count of upper case characters",List("string")),
   ("fields_not_equal" , "Two fields were not equal",List("tuple")),
   ("minimal_value" , "Value was expected to greater or equal minimal value",List("number")),
   ("maximal_value" , "Value was expected to lower or equal maximal value",List("number")),

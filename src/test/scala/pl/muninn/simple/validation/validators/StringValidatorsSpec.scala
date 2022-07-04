@@ -2,7 +2,8 @@ package pl.muninn.simple.validation.validators
 
 import cats.data.Validated
 
-import pl.muninn.simple.validation.Validators
+import pl.muninn.simple.validation.model.Validation
+import pl.muninn.simple.validation.{Validators, ValueValidator}
 
 class StringValidatorsSpec extends munit.FunSuite {
 
@@ -48,21 +49,77 @@ class StringValidatorsSpec extends munit.FunSuite {
     }
   }
 
-  test("complexPasswordRegex should fail if string is not an 8 symbols long with big and small letters, number and symbols and pass if is") {
-    assert(Validators.complexPassword.validate("passwordTest", "password").isInvalid)
-    assert(Validators.complexPassword.validate("passwordTest", "123Pasword.#").isValid)
+  test("minimalCountSymbols should fail if string does not contains require number of symbols") {
+    assert(Validators.minimalCountSymbols(1).validate("minimalCountSymbols", "password").isInvalid)
+    assert(Validators.minimalCountSymbols(1).validate("minimalCountSymbols", "123Pasword.#").isValid)
 
-    Validators.complexPassword.validate("passwordTest", "test") match {
+    Validators.minimalCountSymbols(1).validate("minimalCountSymbols", "test") match {
       case Validated.Valid(_) => fail("Result should be invalid")
       case Validated.Invalid(errors) =>
         assertEquals(errors.length, 1L)
-        assertEquals(errors.head.code, "password_complexity")
+        assertEquals(errors.head.code, "min_count_symbols")
         assertEquals(
           errors.head.reason,
-          "Password needs to be at least 8 characters long and contains 1 number and 1 special symbol and big and small letters"
+          "Count of symbols must be greater or equal 1. Got 0"
         )
-        assertEquals(errors.head.field, "passwordTest")
+        assertEquals(errors.head.field, "minimalCountSymbols")
     }
+  }
+
+  test("minimalCountDigits should fail if string does not contains require number of digits") {
+    assert(Validators.minimalCountDigits(1).validate("minimalCountDigits", "password").isInvalid)
+    assert(Validators.minimalCountDigits(1).validate("minimalCountDigits", "123Pasword.#").isValid)
+
+    Validators.minimalCountDigits(1).validate("minimalCountDigits", "test") match {
+      case Validated.Valid(_) => fail("Result should be invalid")
+      case Validated.Invalid(errors) =>
+        assertEquals(errors.length, 1L)
+        assertEquals(errors.head.code, "min_count_digits")
+        assertEquals(
+          errors.head.reason,
+          "Count of digits must be greater or equal 1. Got 0"
+        )
+        assertEquals(errors.head.field, "minimalCountDigits")
+    }
+  }
+
+  test("minimalCountLowerCases should fail if string does not contains require number of lower case character") {
+    assert(Validators.minimalCountLowerCases(1).validate("minimalCountLowerCases", "PASSWORD").isInvalid)
+    assert(Validators.minimalCountLowerCases(1).validate("minimalCountLowerCases", "123Password.#").isValid)
+
+    Validators.minimalCountLowerCases(1).validate("minimalCountLowerCases", "TEST") match {
+      case Validated.Valid(_) => fail("Result should be invalid")
+      case Validated.Invalid(errors) =>
+        assertEquals(errors.length, 1L)
+        assertEquals(errors.head.code, "min_count_lower_case")
+        assertEquals(
+          errors.head.reason,
+          "Count of lower cases must be greater or equal 1. Got 0"
+        )
+        assertEquals(errors.head.field, "minimalCountLowerCases")
+    }
+  }
+
+  test("minimalCountUpperCases should fail if string does not contains require number of upper case characters") {
+    assert(Validators.minimalCountUpperCases(1).validate("minimalCountUpperCases", "password").isInvalid)
+    assert(Validators.minimalCountUpperCases(1).validate("minimalCountUpperCases", "123Password.#").isValid)
+
+    Validators.minimalCountUpperCases(1).validate("minimalCountUpperCases", "test") match {
+      case Validated.Valid(_) => fail("Result should be invalid")
+      case Validated.Invalid(errors) =>
+        assertEquals(errors.length, 1L)
+        assertEquals(errors.head.code, "min_count_upper_case")
+        assertEquals(
+          errors.head.reason,
+          "Count of upper cases must be greater or equal 1. Got 0"
+        )
+        assertEquals(errors.head.field, "minimalCountUpperCases")
+    }
+  }
+
+  test("password should fail if string does is shorter then 8 characters and does not contains 1 symbols, 1 digit, 1 lower and 1 upper case") {
+    assert(new Validation("password", "password").is(Validators.password()).validate.isInvalid)
+    assert(new Validation("password", "123Pasword.#").is(Validators.password()).validate.isValid)
   }
 
   test("stringMinimalLength should fail string is shorter then minimal length") {
