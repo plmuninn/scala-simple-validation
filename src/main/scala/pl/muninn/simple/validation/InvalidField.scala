@@ -136,24 +136,4 @@ object InvalidField {
       "expected" -> expected.mkString(";")
     )
   }
-
-  case class UnexpectedKey[K](field: String, unexpectedKey: K) extends InvalidField {
-    val reason: String = s"Unexpected key $unexpectedKey found"
-
-    val code: String = "unexpected_key"
-
-    override val metadata: Map[String, String] = Map(
-      "unexpected" -> unexpectedKey.toString
-    )
-  }
-
-  case class UnexpectedKeys[K](field: String, unexpectedKeys: Iterable[K]) extends InvalidField {
-    val reason: String = s"Unexpected keys ${unexpectedKeys.mkString(", ")} found"
-
-    val code: String = "unexpected_keys"
-
-    override val metadata: Map[String, String] = Map(
-      "unexpected" -> unexpectedKeys.mkString(";")
-    )
-  }
 }

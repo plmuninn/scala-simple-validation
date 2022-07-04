@@ -1,36 +1,16 @@
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
+import parts.*
 
 def markdown(using Configuration) =
   md {
-    h1("About")
-      p{
-        code("scala-simple-validation") + m" was designed to allow in simple way validate case classes and other data"
-        m"data structures. It provides:"
-        br
-        ul{
-          li(m"easy way for describing validation schema")
-          li(m"few common validators to use")
-          li(m"simple way of creating your own, custom validators")
-          li(m"designing more complex validation process - where validation depends on some specific value")
-        }
-      }
+    add(docs.about.shortAbout)  
     br
     h1("Getting started")
       p {
         m"Add to yours " + code("build.sbt") + m":"
         br
-        codeBlock(
-          "sbtshell",
-          """
-            |resolvers ++= Seq(
-            |  Resolver.sonatypeRepo("releases"),
-            |  Resolver.sonatypeRepo("snapshots")
-            |)
-            |
-            |libraryDependencies += "pl.muninn" %% "scala-simple-validation" % "@VERSION@
-            |""".stripMargin
-        )
+        add(install.markdown)
         br
         m"Then you need to only add in your code:"
         br
@@ -58,12 +38,5 @@ def markdown(using Configuration) =
             | assert(result.isValid)
             |""".stripMargin
         )
-    }
-    h1("Dependencies")
-    p{
-      m"Libraray is build using " 
-      a("cats", "https://typelevel.org/cats/" , "cats")
-      m" in version " 
-      b(m"@CATS_VERSION@")
     }
   }

@@ -4,35 +4,29 @@ import pl.muninn.markdown.common.MarkdownNode.Span
 import pl.muninn.markdown.common.basic.block.Table.Row
 import pl.muninn.markdown.common.basic.block.Table.TableElement
 
-case class Validator(name:String, forType:Span, compositionUsage:Span, implicitUsage:Span)
-
-val validators = List(
-  Validator("what", partial.text("what"), partial.text("what"), partial.text("what"))
+val validators = Map(
+  "Any type values" -> "any",
+  "Optional values" -> "option",
+  "Strings" -> "string",
+  "Numbers" -> "number",
+  "Collections" -> "collection",
+  "Maps" -> "map",
 )
-
-def mapValidatorToRow(validator:Validator):TableElement =
-  partial.row {
-    col(text(validator.name))
-    col(add(validator.forType))
-    col(add(validator.compositionUsage))
-    col(add(validator.implicitUsage))
-  }
 
 def markdown(using Configuration) =
   md {
     h1("Validators")
     p {
-      m"Validators provided by library:"
+      m"Library provides set of build in validators for types:"
       br
       p{
-        table {
-          headers {
-            col("Name")
-            col("For what type")
-            col("Composition usage")
-            col("Implicit usage")
+        ol {
+          val listElements =
+            for ((name, link) <- validators) yield {
+            li(a(name, s"$link/"))
           }
-          validators.map(mapValidatorToRow).map(add).last
+
+          listElements.head
         }
       }
       br
