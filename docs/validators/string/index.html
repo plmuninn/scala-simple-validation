@@ -28,18 +28,18 @@
       <td><code class="language-plaintext highlighter-rouge">empty_field</code></td>
     </tr>
     <tr>
-      <td>None empty string</td>
+      <td>Email</td>
       <td><code class="language-plaintext highlighter-rouge">emailString</code></td>
       <td><code class="language-plaintext highlighter-rouge">.emailString</code></td>
       <td>Fails if string is not email</td>
       <td><code class="language-plaintext highlighter-rouge">email_field</code></td>
     </tr>
     <tr>
-      <td>Complex password</td>
-      <td><code class="language-plaintext highlighter-rouge">complexPassword</code></td>
-      <td><code class="language-plaintext highlighter-rouge">.complexPassword</code></td>
-      <td>Fails if string is not at least 8 characters long and contains 1 number and 1 special symbol and big and small letters</td>
-      <td><code class="language-plaintext highlighter-rouge">password_complexity</code></td>
+      <td>Password</td>
+      <td><code class="language-plaintext highlighter-rouge">password()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.password</code></td>
+      <td>Fails if string is not at least 8 characters long and not contains 1 number and 1 special symbol and big and small letters</td>
+      <td><code class="language-plaintext highlighter-rouge">minimal_length</code> <code class="language-plaintext highlighter-rouge">min_count_symbols</code> <code class="language-plaintext highlighter-rouge">min_count_digits</code> <code class="language-plaintext highlighter-rouge">min_count_lower_case</code> <code class="language-plaintext highlighter-rouge">min_count_upper_case</code></td>
     </tr>
     <tr>
       <td>Minimal length</td>
@@ -61,6 +61,34 @@
       <td><code class="language-plaintext highlighter-rouge">.expectedLength(8)</code></td>
       <td>Fail if length is not exactly same value defined in function</td>
       <td><code class="language-plaintext highlighter-rouge">expected_length</code></td>
+    </tr>
+    <tr>
+      <td>Contains symbols</td>
+      <td><code class="language-plaintext highlighter-rouge">minimalCountSymbols(1, &lt;list of symbols&gt;)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.containsSymbols(1, &lt;list of symbols&gt;)</code></td>
+      <td>Fail if count of symbols is lower of minimal value</td>
+      <td><code class="language-plaintext highlighter-rouge">min_count_symbols</code></td>
+    </tr>
+    <tr>
+      <td>Contains digits</td>
+      <td><code class="language-plaintext highlighter-rouge">minimalCountDigits(1)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.containsDigits(1)</code></td>
+      <td>Fail if count of digits is lower of minimal value</td>
+      <td><code class="language-plaintext highlighter-rouge">min_count_digits</code></td>
+    </tr>
+    <tr>
+      <td>Contains lower case characters</td>
+      <td><code class="language-plaintext highlighter-rouge">minimalCountLowerCases(1)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.containsLowerCase(1)</code></td>
+      <td>Fail if count of lower case characters is lower of minimal value</td>
+      <td><code class="language-plaintext highlighter-rouge">min_count_lower_case</code></td>
+    </tr>
+    <tr>
+      <td>Contains upper case characters</td>
+      <td><code class="language-plaintext highlighter-rouge">minimalCountUpperCases(1)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.containsUpperCase(1)</code></td>
+      <td>Fail if count of upper case characters is lower of minimal value</td>
+      <td><code class="language-plaintext highlighter-rouge">min_count_upper_case</code></td>
     </tr>
   </tbody>
 </table>
