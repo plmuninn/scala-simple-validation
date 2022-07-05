@@ -1,6 +1,6 @@
 # [Scala simple validation](https://plmuninn.github.io/scala-simple-validation/)
 
-![workflow](https://github.com/plmuninn/scala-simple-validation/actions/workflows/ci.yml/badge.svg)
+![workflow](https://github.com/plmuninn/scala-simple-validation/actions/workflows/ci.yml/badge.svg) ![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest.svg)
 
 
 Library for simple data validation in scala.
