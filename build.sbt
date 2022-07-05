@@ -1,3 +1,4 @@
+import scala.scalanative.build._
 import scala.sys.process._
 
 import ReleaseTransformations._
@@ -29,26 +30,35 @@ resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots")
 )
 
-lazy val catsVersion = "2.7.0"
-lazy val cats        = Seq("org.typelevel" %% "cats-core" % catsVersion)
-
-lazy val munitVersion = "0.7.29"
-lazy val tests        = Seq("org.scalameta" %% "munit" % munitVersion % Test)
+lazy val catsVersion  = "2.8.0"
+lazy val munitVersion = "1.0.0-M6"
 
 lazy val generateDocumentation = taskKey[Unit]("Generate documentation")
 
-lazy val root = (project in file("."))
-  .enablePlugins(MicrositesPlugin)
-  .settings(publishSettings: _*)
-  .settings(documentationSettings: _*)
-  .settings(name := "scala-simple-validation")
-  .settings(libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value)
-  .settings(libraryDependencies ++= (cats ++ tests))
-  .settings(
-    generateDocumentation := {
-      Seq("sh", ((ThisBuild / baseDirectory).value / "scripts" / "generate-docs.sh").toPath.toString) !
-    }
-  )
+lazy val root = project.in(file(".")).aggregate(foo.js, foo.jvm, foo.native)
+
+lazy val foo =
+  crossProject(JSPlatform, JVMPlatform, NativePlatform)
+    .crossType(CrossType.Pure)
+    .in(file("source"))
+    .enablePlugins(MicrositesPlugin)
+    .settings(publishSettings: _*)
+    .settings(documentationSettings: _*)
+    .settings(name := "scala-simple-validation")
+    .settings(moduleName := "scala-simple-validation")
+    .settings(
+      testFrameworks += new TestFramework("munit.Framework"),
+      libraryDependencies ++= Seq(
+        "org.scala-lang"  % "scala-reflect" % scalaVersion.value,
+        "org.typelevel" %%% "cats-core"     % catsVersion,
+        "org.scalameta" %%% "munit"         % munitVersion % Test
+      )
+    )
+    .settings(
+      generateDocumentation := {
+        Seq("sh", ((ThisBuild / baseDirectory).value / "scripts" / "generate-docs.sh").toPath.toString) !
+      }
+    )
 
 lazy val documentationSettings = Seq(
   mdocVariables := Map(

@@ -6,12 +6,20 @@ import pl.muninn.simple.validation.ValueValidator.{invalid, valid}
 import pl.muninn.simple.validation.{InvalidField, ValueValidator}
 
 trait StringValidators {
+
+  // Fix for scala native
+  private def isBlank(value: String): Boolean = {
+    val blankSize = value.filter(Character.isWhitespace)
+
+    value.length == blankSize.length
+  }
+
   val emptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
-    if (value.isBlank) valid else invalid(InvalidField.ExpectedEmpty(key))
+    if (isBlank(value)) valid else invalid(InvalidField.ExpectedEmpty(key))
   }
 
   val noneEmptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
-    if (value.isBlank) invalid(InvalidField.EmptyField(key)) else valid
+    if (isBlank(value)) invalid(InvalidField.EmptyField(key)) else valid
   }
 
   private val emailRegex =
