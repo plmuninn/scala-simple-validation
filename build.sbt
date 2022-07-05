@@ -37,10 +37,12 @@ lazy val generateDocumentation = taskKey[Unit]("Generate documentation")
 lazy val root = project
   .enablePlugins(MicrositesPlugin)
   .settings(documentationSettings: _*)
+  .settings(releaseProcessSettings: _*)
   .settings(publishSettings: _*)
   .settings(name := "scala-simple-validation")
   .in(file("."))
   .settings(
+    publishArtifact := false,
     generateDocumentation := {
       Seq("sh", ((ThisBuild / baseDirectory).value / "scripts" / "generate-docs.sh").toPath.toString) !
     }
@@ -51,6 +53,8 @@ lazy val foo =
   crossProject(JSPlatform, JVMPlatform, NativePlatform)
     .crossType(CrossType.Pure)
     .in(file("source"))
+    .settings(publishSettings: _*)
+    .settings(name := "scala-simple-validation")
     .settings(
       testFrameworks += new TestFramework("munit.Framework"),
       libraryDependencies ++= Seq(
@@ -99,8 +103,11 @@ lazy val publishSettings = Seq(
   //   Following 2 lines need to get around https://github.com/sbt/sbt/issues/4275
   publishConfiguration      := publishConfiguration.value.withOverwrite(true),
   publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
-  updateOptions             := updateOptions.value.withGigahorse(false),
-  releaseCrossBuild         := true, // true if you cross-build the project for multiple Scala versions
+  updateOptions             := updateOptions.value.withGigahorse(false)
+)
+
+val releaseProcessSettings = Seq(
+  releaseCrossBuild := true, // true if you cross-build the project for multiple Scala versions
   releaseProcess := Seq[ReleaseStep](
     checkSnapshotDependencies,
     inquireVersions,
