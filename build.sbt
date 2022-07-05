@@ -35,6 +35,10 @@ lazy val munitVersion = "1.0.0-M6"
 lazy val generateDocumentation = taskKey[Unit]("Generate documentation")
 
 lazy val root = project
+  .enablePlugins(MicrositesPlugin)
+  .settings(documentationSettings: _*)
+  .settings(publishSettings: _*)
+  .settings(name := "scala-simple-validation")
   .in(file("."))
   .settings(
     generateDocumentation := {
@@ -47,11 +51,6 @@ lazy val foo =
   crossProject(JSPlatform, JVMPlatform, NativePlatform)
     .crossType(CrossType.Pure)
     .in(file("source"))
-    .enablePlugins(MicrositesPlugin)
-    .settings(publishSettings: _*)
-    .settings(documentationSettings: _*)
-    .settings(name := "scala-simple-validation")
-    .settings(moduleName := "scala-simple-validation")
     .settings(
       testFrameworks += new TestFramework("munit.Framework"),
       libraryDependencies ++= Seq(
@@ -101,7 +100,7 @@ lazy val publishSettings = Seq(
   publishConfiguration      := publishConfiguration.value.withOverwrite(true),
   publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
   updateOptions             := updateOptions.value.withGigahorse(false),
-  releaseCrossBuild         := false, // true if you cross-build the project for multiple Scala versions
+  releaseCrossBuild         := true, // true if you cross-build the project for multiple Scala versions
   releaseProcess := Seq[ReleaseStep](
     checkSnapshotDependencies,
     inquireVersions,
@@ -111,8 +110,7 @@ lazy val publishSettings = Seq(
     setReleaseVersion,
     commitReleaseVersion,
     tagRelease,
-    // For non cross-build projects, use releaseStepCommand("publishSigned")
-    releaseStepCommandAndRemaining("publishSigned"),
+    releaseStepCommandAndRemaining("+publishSigned"),
     releaseStepCommand("sonatypeBundleRelease"),
     releaseStepCommand("publishMicrosite"),
     setNextVersion,
