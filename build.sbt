@@ -79,7 +79,8 @@ lazy val documentationSettings = Seq(
   micrositeHighlightTheme   := "atom-one-light",
   micrositePushSiteWith     := GHPagesPlugin,
   micrositeDocumentationUrl := "docs",
-  mdocIn                    := file("./docs")
+  mdocIn                    := file("./docs"),
+  micrositeDataDirectory    := file("./microsite/data")
 )
 
 lazy val publishSettings = Seq(
