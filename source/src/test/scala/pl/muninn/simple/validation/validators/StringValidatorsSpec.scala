@@ -2,8 +2,8 @@ package pl.muninn.simple.validation.validators
 
 import cats.data.Validated
 
+import pl.muninn.simple.validation.Validators
 import pl.muninn.simple.validation.model.Validation
-import pl.muninn.simple.validation.{Validators, ValueValidator}
 
 class StringValidatorsSpec extends munit.FunSuite {
 

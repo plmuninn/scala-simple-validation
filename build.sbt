@@ -29,26 +29,36 @@ resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots")
 )
 
-lazy val catsVersion = "2.7.0"
-lazy val cats        = Seq("org.typelevel" %% "cats-core" % catsVersion)
-
-lazy val munitVersion = "0.7.29"
-lazy val tests        = Seq("org.scalameta" %% "munit" % munitVersion % Test)
+lazy val catsVersion  = "2.8.0"
+lazy val munitVersion = "1.0.0-M6"
 
 lazy val generateDocumentation = taskKey[Unit]("Generate documentation")
 
-lazy val root = (project in file("."))
+lazy val root = project
   .enablePlugins(MicrositesPlugin)
-  .settings(publishSettings: _*)
   .settings(documentationSettings: _*)
+  .settings(publishSettings: _*)
   .settings(name := "scala-simple-validation")
-  .settings(libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value)
-  .settings(libraryDependencies ++= (cats ++ tests))
+  .in(file("."))
   .settings(
     generateDocumentation := {
       Seq("sh", ((ThisBuild / baseDirectory).value / "scripts" / "generate-docs.sh").toPath.toString) !
     }
   )
+  .aggregate(foo.js, foo.jvm, foo.native)
+
+lazy val foo =
+  crossProject(JSPlatform, JVMPlatform, NativePlatform)
+    .crossType(CrossType.Pure)
+    .in(file("source"))
+    .settings(
+      testFrameworks += new TestFramework("munit.Framework"),
+      libraryDependencies ++= Seq(
+        "org.scala-lang"  % "scala-reflect" % scalaVersion.value,
+        "org.typelevel" %%% "cats-core"     % catsVersion,
+        "org.scalameta" %%% "munit"         % munitVersion % Test
+      )
+    )
 
 lazy val documentationSettings = Seq(
   mdocVariables := Map(
@@ -90,19 +100,18 @@ lazy val publishSettings = Seq(
   publishConfiguration      := publishConfiguration.value.withOverwrite(true),
   publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
   updateOptions             := updateOptions.value.withGigahorse(false),
-  releaseCrossBuild         := false, // true if you cross-build the project for multiple Scala versions
+  releaseCrossBuild         := true, // true if you cross-build the project for multiple Scala versions
   releaseProcess := Seq[ReleaseStep](
     checkSnapshotDependencies,
     inquireVersions,
     runClean,
     runTest,
+    releaseStepCommand("generateDocumentation"),
     setReleaseVersion,
     commitReleaseVersion,
     tagRelease,
-    // For non cross-build projects, use releaseStepCommand("publishSigned")
-    releaseStepCommandAndRemaining("publishSigned"),
+    releaseStepCommandAndRemaining("+publishSigned"),
     releaseStepCommand("sonatypeBundleRelease"),
-    releaseStepCommand("generateDocumentation"),
     releaseStepCommand("publishMicrosite"),
     setNextVersion,
     commitNextVersion,
