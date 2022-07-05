@@ -1,4 +1,3 @@
-import scala.scalanative.build._
 import scala.sys.process._
 
 import ReleaseTransformations._
