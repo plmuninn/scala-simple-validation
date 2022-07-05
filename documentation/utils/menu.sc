@@ -35,4 +35,4 @@ def generateMenu(mainPath:String, pages:List[Layout]):Unit =
   val options = s"options:${optionLists.mkString("\n")}"
   pprint.pprintln(s"Saving menu")
   pprint.pprintln(s"$options")
-  os.write.over(os.pwd / "src" / "main" / "resources" / "microsite" / "data" / "menu.yaml", options, createFolders = true)
+  os.write.over(os.pwd / "source" / "src" / "main" / "resources" / "microsite" / "data" / "menu.yaml", options, createFolders = true)

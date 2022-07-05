@@ -35,8 +35,6 @@ lazy val munitVersion = "1.0.0-M6"
 lazy val generateDocumentation = taskKey[Unit]("Generate documentation")
 
 lazy val root = project
-  .enablePlugins(MicrositesPlugin)
-  .settings(documentationSettings: _*)
   .settings(releaseProcessSettings: _*)
   .settings(publishSettings: _*)
   .settings(name := "scala-simple-validation")
@@ -63,6 +61,7 @@ lazy val foo =
         "org.scalameta" %%% "munit"         % munitVersion % Test
       )
     )
+    .jvmConfigure(_.enablePlugins(MicrositesPlugin).settings(documentationSettings: _*))
 
 lazy val documentationSettings = Seq(
   mdocVariables := Map(
@@ -79,7 +78,8 @@ lazy val documentationSettings = Seq(
   micrositeGithubRepo       := repo,
   micrositeHighlightTheme   := "atom-one-light",
   micrositePushSiteWith     := GHPagesPlugin,
-  micrositeDocumentationUrl := "docs"
+  micrositeDocumentationUrl := "docs",
+  mdocIn                    := file("./docs")
 )
 
 lazy val publishSettings = Seq(
