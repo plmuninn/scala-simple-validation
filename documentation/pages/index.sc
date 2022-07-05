@@ -10,7 +10,7 @@ def markdown(using Configuration) =
       p {
         m"Add to yours " + code("build.sbt") + m":"
         br
-        add(installPart)
+        add(installPart())
         br
         m"Then you need to only add in your code:"
         br

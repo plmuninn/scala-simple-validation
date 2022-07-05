@@ -34,7 +34,14 @@ lazy val munitVersion = "1.0.0-M6"
 
 lazy val generateDocumentation = taskKey[Unit]("Generate documentation")
 
-lazy val root = project.in(file(".")).aggregate(foo.js, foo.jvm, foo.native)
+lazy val root = project
+  .in(file("."))
+  .settings(
+    generateDocumentation := {
+      Seq("sh", ((ThisBuild / baseDirectory).value / "scripts" / "generate-docs.sh").toPath.toString) !
+    }
+  )
+  .aggregate(foo.js, foo.jvm, foo.native)
 
 lazy val foo =
   crossProject(JSPlatform, JVMPlatform, NativePlatform)
@@ -52,11 +59,6 @@ lazy val foo =
         "org.typelevel" %%% "cats-core"     % catsVersion,
         "org.scalameta" %%% "munit"         % munitVersion % Test
       )
-    )
-    .settings(
-      generateDocumentation := {
-        Seq("sh", ((ThisBuild / baseDirectory).value / "scripts" / "generate-docs.sh").toPath.toString) !
-      }
     )
 
 lazy val documentationSettings = Seq(
@@ -105,13 +107,13 @@ lazy val publishSettings = Seq(
     inquireVersions,
     runClean,
     runTest,
+    releaseStepCommand("generateDocumentation"),
     setReleaseVersion,
     commitReleaseVersion,
     tagRelease,
     // For non cross-build projects, use releaseStepCommand("publishSigned")
     releaseStepCommandAndRemaining("publishSigned"),
     releaseStepCommand("sonatypeBundleRelease"),
-    releaseStepCommand("generateDocumentation"),
     releaseStepCommand("publishMicrosite"),
     setNextVersion,
     commitNextVersion,
