@@ -108,14 +108,15 @@ lazy val publishSettings = Seq(
 )
 
 val releaseProcessSettings = Seq(
-  releaseCrossBuild := true, // true if you cross-build the project for multiple Scala versions
+  releaseCrossBuild           := true, // true if you cross-build the project for multiple Scala versions
+  releaseIgnoreUntrackedFiles := true,
   releaseProcess := Seq[ReleaseStep](
     checkSnapshotDependencies,
     inquireVersions,
     runClean,
     runTest,
-    releaseStepCommand("generateDocumentation"),
     setReleaseVersion,
+    releaseStepCommand("generateDocumentation"),
     commitReleaseVersion,
     tagRelease,
     releaseStepCommandAndRemaining("+publishSigned"),
