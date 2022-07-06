@@ -1,7 +1,4 @@
-//> using scala "3.1"
-
 import pl.muninn.markdown.Markdown.{*, given}
-import pl.muninn.markdown.common.Configuration
 import pl.muninn.markdown.common.basic.span.Code
 
 type Validator = (String, Code, Code, String, List[String])
@@ -13,11 +10,11 @@ private def mapValidatorToRow(validator:Validator) =
     col(add(compositionUsage))
     col(add(implicitUsage))
     col(text(description))
-    col(errorCodes.map(ec => code(ec)).head)
+    col(errorCodes.foreach(ec => code(ec)))
   }
 
 
-def pageMarkdown(forType:String, validators:List[Validator])(using Configuration) =
+def pageMarkdown(forType:String, validators:List[Validator])(using MarkdownConfig) =
   md {
     h1(m"$forType Validators")
     br
@@ -32,7 +29,9 @@ def pageMarkdown(forType:String, validators:List[Validator])(using Configuration
           col(b(m"Description"))
           col(b(m"Error codes"))
         }
-        validators.map(mapValidatorToRow).map(add).last
+        for (validator <- validators) {
+          add(mapValidatorToRow(validator))
+        }
       }
     }
   }

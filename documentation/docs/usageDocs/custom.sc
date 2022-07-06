@@ -1,7 +1,7 @@
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
 
-def markdown(using Configuration) = md {
+def markdown(using MarkdownConfig) = md {
   h1("Quick custom validators")
   p{
     m"You can easily create custom validators on fly - it's really helpful during working on new or custom validators"

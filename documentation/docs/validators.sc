@@ -1,8 +1,4 @@
 import pl.muninn.markdown.Markdown.{*, given}
-import pl.muninn.markdown.common.Configuration
-import pl.muninn.markdown.common.MarkdownNode.Span
-import pl.muninn.markdown.common.basic.block.Table.Row
-import pl.muninn.markdown.common.basic.block.Table.TableElement
 
 import scala.collection.immutable.ListMap
 
@@ -15,7 +11,7 @@ val validators = ListMap(
   "Maps" -> "map",
 )
 
-def markdown(using Configuration) =
+def markdown(using MarkdownConfig) =
   md {
     h1("Validators")
     p {
@@ -23,12 +19,9 @@ def markdown(using Configuration) =
       br
       p{
         ol {
-          val listElements =
-            for ((name, link) <- validators) yield {
-            li(a(name, s"$link/"))
+            for ((name, link) <- validators)  {
+              li(a(name, s"$link/"))
           }
-
-          listElements.head
         }
       }
       br

@@ -1,12 +1,11 @@
 import pl.muninn.markdown.Markdown.{*, given}
-import pl.muninn.markdown.common.Configuration
 
-def shortAbout(using Configuration) = 
+def shortAbout(using MarkdownConfig) =
     md {
         h1("About")
         p{
             code("scala-simple-validation") + m" was designed to allow in simple way validate case classes and other"
-            m"data structures. It provides:"
+            m" data structures. It provides:"
             br
             ul{
                 li(m"easy way for describing validation schema")
@@ -18,7 +17,7 @@ def shortAbout(using Configuration) =
     }
 
 
-def markdown(using Configuration) = md {
+def markdown(using MarkdownConfig) = md {
     add(shortAbout)
     p{
      m"Library was designed in a way to be easy to use and quite elastic. It was created because using"
@@ -41,9 +40,6 @@ def markdown(using Configuration) = md {
     br
     h1("Dependencies")
     p{
-        div {
-            m"Libraray is build using " + a("cats", "https://typelevel.org/cats/") + m" in version " 
-            b(m"@CATS_VERSION@")
-        }
+      m"Libraray is build using " + a("cats", "https://typelevel.org/cats/") + m" in version " + b(m"@CATS_VERSION@")
     }
 }

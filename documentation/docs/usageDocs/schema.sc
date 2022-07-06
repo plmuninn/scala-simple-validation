@@ -1,7 +1,7 @@
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
 
-def markdown(using Configuration) = md {
+def markdown(using MarkdownConfig) = md {
   h1("Schema definitions")
   p {
     m"You can create validation schema using composition or using implicits"

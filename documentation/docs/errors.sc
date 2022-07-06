@@ -1,5 +1,4 @@
 import pl.muninn.markdown.Markdown.{*, given}
-import pl.muninn.markdown.common.Configuration
 
 private val errorCodesWithDescription = List (
   ("equal_field", "Value was not equal expected value", List("any")),
@@ -20,7 +19,7 @@ private val errorCodesWithDescription = List (
   ("keys_missing" , "Value was expected to have specific list of keys",List("map")),
 )
 
-def markdown(using Configuration) = md {
+def markdown(using MarkdownConfig) = md {
     h1("Errors")
     p {
         m"Error structure is reperesented by simple trait:"
@@ -37,22 +36,10 @@ def markdown(using Configuration) = md {
        m"Where each filed represents:"
        br
        ol {
-         li {
-           code("field")
-           m" - name of validated field"
-         }
-         li {
-           code("reason")
-           m" - descriptive reason of failure"
-         }
-         li {
-           code("code")
-           m" - code of error"
-         }
-         li {
-           code("metadata")
-           m" - list of meta information of error ex. when number was expected to be lower then 10 you will find there what was expected value"
-         }
+         li(code("field") + m" - name of validated field")
+         li(code("reason")+ m" - descriptive reason of failure")
+         li(code("code") +m" - code of error")
+         li(code("metadata") + m" - list of meta information of error ex. when number was expected to be lower then 10 you will find there what was expected value")
        }
     }
     br
@@ -68,17 +55,15 @@ def markdown(using Configuration) = md {
             col(b(m"Data types"))
           }
 
-          val rows = for ((errorCode, description, dataTypes) <- errorCodesWithDescription) yield {
+          for ((errorCode, description, dataTypes) <- errorCodesWithDescription) {
             row {
               col(b(errorCode))
               col(text(description))
               col(div(
-                dataTypes.map(dt => code(dt)).last
+                dataTypes.foreach(code(_))
               ))
             }
           }
-
-          rows.head
         }
       }
     }

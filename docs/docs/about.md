@@ -5,7 +5,7 @@ permalink: docs/
 ---
 # About
 
-`scala-simple-validation` was designed to allow in simple way validate case classes and otherdata structures. It provides:
+`scala-simple-validation` was designed to allow in simple way validate case classes and other data structures. It provides:
 1. easy way for describing validation schema
 2. few common validators to use
 3. simple way of creating your own, custom validators

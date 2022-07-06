@@ -1,7 +1,6 @@
 import pl.muninn.markdown.Markdown.{*, given}
-import pl.muninn.markdown.common.Configuration
 
-def markdown(using Configuration) = md {
+def markdown(using MarkdownConfig) = md {
   h1("Compose validators")
   p {
     m"You can easily compose own validator using defined already validators. For example:"
