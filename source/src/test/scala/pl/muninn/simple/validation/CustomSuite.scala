@@ -8,8 +8,8 @@ import pl.muninn.simple.validation.test.OptionalTestClass
 class CustomSuite extends munit.FunSuite {
   trait Suite {
     val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
-      context.field(_.stringValue).isDefined +
-        context.field(_.intValue).isDefined +
+      context.field(_.stringValue).notEmpty +
+        context.field(_.intValue).notEmpty +
         context.custom { request =>
           if (request.intValue.contains(10)) {
             context.field(_.stringValue).equalValue(Some("test"))

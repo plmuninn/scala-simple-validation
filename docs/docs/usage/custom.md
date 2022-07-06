@@ -35,12 +35,13 @@ You can also easily create custom validation logic. For example, some values sho
 
  val orderSchema: Schema[Order] = createSchema { context =>
     context.field(_.totalPrice).min(1) +
-      context.field(_.products).nonEmpty +
+      context.field(_.products).notEmpty +
       context.custom { order =>
          // If total price is equal or above 100 we want all products to be at least 50
         if (order.totalPrice >= 100) {
-          context.field(_.products.map(_.price)).all(minimalNumberValue(50L))
+          context.field(_.products.map(_.price)).all(min(50L))
         } else {
+         // Don't validate anything - we are good
           context.noneValidator
         }
       }

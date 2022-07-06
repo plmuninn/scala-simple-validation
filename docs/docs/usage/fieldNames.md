@@ -13,15 +13,15 @@ Field name can be set or retrieved using macro:
  case class Field(name:String, otherField:String)
 
  val macroSchema:Schema[Field] = createSchema { context =>
-   context.field(_.name).noneEmptyString +
-     context.field(_.otherField).noneEmptyString
+   context.field(_.name).notEmpty +
+     context.field(_.otherField).notEmpty
  }
 
  macroSchema.validate(Field("",""))
 
  val customNameSchema:Schema[Field] = createSchema { context =>
-   context.field("name")(_.name).noneEmptyString +
-     context.field("myName")(_.otherField).noneEmptyString
+   context.field("name")(_.name).notEmpty +
+     context.field("myName")(_.otherField).notEmpty
  }
 
  customNameSchema.validate(Field("",""))
@@ -41,7 +41,7 @@ Macro design for retrieving value name was done in a way to allow user get compl
 
  val schema:Schema[ComplexField] = createSchema { context =>
    // field name will be `field.otherField`
-   context.field(_.field.map(_.otherField)).definedAnd(noneEmptyString)
+   context.field(_.field.map(_.otherField)).definedAnd(notEmptyString)
  }
 
  schema.validate(ComplexField(None))

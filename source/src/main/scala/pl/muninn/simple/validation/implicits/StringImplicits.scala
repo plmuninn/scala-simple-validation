@@ -2,28 +2,28 @@ package pl.muninn.simple.validation.implicits
 
 import pl.muninn.simple.validation.model.{Validation, ValidationWithValidators}
 import pl.muninn.simple.validation.validators.StringValidators
-import pl.muninn.simple.validation.validators.StringValidators._
 
 trait StringImplicits {
 
   implicit class StringValidation(validation: Validation[String]) {
-    def emptyString: ValidationWithValidators[String]     = validation.is(StringValidators.emptyString)
-    def noneEmptyString: ValidationWithValidators[String] = validation.is(StringValidators.noneEmptyString)
-    def emailString: ValidationWithValidators[String]     = validation.is(StringValidators.emailString)
-    def password: ValidationWithValidators[String]        = validation.is(StringValidators.password())
+
+    def empty: ValidationWithValidators[String]    = validation.is(StringValidators.emptyString)
+    def notEmpty: ValidationWithValidators[String] = validation.is(StringValidators.notEmptyString)
+    def email: ValidationWithValidators[String]    = validation.is(StringValidators.email)
+    def password: ValidationWithValidators[String] = validation.is(StringValidators.password())
 
     def password(
-        minimalLength: Int = 8,
+        minimalLengthOf: Int = 8,
         minCountOfSymbols: Int = 1,
         minCountOfDigits: Int = 1,
         minCountOfLowerCases: Int = 1,
         minCountOfUpperCases: Int = 1,
-        symbolsList: List[Char] = DEFAULT_SYMBOL_LIST
+        symbolsList: List[Char] = StringValidators.DEFAULT_SYMBOL_LIST
     ): ValidationWithValidators[String] =
       validation.is(
         StringValidators
           .password(
-            minimalLength = minimalLength,
+            minimalLengthOf = minimalLengthOf,
             minCountOfSymbols = minCountOfSymbols,
             minCountOfDigits = minCountOfDigits,
             minCountOfLowerCases = minCountOfLowerCases,
@@ -32,16 +32,20 @@ trait StringImplicits {
           )
       )
 
-    def minimalLength(expected: Int): ValidationWithValidators[String]  = validation.is(stringMinimalLength(expected))
-    def maximalLength(expected: Int): ValidationWithValidators[String]  = validation.is(stringMaximalLength(expected))
-    def expectedLength(expected: Int): ValidationWithValidators[String] = validation.is(stringLength(expected))
+    def minimalLength(expected: Int): ValidationWithValidators[String] =
+      validation.is(StringValidators.minimalLengthString(expected))
 
-    def containsSymbols(count: Int, symbols: List[Char] = DEFAULT_SYMBOL_LIST): ValidationWithValidators[String] =
-      validation.is(minimalCountSymbols(count, symbols))
+    def maximalLength(expected: Int): ValidationWithValidators[String] =
+      validation.is(StringValidators.maximalLengthString(expected))
 
-    def containsDigits(count: Int): ValidationWithValidators[String]    = validation.is(minimalCountDigits(count))
-    def containsLowerCase(count: Int): ValidationWithValidators[String] = validation.is(minimalCountLowerCases(count))
-    def containsUpperCase(count: Int): ValidationWithValidators[String] = validation.is(minimalCountUpperCases(count))
+    def exactLength(expected: Int): ValidationWithValidators[String] = validation.is(StringValidators.exactLengthString(expected))
+
+    def containsSymbols(count: Int, symbols: List[Char] = StringValidators.DEFAULT_SYMBOL_LIST): ValidationWithValidators[String] =
+      validation.is(StringValidators.minimalCountSymbols(count, symbols))
+
+    def containsDigits(count: Int): ValidationWithValidators[String]    = validation.is(StringValidators.minimalCountDigits(count))
+    def containsLowerCase(count: Int): ValidationWithValidators[String] = validation.is(StringValidators.minimalCountLowerCases(count))
+    def containsUpperCase(count: Int): ValidationWithValidators[String] = validation.is(StringValidators.minimalCountUpperCases(count))
   }
 
 }

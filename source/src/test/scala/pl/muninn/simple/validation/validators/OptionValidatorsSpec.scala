@@ -2,35 +2,33 @@ package pl.muninn.simple.validation.validators
 
 import cats.data.Validated
 
-import pl.muninn.simple.validation.Validators
-
 class OptionValidatorsSpec extends munit.FunSuite {
 
-  test("forOpt should test only value when is defined, otherwise it should pass it as valid") {
-    assert(Validators.ifDefined(Validators.noneEmptyString).validate("forOpt", Some("")).isInvalid)
-    assert(Validators.ifDefined(Validators.noneEmptyString).validate("forOpt", Some("some")).isValid)
-    assert(Validators.ifDefined(Validators.noneEmptyString).validate("forOpt", None).isValid)
+  test("ifDefined should test only value when is defined, otherwise it should pass it as valid") {
+    assert(OptionValidators.ifDefined(StringValidators.notEmptyString).validate("ifDefined", Some("")).isInvalid)
+    assert(OptionValidators.ifDefined(StringValidators.notEmptyString).validate("ifDefined", Some("some")).isValid)
+    assert(OptionValidators.ifDefined(StringValidators.notEmptyString).validate("ifDefined", None).isValid)
   }
 
-  test("isDefined should fail if is not defined optional value") {
-    assert(Validators.isDefined.validate("isDefined", None).isInvalid)
-    assert(Validators.isDefined.validate("isDefined", Some("")).isValid)
+  test("defined should fail if is not defined optional value") {
+    assert(OptionValidators.defined[String].validate("defined", None).isInvalid)
+    assert(OptionValidators.defined[String].validate("defined", Some("")).isValid)
 
-    Validators.isDefined.validate("isDefined", None) match {
+    OptionValidators.defined[Option[String]].validate("defined", None) match {
       case Validated.Valid(_) => fail("Result should be invalid")
       case Validated.Invalid(errors) =>
         assertEquals(errors.length, 1L)
         assertEquals(errors.head.code, "empty_field")
         assertEquals(errors.head.reason, "Non empty value required")
-        assertEquals(errors.head.field, "isDefined")
+        assertEquals(errors.head.field, "defined")
     }
   }
 
-  test("notDefined should fail if value is defined for optional value") {
-    assert(Validators.notDefined.validate("notDefined", Some("")).isInvalid)
-    assert(Validators.notDefined.validate("notDefined", None).isValid)
+  test("empty should fail if value is defined for optional value") {
+    assert(OptionValidators.notDefined[String].validate("notDefined", Some("")).isInvalid)
+    assert(OptionValidators.notDefined[String].validate("notDefined", None).isValid)
 
-    Validators.notDefined.validate("notDefined", Some("")) match {
+    OptionValidators.notDefined[String].validate("notDefined", Some("")) match {
       case Validated.Valid(_) => fail("Result should be invalid")
       case Validated.Invalid(errors) =>
         assertEquals(errors.length, 1L)

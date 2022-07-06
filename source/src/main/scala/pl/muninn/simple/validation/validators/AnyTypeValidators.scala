@@ -2,15 +2,16 @@ package pl.muninn.simple.validation.validators
 
 import pl.muninn.simple.validation.InvalidField.FieldsNotEqual
 import pl.muninn.simple.validation.ValueValidator.{invalid, valid}
+import pl.muninn.simple.validation.validators.CommonValidators.EqualMagnetic
 import pl.muninn.simple.validation.{InvalidField, ValueValidator}
 
 trait AnyTypeValidators {
 
   val emptyValidator: ValueValidator[Any] = ValueValidator.instance { (_, _: Any) => valid }
 
-  def equalValue[T](expected: T): ValueValidator[T] = ValueValidator.instance { (key, value) =>
-    if (value == expected) valid else invalid(InvalidField.EqualValue(key, expected, value))
-  }
+  private implicit def anyEqualMagnetic[T]: EqualMagnetic[T] = { case (value, expected) => value == expected }
+
+  def equalValue[T](expected: T): ValueValidator[T] = CommonValidators.equal(expected)
 
   def customValid[T](code: String, reason: T => String, metadata: Map[String, String] = Map.empty)(f: T => Boolean): ValueValidator[T] =
     ValueValidator.instance { (key, value) =>

@@ -14,8 +14,8 @@ Simple example of how to use library
  case class LoginRequest(login:String, password:String)
 
  val schema:Schema[LoginRequest] = createSchema { context =>
-   context.field(_.login).noneEmptyString +
-     context.field(_.password).noneEmptyString
+   context.field(_.login).notEmpty +
+     context.field(_.password).notEmpty
  }
 
  val result = schema.validate(LoginRequest("admin", "admin"))

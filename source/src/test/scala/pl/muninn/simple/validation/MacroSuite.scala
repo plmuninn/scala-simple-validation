@@ -9,22 +9,22 @@ class MacroSuite extends munit.FunSuite {
 
   trait Suite {
     val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
-      context.field(_.stringValue).isDefined +
-        context.field(_.intValue).isDefined
+      context.field(_.stringValue).notEmpty +
+        context.field(_.intValue).notEmpty
     }
 
     val simpleCombinedClassSchema: Schema[SimpleCombinedClass] = createSchema { context =>
-      context.field(_.innerClass.stringValue).isDefined +
-        context.field(_.innerClass.intValue).isDefined
+      context.field(_.innerClass.stringValue).notEmpty +
+        context.field(_.innerClass.intValue).notEmpty
     }
 
     val combinedClassSchema: Schema[CombinedClass] = createSchema { context =>
-      context.field(_.innerClass.flatMap(_.stringValue)).isDefined +
-        context.field(_.innerClass.flatMap(_.intValue)).isDefined
+      context.field(_.innerClass.flatMap(_.stringValue)).notEmpty +
+        context.field(_.innerClass.flatMap(_.intValue)).notEmpty
     }
 
     val listCombinedClassSchema: Schema[ListCombinedClass] = createSchema { context =>
-      context.field(_.values.flatMap(_.innerClass).map(_.stringValue)).nonEmpty
+      context.field(_.values.flatMap(_.innerClass).map(_.stringValue)).notEmpty
     }
 
     val pairTestClassSchema: Schema[PairTestClass] = createSchema { context =>

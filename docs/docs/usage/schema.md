@@ -13,15 +13,15 @@ You can create validation schema using composition or using implicits
  case class Field(name:String, otherField:String)
 
  val compositionSchema:Schema[Field] = createSchema { context =>
-   context.field(_.name).is(noneEmptyString and stringMinimalLength(8)) +
-     context.field(_.otherField).is(noneEmptyString)
+   context.field(_.name).is(notEmptyString and minimalLengthString(8)) +
+     context.field(_.otherField).is(notEmptyString)
  }
 
  compositionSchema.validate(Field("",""))
 
  val implicitSchema:Schema[Field] = createSchema { context =>
-   (context.field(_.name).noneEmptyString and stringMinimalLength(8)) +
-     context.field(_.otherField).noneEmptyString
+   (context.field(_.name).notEmpty and minimalLengthString(8)) +
+     context.field(_.otherField).notEmpty
  }
 
  implicitSchema.validate(Field("",""))

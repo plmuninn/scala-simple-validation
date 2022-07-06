@@ -1,7 +1,6 @@
 import pl.muninn.markdown.Markdown.{*, given}
-import pl.muninn.markdown.common.Configuration
 
-def usageExample(using Configuration) = md {
+def usageExample(using MarkdownConfig) = md {
   h1("Usage example")
   p{
     m"Simple example of how to use library"
@@ -15,8 +14,8 @@ def usageExample(using Configuration) = md {
         | case class LoginRequest(login:String, password:String)
         |
         | val schema:Schema[LoginRequest] = createSchema { context =>
-        |   context.field(_.login).noneEmptyString +
-        |     context.field(_.password).noneEmptyString
+        |   context.field(_.login).notEmpty +
+        |     context.field(_.password).notEmpty
         | }
         |
         | val result = schema.validate(LoginRequest("admin", "admin"))
@@ -27,16 +26,12 @@ def usageExample(using Configuration) = md {
   }
 }
 
-def markdown(using Configuration) = md {
+def markdown(using MarkdownConfig) = md {
   add(usageExample)
   br
   h1(m"Library provides")
   p{
-    div {
-      m"Library allows to use two different ways of creating validation "
-      a("schema", "schema/")
-      m" ."
-    }
+    m"Library allows to use two different ways of creating validation " + a("schema", "schema/") + m" ."
     br(true)
     m"It also provides simple way of"
     br

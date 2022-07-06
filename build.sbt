@@ -45,9 +45,9 @@ lazy val root = project
       Seq("sh", ((ThisBuild / baseDirectory).value / "scripts" / "generate-docs.sh").toPath.toString) !
     }
   )
-  .aggregate(foo.js, foo.jvm, foo.native)
+  .aggregate(validation.js, validation.jvm, validation.native)
 
-lazy val foo =
+lazy val validation =
   crossProject(JSPlatform, JVMPlatform, NativePlatform)
     .crossType(CrossType.Pure)
     .in(file("source"))

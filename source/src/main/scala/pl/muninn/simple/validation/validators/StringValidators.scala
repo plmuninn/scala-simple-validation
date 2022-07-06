@@ -3,29 +3,33 @@ package pl.muninn.simple.validation.validators
 import cats.data.NonEmptyList
 
 import pl.muninn.simple.validation.ValueValidator.{invalid, valid}
+import pl.muninn.simple.validation.validators.CommonValidators.{EmptyMagnetic, LengthMagnetic}
 import pl.muninn.simple.validation.{InvalidField, ValueValidator}
 
 trait StringValidators {
 
-  // Fix for scala native
-  private def isBlank(value: String): Boolean = {
+  private implicit val stringEmptyMagnetic: EmptyMagnetic[String] = { value =>
     val blankSize = value.filter(Character.isWhitespace)
 
     value.length == blankSize.length
   }
 
-  val emptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
-    if (isBlank(value)) valid else invalid(InvalidField.ExpectedEmpty(key))
-  }
+  private implicit val stringLengthMagnetic: LengthMagnetic[String] = _.length
 
-  val noneEmptyString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
-    if (isBlank(value)) invalid(InvalidField.EmptyField(key)) else valid
-  }
+  def emptyString: ValueValidator[String] = CommonValidators.empty
+
+  def notEmptyString: ValueValidator[String] = CommonValidators.notEmpty
+
+  def minimalLengthString(expected: Int): ValueValidator[String] = CommonValidators.minimalLength(expected)
+
+  def maximalLengthString(expected: Int): ValueValidator[String] = CommonValidators.maximalLength(expected)
+
+  def exactLengthString(expected: Int): ValueValidator[String] = CommonValidators.exactLength(expected)
 
   private val emailRegex =
     """^[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$""".r
 
-  val emailString: ValueValidator[String] = ValueValidator.instance { (key, value) =>
+  val email: ValueValidator[String] = ValueValidator.instance { (key, value) =>
     if (!emailRegex.matches(value)) invalid(InvalidField.NotEmail(key)) else valid
   }
 
@@ -63,30 +67,19 @@ trait StringValidators {
   }
 
   def password(
-      minimalLength: Int = 8,
+      minimalLengthOf: Int = 8,
       minCountOfSymbols: Int = 1,
       minCountOfDigits: Int = 1,
       minCountOfLowerCases: Int = 1,
       minCountOfUpperCases: Int = 1,
       symbolsList: List[Char] = DEFAULT_SYMBOL_LIST
   ): NonEmptyList[ValueValidator[String]] =
-    stringMinimalLength(minimalLength) and
+    minimalLengthString(minimalLengthOf) and
       minimalCountSymbols(minCountOfSymbols, symbolsList) and
       minimalCountDigits(minCountOfDigits) and
       minimalCountLowerCases(minCountOfLowerCases) and
       minimalCountUpperCases(minCountOfUpperCases)
 
-  def stringMinimalLength(expected: Int): ValueValidator[String] = ValueValidator.instance { (key, value) =>
-    if (value.length >= expected) valid else invalid(InvalidField.MinimalLength(key, expected, value.length))
-  }
-
-  def stringMaximalLength(expected: Int): ValueValidator[String] = ValueValidator.instance { (key, value) =>
-    if (value.length <= expected) valid else invalid(InvalidField.MaximalLength(key, expected, value.length))
-  }
-
-  def stringLength(expected: Int): ValueValidator[String] = ValueValidator.instance { (key, value) =>
-    if (value.length == expected) valid else invalid(InvalidField.ExpectedLength(key, expected, value.length))
-  }
 }
 
 object StringValidators extends StringValidators

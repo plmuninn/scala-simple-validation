@@ -1,7 +1,7 @@
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
 
-def installPart(isScalaNative:Boolean = false)(using Configuration) =
+def installPart(isScalaNative:Boolean = false)(using MarkdownConfig) =
   partial.codeBlock(
     "scala",
     s"""
@@ -14,7 +14,7 @@ def installPart(isScalaNative:Boolean = false)(using Configuration) =
       |""".stripMargin
   )
 
-def markdown(using Configuration) = 
+def markdown(using MarkdownConfig) =
     md {
      p{
         m"To install library add to your " + code("build.sbt") + " file:"

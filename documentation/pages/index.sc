@@ -1,8 +1,7 @@
 import pl.muninn.markdown.Markdown.{*, given}
-import pl.muninn.markdown.common.Configuration
 import docs.install.installPart
 
-def markdown(using Configuration) =
+def markdown(using MarkdownConfig) =
   md {
     add(docs.about.shortAbout)  
     br

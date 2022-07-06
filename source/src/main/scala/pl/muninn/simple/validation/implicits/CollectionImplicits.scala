@@ -7,13 +7,6 @@ import cats.data.NonEmptyList
 import pl.muninn.simple.validation.ValueValidator
 import pl.muninn.simple.validation.model.{Validation, ValidationWithValidators}
 import pl.muninn.simple.validation.validators.CollectionValidators
-import pl.muninn.simple.validation.validators.CollectionValidators.{
-  collectionLength,
-  collectionMaximalLength,
-  collectionMinimalLength,
-  emptyCollection,
-  noneEmptyCollection
-}
 
 trait CollectionImplicits {
 
@@ -24,11 +17,18 @@ trait CollectionImplicits {
     def all(fieldValidators: NonEmptyList[ValueValidator[A]]): ValidationWithValidators[CollectionType] =
       field.is(CollectionValidators.all[A, CC](fieldValidators))
 
-    def nonEmpty: ValidationWithValidators[CollectionType]                      = field.is(noneEmptyCollection[A, CC])
-    def empty: ValidationWithValidators[CollectionType]                         = field.is(emptyCollection[A, CC])
-    def minimalLength(expected: Int): ValidationWithValidators[CollectionType]  = field.is(collectionMinimalLength[A, CC](expected))
-    def maximumLength(expected: Int): ValidationWithValidators[CollectionType]  = field.is(collectionMaximalLength[A, CC](expected))
-    def expectedLength(expected: Int): ValidationWithValidators[CollectionType] = field.is(collectionLength[A, CC](expected))
+    def empty: ValidationWithValidators[CollectionType] = field.is(CollectionValidators.emptyCollection[A, CC])
+
+    def notEmpty: ValidationWithValidators[CollectionType] = field.is(CollectionValidators.notEmptyCollection[A, CC])
+
+    def minimalLength(expected: Int): ValidationWithValidators[CollectionType] =
+      field.is(CollectionValidators.minimalLengthCollection[A, CC](expected))
+
+    def maximumLength(expected: Int): ValidationWithValidators[CollectionType] =
+      field.is(CollectionValidators.minimalLengthCollection[A, CC](expected))
+
+    def expectedLength(expected: Int): ValidationWithValidators[CollectionType] =
+      field.is(CollectionValidators.exactLengthCollection[A, CC](expected))
   }
 
   implicit class ListValidation[A](field: Validation[List[A]])
