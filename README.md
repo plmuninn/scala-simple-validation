@@ -2,11 +2,11 @@
 
 ![workflow](https://github.com/plmuninn/scala-simple-validation/actions/workflows/ci.yml/badge.svg) 
 
-![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest.svg)
+[![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest.svg)](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation)
 
-![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest-by-scala-version.svg?platform=jvm)
-![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest-by-scala-version.svg?platform=sjs1)
-![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest-by-scala-version.svg?platform=native0.4)
+[![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest-by-scala-version.svg?platform=jvm)](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation)
+[![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest-by-scala-version.svg?platform=sjs1)](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation)
+[![scala-simple-validation Scala version support](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation/latest-by-scala-version.svg?platform=native0.4)](https://index.scala-lang.org/plmuninn/scala-simple-validation/scala-simple-validation)
 
 Library for simple data validation in scala.
 
