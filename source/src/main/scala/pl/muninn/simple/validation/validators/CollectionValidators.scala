@@ -5,8 +5,9 @@ import scala.language.implicitConversions
 
 import cats.data.NonEmptyList
 
-import pl.muninn.simple.validation.ValueValidator.{invalid, valid}
-import pl.muninn.simple.validation.{InvalidField, ValueValidator}
+import pl.muninn.simple.validation.ValueValidator
+import pl.muninn.simple.validation.ValueValidator.valid
+import pl.muninn.simple.validation.validators.CommonValidators.{EmptyMagnetic, LengthMagnetic}
 
 trait CollectionValidators {
 
@@ -27,30 +28,22 @@ trait CollectionValidators {
     }
   }
 
-  def noneEmptyCollection[A, CC[x] <: Iterable[x]]: ValueValidator[IterableOps[A, CC, CC[A]]] =
-    ValueValidator.instance { (key, value) =>
-      if (value.iterator.isEmpty) invalid(InvalidField.EmptyField(key)) else valid
-    }
+  private implicit def collectionEmptyMagnetic[A, CC[x] <: Iterable[x]]: EmptyMagnetic[IterableOps[A, CC, CC[A]]] = _.isEmpty
 
-  def emptyCollection[A, CC[x] <: Iterable[x]]: ValueValidator[IterableOps[A, CC, CC[A]]] =
-    ValueValidator.instance { (key, value) =>
-      if (value.isEmpty) valid else invalid(InvalidField.ExpectedEmpty(key))
-    }
+  private implicit def collectionLengthMagnetic[A, CC[x] <: Iterable[x]]: LengthMagnetic[IterableOps[A, CC, CC[A]]] = _.size
 
-  def collectionMinimalLength[A, CC[x] <: Iterable[x]](expected: Int): ValueValidator[IterableOps[A, CC, CC[A]]] =
-    ValueValidator.instance { (key, value) =>
-      if (value.size >= expected) valid else invalid(InvalidField.MinimalLength(key, expected, value.size))
-    }
+  def emptyCollection[A, CC[x] <: Iterable[x]]: ValueValidator[IterableOps[A, CC, CC[A]]] = CommonValidators.empty
 
-  def collectionMaximalLength[A, CC[x] <: Iterable[x]](expected: Int): ValueValidator[IterableOps[A, CC, CC[A]]] = ValueValidator.instance {
-    (key, value) =>
-      if (value.size <= expected) valid else invalid(InvalidField.MaximalLength(key, expected, value.size))
-  }
+  def notEmptyCollection[A, CC[x] <: Iterable[x]]: ValueValidator[IterableOps[A, CC, CC[A]]] = CommonValidators.notEmpty
 
-  def collectionLength[A, CC[x] <: Iterable[x]](expected: Int): ValueValidator[IterableOps[A, CC, CC[A]]] = ValueValidator.instance { (key, value) =>
-    if (value.size == expected) valid else invalid(InvalidField.ExpectedLength(key, expected, value.size))
-  }
+  def minimalLengthCollection[A, CC[x] <: Iterable[x]](expected: Int): ValueValidator[IterableOps[A, CC, CC[A]]] =
+    CommonValidators.minimalLength(expected)
 
+  def maximalLengthCollection[A, CC[x] <: Iterable[x]](expected: Int): ValueValidator[IterableOps[A, CC, CC[A]]] =
+    CommonValidators.maximalLength(expected)
+
+  def exactLengthCollection[A, CC[x] <: Iterable[x]](expected: Int): ValueValidator[IterableOps[A, CC, CC[A]]] =
+    CommonValidators.exactLength(expected)
 }
 
 object CollectionValidators extends CollectionValidators

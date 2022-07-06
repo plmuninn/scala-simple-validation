@@ -9,9 +9,9 @@ class ImplicitSuite extends munit.FunSuite {
 
   trait Suit {
     val typeTestClassSchema: Schema[TypeTestClass] = createSchema { context =>
-      context.field("stringValue")(_.stringValue).noneEmptyString +
+      context.field("stringValue")(_.stringValue).notEmpty +
         context.field("intValue")(_.intValue).min(10) +
-        (context.field("listValue")(_.listValue).nonEmpty and all(noneEmptyString)) +
+        (context.field("listValue")(_.listValue).notEmpty and all(notEmptyString)) +
         context.field("mapValue")(_.mapValue).containsKey("test")
     }
 
@@ -20,8 +20,8 @@ class ImplicitSuite extends munit.FunSuite {
     }
 
     val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
-      (context.field("stringValue")(_.stringValue).isDefined and ifDefined(noneEmptyString)) +
-        context.field("intValue")(_.intValue).ifDefined(minimalNumberValue(10))
+      (context.field("stringValue")(_.stringValue).notEmpty and ifDefined(notEmptyString)) +
+        context.field("intValue")(_.intValue).ifDefined(min(10))
     }
   }
 

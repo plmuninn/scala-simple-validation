@@ -13,7 +13,7 @@ def markdown(using Configuration) = md {
         |
         | case class Field(name:String, otherField:String)
         |
-        | val myValidString = noneEmptyString and stringMinimalLength(8)
+        | val myValidString = notEmptyString and minimalLengthString(8)
         |
         | val schema:Schema[Field] = createSchema { context =>
         |   context.field(_.name).is(myValidString) +

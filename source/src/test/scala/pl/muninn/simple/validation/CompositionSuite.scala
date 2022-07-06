@@ -9,9 +9,9 @@ class CompositionSuite extends munit.FunSuite {
 
   trait Suit {
     val typeTestClassSchema: Schema[TypeTestClass] = createSchema { context =>
-      context.field("stringValue")(_.stringValue).is(noneEmptyString) +
-        context.field("intValue")(_.intValue).is(minimalNumberValue(10)) +
-        context.field("listValue")(_.listValue).is(noneEmptyCollection and all(noneEmptyString)) +
+      context.field("stringValue")(_.stringValue).is(notEmptyString) +
+        context.field("intValue")(_.intValue).is(min(10)) +
+        context.field("listValue")(_.listValue).is(all(notEmptyString) and notEmptyCollection) +
         context.field("mapValue")(_.mapValue).is(containsKey("test"))
     }
 
@@ -20,8 +20,8 @@ class CompositionSuite extends munit.FunSuite {
     }
 
     val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
-      context.field("stringValue")(_.stringValue).is(ifDefined(noneEmptyString) and isDefined) +
-        context.field("intValue")(_.intValue).is(ifDefined(minimalNumberValue(10)))
+      context.field("stringValue")(_.stringValue).is(ifDefined(notEmptyString) and defined) +
+        context.field("intValue")(_.intValue).is(ifDefined(min(10)))
     }
   }
 

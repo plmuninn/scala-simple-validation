@@ -8,7 +8,7 @@ trait AnyTypeImplicits {
 
   implicit class AnyValidation[T](validation: Validation[T]) {
 
-    def equalValue(expected: T): ValidationWithValidators[T] = validation.is(AnyTypeValidators.equalValue(expected))
+    def equalValue(expected: T): ValidationWithValidators[T] = validation.is(AnyTypeValidators.equalValue[T](expected))
 
     def custom(code: String, reason: String)(f: T => Boolean): ValidationWithValidators[T] =
       validation.is(customValid(code, { _: T => reason }, Map.empty)(f))
