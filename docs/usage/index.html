@@ -7,8 +7,8 @@
  <span class="k">case</span> <span class="k">class</span> <span class="nc">LoginRequest</span><span class="o">(</span><span class="n">login</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span> <span class="n">password</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span>
 
  <span class="k">val</span> <span class="nv">schema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">LoginRequest</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
-   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">login</span><span class="o">).</span><span class="py">noneEmptyString</span> <span class="o">+</span>
-     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">password</span><span class="o">).</span><span class="py">noneEmptyString</span>
+   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">login</span><span class="o">).</span><span class="py">notEmpty</span> <span class="o">+</span>
+     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">password</span><span class="o">).</span><span class="py">notEmpty</span>
  <span class="o">}</span>
 <span class="c1">// schema: Schema[LoginRequest] = &lt;function1&gt;</span>
 

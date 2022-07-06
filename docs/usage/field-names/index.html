@@ -6,8 +6,8 @@
  <span class="k">case</span> <span class="k">class</span> <span class="nc">Field</span><span class="o">(</span><span class="n">name</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span> <span class="n">otherField</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span>
 
  <span class="k">val</span> <span class="nv">macroSchema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">Field</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
-   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">noneEmptyString</span> <span class="o">+</span>
-     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">).</span><span class="py">noneEmptyString</span>
+   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">notEmpty</span> <span class="o">+</span>
+     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">).</span><span class="py">notEmpty</span>
  <span class="o">}</span>
 <span class="c1">// macroSchema: Schema[Field] = &lt;function1&gt;</span>
 
@@ -20,8 +20,8 @@
 <span class="c1">// )</span>
 
  <span class="k">val</span> <span class="nv">customNameSchema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">Field</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
-   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="s">"name"</span><span class="o">)(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">noneEmptyString</span> <span class="o">+</span>
-     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="s">"myName"</span><span class="o">)(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">).</span><span class="py">noneEmptyString</span>
+   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="s">"name"</span><span class="o">)(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">notEmpty</span> <span class="o">+</span>
+     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="s">"myName"</span><span class="o">)(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">).</span><span class="py">notEmpty</span>
  <span class="o">}</span>
 <span class="c1">// customNameSchema: Schema[Field] = &lt;function1&gt;</span>
 
@@ -44,7 +44,7 @@
 
  <span class="k">val</span> <span class="nv">schema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">ComplexField</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
    <span class="c1">// field name will be `field.otherField`</span>
-   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">field</span><span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">)).</span><span class="py">definedAnd</span><span class="o">(</span><span class="n">noneEmptyString</span><span class="o">)</span>
+   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">field</span><span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">)).</span><span class="py">definedAnd</span><span class="o">(</span><span class="n">notEmptyString</span><span class="o">)</span>
  <span class="o">}</span>
 <span class="c1">// schema: Schema[ComplexField] = &lt;function1&gt;</span>
 

@@ -6,8 +6,8 @@
  <span class="k">case</span> <span class="k">class</span> <span class="nc">Field</span><span class="o">(</span><span class="n">name</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span> <span class="n">otherField</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span>
 
  <span class="k">val</span> <span class="nv">compositionSchema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">Field</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
-   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">is</span><span class="o">(</span><span class="n">noneEmptyString</span> <span class="n">and</span> <span class="nf">stringMinimalLength</span><span class="o">(</span><span class="mi">8</span><span class="o">))</span> <span class="o">+</span>
-     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">).</span><span class="py">is</span><span class="o">(</span><span class="n">noneEmptyString</span><span class="o">)</span>
+   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">is</span><span class="o">(</span><span class="n">notEmptyString</span> <span class="n">and</span> <span class="nf">minimalLengthString</span><span class="o">(</span><span class="mi">8</span><span class="o">))</span> <span class="o">+</span>
+     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">).</span><span class="py">is</span><span class="o">(</span><span class="n">notEmptyString</span><span class="o">)</span>
  <span class="o">}</span>
 <span class="c1">// compositionSchema: Schema[Field] = &lt;function1&gt;</span>
 
@@ -25,8 +25,8 @@
 <span class="c1">// )</span>
 
  <span class="k">val</span> <span class="nv">implicitSchema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">Field</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
-   <span class="o">(</span><span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">noneEmptyString</span> <span class="n">and</span> <span class="nf">stringMinimalLength</span><span class="o">(</span><span class="mi">8</span><span class="o">))</span> <span class="o">+</span>
-     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">).</span><span class="py">noneEmptyString</span>
+   <span class="o">(</span><span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">notEmpty</span> <span class="n">and</span> <span class="nf">minimalLengthString</span><span class="o">(</span><span class="mi">8</span><span class="o">))</span> <span class="o">+</span>
+     <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">otherField</span><span class="o">).</span><span class="py">notEmpty</span>
  <span class="o">}</span>
 <span class="c1">// implicitSchema: Schema[Field] = &lt;function1&gt;</span>
 

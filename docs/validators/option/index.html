@@ -23,21 +23,21 @@
     <tr>
       <td>Is defined and</td>
       <td><code class="language-plaintext highlighter-rouge">N\A</code></td>
-      <td><code class="language-plaintext highlighter-rouge">definedAnd(&lt;validators&gt;)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.definedAnd(&lt;validators&gt;) or .notEmptyAnd(&lt;validators&gt;)</code></td>
       <td>Fails if value is not defined and runs passed to it validators if value is defined</td>
       <td><code class="language-plaintext highlighter-rouge">empty_field</code></td>
     </tr>
     <tr>
       <td>If is defined</td>
-      <td><code class="language-plaintext highlighter-rouge">isDefined</code></td>
-      <td><code class="language-plaintext highlighter-rouge">.isDefined</code></td>
+      <td><code class="language-plaintext highlighter-rouge">defined</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.notEmpty or .isDefined</code></td>
       <td>Fails if value is not defined</td>
       <td><code class="language-plaintext highlighter-rouge">empty_field</code></td>
     </tr>
     <tr>
       <td>If is not defined</td>
       <td><code class="language-plaintext highlighter-rouge">notDefined</code></td>
-      <td><code class="language-plaintext highlighter-rouge">.notDefined</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.empty or .notDefined</code></td>
       <td>Fails if value is defined</td>
       <td><code class="language-plaintext highlighter-rouge">empty_expected</code></td>
     </tr>

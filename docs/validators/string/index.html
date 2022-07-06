@@ -16,21 +16,21 @@
     <tr>
       <td>Empty string</td>
       <td><code class="language-plaintext highlighter-rouge">emptyString</code></td>
-      <td><code class="language-plaintext highlighter-rouge">.emptyString</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.empty</code></td>
       <td>Fails if string is not empty</td>
       <td><code class="language-plaintext highlighter-rouge">empty_expected</code></td>
     </tr>
     <tr>
       <td>None empty string</td>
-      <td><code class="language-plaintext highlighter-rouge">noneEmptyString</code></td>
-      <td><code class="language-plaintext highlighter-rouge">.noneEmptyString</code></td>
+      <td><code class="language-plaintext highlighter-rouge">notEmpty</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.notEmptyString</code></td>
       <td>Fails if string is empty</td>
       <td><code class="language-plaintext highlighter-rouge">empty_field</code></td>
     </tr>
     <tr>
       <td>Email</td>
-      <td><code class="language-plaintext highlighter-rouge">emailString</code></td>
-      <td><code class="language-plaintext highlighter-rouge">.emailString</code></td>
+      <td><code class="language-plaintext highlighter-rouge">email</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.email</code></td>
       <td>Fails if string is not email</td>
       <td><code class="language-plaintext highlighter-rouge">email_field</code></td>
     </tr>
@@ -43,22 +43,22 @@
     </tr>
     <tr>
       <td>Minimal length</td>
-      <td><code class="language-plaintext highlighter-rouge">stringMinimalLength(8)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">minimalLengthString(8)</code></td>
       <td><code class="language-plaintext highlighter-rouge">.minimalLength(8)</code></td>
       <td>Fails if length is greater or equal minimal value</td>
       <td><code class="language-plaintext highlighter-rouge">minimal_length</code></td>
     </tr>
     <tr>
       <td>Maximal length</td>
-      <td><code class="language-plaintext highlighter-rouge">stringMaximalLength(8)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">maximalLengthString(8)</code></td>
       <td><code class="language-plaintext highlighter-rouge">.maximalLength(8)</code></td>
       <td>Fails if length is lower or equal maximal value</td>
       <td><code class="language-plaintext highlighter-rouge">maximal_length</code></td>
     </tr>
     <tr>
       <td>Expected length</td>
-      <td><code class="language-plaintext highlighter-rouge">stringLength(8)</code></td>
-      <td><code class="language-plaintext highlighter-rouge">.expectedLength(8)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">exactLengthString(8)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.exactLength(8)</code></td>
       <td>Fail if length is not exactly same value defined in function</td>
       <td><code class="language-plaintext highlighter-rouge">expected_length</code></td>
     </tr>

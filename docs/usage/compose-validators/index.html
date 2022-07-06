@@ -5,10 +5,10 @@
 
  <span class="k">case</span> <span class="k">class</span> <span class="nc">Field</span><span class="o">(</span><span class="n">name</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span> <span class="n">otherField</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span>
 
- <span class="k">val</span> <span class="nv">myValidString</span> <span class="k">=</span> <span class="n">noneEmptyString</span> <span class="n">and</span> <span class="nf">stringMinimalLength</span><span class="o">(</span><span class="mi">8</span><span class="o">)</span>
+ <span class="k">val</span> <span class="nv">myValidString</span> <span class="k">=</span> <span class="n">notEmptyString</span> <span class="n">and</span> <span class="nf">minimalLengthString</span><span class="o">(</span><span class="mi">8</span><span class="o">)</span>
 <span class="c1">// myValidString: cats.data.NonEmptyList[pl.muninn.simple.validation.ValueValidator[String]] = NonEmptyList(</span>
-<span class="c1">//   head = pl.muninn.simple.validation.ValueValidator$$anon$1@40c25856,</span>
-<span class="c1">//   tail = List(pl.muninn.simple.validation.ValueValidator$$anon$1@6a0cb59c)</span>
+<span class="c1">//   head = pl.muninn.simple.validation.ValueValidator$$anon$1@280f0f08,</span>
+<span class="c1">//   tail = List(pl.muninn.simple.validation.ValueValidator$$anon$1@2bfb3baf)</span>
 <span class="c1">// )</span>
 
  <span class="k">val</span> <span class="nv">schema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">Field</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
