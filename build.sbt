@@ -59,8 +59,7 @@ lazy val validation =
         "org.scala-lang"  % "scala-reflect" % scalaVersion.value,
         "org.typelevel" %%% "cats-core"     % catsVersion,
         "org.scalameta" %%% "munit"         % munitVersion % Test
-      ),
-      addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
+      )
     )
     .jvmConfigure(_.enablePlugins(MicrositesPlugin).settings(documentationSettings: _*))
 

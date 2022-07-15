@@ -12,7 +12,7 @@ resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots")
 )
 
-libraryDependencies += "pl.muninn" %% "scala-simple-validation" % "@VERSION@
+libraryDependencies += "pl.muninn" %% "scala-simple-validation" % "@VERSION@"
 
 ```
 
@@ -25,6 +25,6 @@ resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots")
 )
 
-libraryDependencies += "pl.muninn" %%% "scala-simple-validation" % "@VERSION@
+libraryDependencies += "pl.muninn" %%% "scala-simple-validation" % "@VERSION@"
 
 ```
