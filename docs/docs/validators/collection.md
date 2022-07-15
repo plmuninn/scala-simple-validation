@@ -15,3 +15,14 @@ Validators for **Collection** are :
 | Minimal value        | `minimalLengthCollection(8)`    | `.minimalLength(8)`          | Fails if length of collection is greater or equal minimal value           | `minimal_length`  |
 | Maximal value        | `maximalLengthCollection(8)`    | `.maximumLength(8)`          | Fails if length of collection is lower or equal maximal value             | `maximal_length`  |
 | Exact length         | `exactLengthCollection(8)`      | `.expectedLength(8)`         | Fail if length of collection is not exactly same as defined in function   | `expected_length` |
+
+# Collection types
+
+Methods for collection comes in two versions - generic and specific. List above define generic validators. Specific one are defined using pattern of `validation + [?In] + type`. For example: `emptyList` or `allInVector`
+
+
+Definitions are provided for:
+* List
+* Seq
+* Set
+* Vector

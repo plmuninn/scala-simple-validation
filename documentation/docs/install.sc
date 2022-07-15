@@ -10,7 +10,7 @@ def installPart(isScalaNative:Boolean = false)(using MarkdownConfig) =
       |  Resolver.sonatypeRepo("snapshots")
       |)
       |
-      |libraryDependencies += "pl.muninn" ${if isScalaNative then "%%%" else "%%"} "scala-simple-validation" % "@VERSION@
+      |libraryDependencies += "pl.muninn" ${if isScalaNative then "%%%" else "%%"} "scala-simple-validation" % "@VERSION@"
       |""".stripMargin
   )
 
