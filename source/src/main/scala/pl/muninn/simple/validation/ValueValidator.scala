@@ -4,7 +4,10 @@ import cats.data.ValidatedNec
 import cats.implicits.catsSyntaxValidatedIdBinCompat0
 
 trait ValueValidator[-T] {
-  def validate(key: String, value: T): ValidatedNec[InvalidField, Unit]
+
+  type ValueType = T
+
+  def validate(key: String, value: ValueType): ValidatedNec[InvalidField, Unit]
 }
 
 object ValueValidator extends ValidationImplicits {

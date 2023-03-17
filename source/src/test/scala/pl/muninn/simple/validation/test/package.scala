@@ -7,4 +7,5 @@ package object test {
   case class CombinedClass(innerClass: Option[OptionalTestClass])
   case class SimpleCombinedClass(innerClass: OptionalTestClass)
   case class ListCombinedClass(values: List[CombinedClass])
+  case class ValueType(value: String) extends AnyVal
 }
