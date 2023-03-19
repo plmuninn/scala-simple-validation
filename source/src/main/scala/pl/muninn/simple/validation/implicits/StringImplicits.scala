@@ -46,6 +46,12 @@ trait StringImplicits {
     def containsDigits(count: Int): ValidationWithValidators[String]    = validation.is(StringValidators.minimalCountDigits(count))
     def containsLowerCase(count: Int): ValidationWithValidators[String] = validation.is(StringValidators.minimalCountLowerCases(count))
     def containsUpperCase(count: Int): ValidationWithValidators[String] = validation.is(StringValidators.minimalCountUpperCases(count))
+    def contains(expected: String): ValidationWithValidators[String]    = validation.is(StringValidators.contains(expected))
+
+    def containsAtLeastOne(expected: Iterable[String]): ValidationWithValidators[String] =
+      validation.is(StringValidators.containsAtLeastOne(expected))
+
+    def equalAtLeastOne(expected: Iterable[String]): ValidationWithValidators[String] = validation.is(StringValidators.equalAtLeastOne(expected))
   }
 
 }

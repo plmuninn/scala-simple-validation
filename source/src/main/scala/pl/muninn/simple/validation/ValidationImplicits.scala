@@ -16,6 +16,10 @@ trait ValidationImplicits {
 
   implicit class ValueValidatorOps[T](validator: ValueValidator[T]) {
     def and(otherValidator: ValueValidator[T]): NonEmptyList[ValueValidator[T]] = NonEmptyList.of(validator, otherValidator)
+
+    def contramap[A](f: A => T): ValueValidator[A] = ValueValidator.instance[A] { case (key, value) =>
+      validator.validate(key, f(value))
+    }
   }
 
   implicit class ValueValidatorListOps[T](validators: NonEmptyList[ValueValidator[T]]) {
@@ -24,6 +28,8 @@ trait ValidationImplicits {
 
   implicit class SingleValidationWithValidatorOps(result: ValidationWithValidators[_]) {
     def +(otherResult: ValidationWithValidators[_]): NonEmptyList[ValidationWithValidators[_]] = NonEmptyList(result, List(otherResult))
+    def +(otherResults: NonEmptyList[ValidationWithValidators[_]]): NonEmptyList[ValidationWithValidators[_]] =
+      NonEmptyList.one(result).concatNel(otherResults)
   }
 
   implicit class ValidationWithValidatorsListOps(result: NonEmptyList[ValidationWithValidators[_]]) {

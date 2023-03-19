@@ -165,4 +165,34 @@ object InvalidField {
       "expected" -> expected.mkString(";")
     )
   }
+
+  case class ValueContains[K](field: String, expected: K) extends InvalidField {
+    val reason: String = s"Value should contain $expected"
+
+    val code: String = "value_contains"
+
+    override val metadata: Map[String, String] = Map(
+      "expected" -> expected.toString
+    )
+  }
+
+  case class OneOfValuesContains[K](field: String, expected: Iterable[K]) extends InvalidField {
+    val reason: String = s"One of values ${expected.mkString(", ")} should be found"
+
+    val code: String = "one_of_values_contains"
+
+    override val metadata: Map[String, String] = Map(
+      "expected" -> expected.mkString(",")
+    )
+  }
+
+  case class OneOfValuesMissing[K](field: String, expected: Iterable[K]) extends InvalidField {
+    val reason: String = s"One of values ${expected.mkString(", ")} is missing"
+
+    val code: String = "one_of_values_missing"
+
+    override val metadata: Map[String, String] = Map(
+      "expected" -> expected.mkString(",")
+    )
+  }
 }

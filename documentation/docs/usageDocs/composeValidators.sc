@@ -24,4 +24,31 @@ def markdown(using MarkdownConfig) = md {
         |""".stripMargin
     )
   }
+  br
+  h1("Use schema as validators")
+  p {
+    m"You can easily use existing schema as validator for field. For example:"
+    br
+    codeBlock(
+      "scala mdoc",
+      """
+        | import pl.muninn.simple.validation.all._
+        |
+        | case class InputValue(name:String)
+        |
+        | val inputSchema:Schema[InputValue] = createSchema { context =>
+        |   context.field(_.name).notEmpty
+        | }
+        |
+        | case class RequestClass(input:InputValue)
+        |
+        | val schema:Schema[RequestClass] = createSchema { context =>
+        |   context.field(_.input).withSchema(inputSchema)
+        | }
+        |
+        | schema.validate(RequestClass(InputValue("")))
+        |
+        |""".stripMargin
+    )
+  }
 }

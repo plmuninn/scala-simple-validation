@@ -17,6 +17,9 @@ private val errorCodesWithDescription = List (
   ("expected_length" , "Value was expected to exact length",List("string", "collection")),
   ("key_missing" , "Value was expected to have specific key",List("map")),
   ("keys_missing" , "Value was expected to have specific list of keys",List("map")),
+  ("value_contains" , "Value was expected to contain expected part of expected value",List("string")),
+  ("one_of_values_contains" , "Value was expected to contain part of expected one of values",List("string")),
+  ("one_of_values_missing" , "Value was expected to be one of expected values",List("string")),
 )
 
 def markdown(using MarkdownConfig) = md {
