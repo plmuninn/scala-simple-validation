@@ -165,4 +165,46 @@ class StringValidatorsSpec extends munit.FunSuite {
         assertEquals(errors.head.field, "exactLengthString")
     }
   }
+
+  test("contains should fail string is does not contain expected value") {
+    assert(StringValidators.contains("not").validate("containsString", "test").isInvalid)
+    assert(StringValidators.contains("te").validate("containsString", "test").isValid)
+
+    StringValidators.contains("not").validate("containsString", "test") match {
+      case Validated.Valid(_) => fail("Result should be invalid")
+      case Validated.Invalid(errors) =>
+        assertEquals(errors.length, 1L)
+        assertEquals(errors.head.code, "value_contains")
+        assertEquals(errors.head.reason, "Value should contain not")
+        assertEquals(errors.head.field, "containsString")
+    }
+  }
+
+  test("containsAtLeastOne should fail string does not contain at least one of values") {
+    assert(StringValidators.containsAtLeastOne(List("not", "yes")).validate("containsOneOfString", "test").isInvalid)
+    assert(StringValidators.containsAtLeastOne(List("not", "te")).validate("containsOneOfString", "test").isValid)
+
+    StringValidators.containsAtLeastOne(List("not", "yes")).validate("containsOneOfString", "test") match {
+      case Validated.Valid(_) => fail("Result should be invalid")
+      case Validated.Invalid(errors) =>
+        assertEquals(errors.length, 1L)
+        assertEquals(errors.head.code, "one_of_values_contains")
+        assertEquals(errors.head.reason, "One of values not, yes should be found")
+        assertEquals(errors.head.field, "containsOneOfString")
+    }
+  }
+
+  test("equalAtLeastOne should fail string is not equal at least one of values") {
+    assert(StringValidators.equalAtLeastOne(List("not", "yes")).validate("equalAtLeastOneString", "test").isInvalid)
+    assert(StringValidators.equalAtLeastOne(List("not", "test")).validate("equalAtLeastOneString", "test").isValid)
+
+    StringValidators.equalAtLeastOne(List("not", "yes")).validate("equalAtLeastOneString", "test") match {
+      case Validated.Valid(_) => fail("Result should be invalid")
+      case Validated.Invalid(errors) =>
+        assertEquals(errors.length, 1L)
+        assertEquals(errors.head.code, "one_of_values_missing")
+        assertEquals(errors.head.reason, "One of values not, yes is missing")
+        assertEquals(errors.head.field, "equalAtLeastOneString")
+    }
+  }
 }

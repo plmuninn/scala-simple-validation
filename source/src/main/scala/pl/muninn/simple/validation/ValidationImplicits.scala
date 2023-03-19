@@ -28,6 +28,8 @@ trait ValidationImplicits {
 
   implicit class SingleValidationWithValidatorOps(result: ValidationWithValidators[_]) {
     def +(otherResult: ValidationWithValidators[_]): NonEmptyList[ValidationWithValidators[_]] = NonEmptyList(result, List(otherResult))
+    def +(otherResults: NonEmptyList[ValidationWithValidators[_]]): NonEmptyList[ValidationWithValidators[_]] =
+      NonEmptyList.one(result).concatNel(otherResults)
   }
 
   implicit class ValidationWithValidatorsListOps(result: NonEmptyList[ValidationWithValidators[_]]) {

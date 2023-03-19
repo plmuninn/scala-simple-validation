@@ -16,4 +16,7 @@ def markdown(using Configuration) = pageMarkdown("String", List(
   ("Contains digits", partial.code("minimalCountDigits(1)"), partial.code(".containsDigits(1)"), "Fail if count of digits is lower of minimal value", List("min_count_digits")),
   ("Contains lower case characters", partial.code("minimalCountLowerCases(1)"), partial.code(".containsLowerCase(1)"), "Fail if count of lower case characters is lower of minimal value", List("min_count_lower_case")),
   ("Contains upper case characters", partial.code("minimalCountUpperCases(1)"), partial.code(".containsUpperCase(1)"), "Fail if count of upper case characters is lower of minimal value", List("min_count_upper_case")),
+  ("Contains string", partial.code("contains(<expected value>)"), partial.code(".contains(<expected value>)"), "Fail if value does not contain expected value", List("value_contains")),
+  ("Contains one of values", partial.code("containsAtLeastOne(<expected list of values value>)"), partial.code(".containsAtLeastOne(<expected list of values value>)"), "Fail if value does not contain at least one of expected values", List("one_of_values_contains")),
+  ("Equal one of values", partial.code("equalAtLeastOne(<expected list of values value>)"), partial.code(".equalAtLeastOne(<expected list of values value>)"), "Fail if value does not equal at least one of expected values", List("one_of_values_missing")),
 ))

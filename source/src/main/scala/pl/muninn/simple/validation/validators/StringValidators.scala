@@ -80,6 +80,24 @@ trait StringValidators {
       minimalCountLowerCases(minCountOfLowerCases) and
       minimalCountUpperCases(minCountOfUpperCases)
 
+  // TODO test & document all below
+  def contains(expected: String): ValueValidator[String] = ValueValidator.instance { (key, value) =>
+    if (value.contains(expected)) valid else invalid(InvalidField.ValueContains(key, expected))
+  }
+
+  def containsAtLeastOne(expected: Iterable[String]): ValueValidator[String] = ValueValidator.instance { (key, value) =>
+    expected.find(ex => value.contains(ex)) match {
+      case Some(_) => valid
+      case None    => invalid(InvalidField.OneOfValuesContains(key, expected))
+    }
+  }
+
+  def equalAtLeastOne(expected: Iterable[String]): ValueValidator[String] = ValueValidator.instance { (key, value) =>
+    expected.find(ex => ex == value) match {
+      case Some(_) => valid
+      case None    => invalid(InvalidField.OneOfValuesMissing(key, expected))
+    }
+  }
 }
 
 object StringValidators extends StringValidators
