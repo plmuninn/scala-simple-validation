@@ -129,19 +129,27 @@ def markdown(using MarkdownConfig) = md {
       "scala mdoc",
       """
         | import pl.muninn.simple.validation.all._
-        | import pl.muninn.simple.validation.validators.StringValidators
+        |  import pl.muninn.simple.validation.validators.{NumberValidators, StringValidators}
         |
-        | case class MyInput(value:String) extends AnyVal
+        |  sealed trait Input
         |
-        | object MyInput {
-        |   val nonEmpty = StringValidators.notEmptyString.contramap[MyInput](_.value)
-        | }
+        |  object Input {
+        |    case class StringInput(value: String) extends Input
         |
-        | val schema:Schema[MyInput] = createSchema { context =>
-        |   context.field(_.value).is(MyInput.nonEmpty)
-        | }
+        |    val nonEmptyStringInput = StringValidators.notEmptyString.contramap[StringInput](_.value)
+        |    case class IntInput(value: Int) extends Input
         |
-        | schema.validate(MyInput(""))
+        |    val nonEmptyIntInput = NumberValidators.min(0).contramap[IntInput](_.value)
+        |  }
+        |
+        |  case class InputRequest(stringValue: Input.StringInput, intValue: Input.IntInput)
+        |
+        |  val inputSchema: Schema[InputRequest] = createSchema { context =>
+        |    context.field(_.stringValue).is(Input.nonEmptyStringInput) +
+        |      context.field(_.intValue).is(Input.nonEmptyIntInput)
+        |  }
+        |
+        |  inputSchema.validate(InputRequest(Input.StringInput(""), Input.IntInput(0)))
         |
         |""".stripMargin
     )

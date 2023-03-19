@@ -42,11 +42,11 @@ def markdown(using MarkdownConfig) = md {
         |
         | case class RequestClass(input:InputValue)
         |
-        | val schema:Schema[RequestClass] = createSchema { context =>
+        | val requestSchema:Schema[RequestClass] = createSchema { context =>
         |   context.field(_.input).withSchema(inputSchema)
         | }
         |
-        | schema.validate(RequestClass(InputValue("")))
+        | requestSchema.validate(RequestClass(InputValue("")))
         |
         |""".stripMargin
     )
