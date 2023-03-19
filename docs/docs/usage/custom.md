@@ -111,3 +111,26 @@ You can define full own validators and errors
 
 
 ```
+
+# Reuse existing validators
+
+You can reuse existing validators for other types if you can map it value to validator map
+```scala mdoc
+
+ import pl.muninn.simple.validation.all._
+ import pl.muninn.simple.validation.validators.StringValidators
+
+ case class MyInput(value:String) extends AnyVal
+
+ object MyInput {
+   val nonEmpty = StringValidators.notEmptyString.contramap[MyInput](_.value)
+ }
+
+ val schema:Schema[MyInput] = createSchema { context =>
+   context.field(_.value).is(MyInput.nonEmpty)
+ }
+
+ schema.validate(MyInput(""))
+
+
+```
