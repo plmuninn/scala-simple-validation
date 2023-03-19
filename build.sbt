@@ -19,7 +19,7 @@ val compilerOptions = Seq(
 val username = "plmuninn"
 val repo     = "scala-simple-validation"
 
-ThisBuild / scalaVersion  := "2.13.8"
+ThisBuild / scalaVersion  := "2.13.10"
 ThisBuild / name          := repo
 ThisBuild / organization  := "pl.muninn"
 ThisBuild / scalacOptions := compilerOptions
@@ -29,8 +29,8 @@ resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots")
 )
 
-lazy val catsVersion  = "2.8.0"
-lazy val munitVersion = "1.0.0-M6"
+lazy val catsVersion  = "2.9.0"
+lazy val munitVersion = "1.0.0-M7"
 
 lazy val generateDocumentation = taskKey[Unit]("Generate documentation")
 
