@@ -90,6 +90,27 @@
       <td>Fail if count of upper case characters is lower of minimal value</td>
       <td><code class="language-plaintext highlighter-rouge">min_count_upper_case</code></td>
     </tr>
+    <tr>
+      <td>Contains string</td>
+      <td><code class="language-plaintext highlighter-rouge">contains(&lt;expected value&gt;)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.contains(&lt;expected value&gt;)</code></td>
+      <td>Fail if value does not contain expected value</td>
+      <td><code class="language-plaintext highlighter-rouge">value_contains</code></td>
+    </tr>
+    <tr>
+      <td>Contains one of values</td>
+      <td><code class="language-plaintext highlighter-rouge">containsAtLeastOne(&lt;expected list of values value&gt;)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.containsAtLeastOne(&lt;expected list of values value&gt;)</code></td>
+      <td>Fail if value does not contain at least one of expected values</td>
+      <td><code class="language-plaintext highlighter-rouge">one_of_values_contains</code></td>
+    </tr>
+    <tr>
+      <td>Equal one of values</td>
+      <td><code class="language-plaintext highlighter-rouge">equalAtLeastOne(&lt;expected list of values value&gt;)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.equalAtLeastOne(&lt;expected list of values value&gt;)</code></td>
+      <td>Fail if value does not equal at least one of expected values</td>
+      <td><code class="language-plaintext highlighter-rouge">one_of_values_missing</code></td>
+    </tr>
   </tbody>
 </table>
 </section></div></div></div></div><script src="/scala-simple-validation/highlight/highlight.pack.js"></script><script src="/scala-simple-validation/lunr/lunr.js"></script><script>

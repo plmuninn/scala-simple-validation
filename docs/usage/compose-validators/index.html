@@ -7,8 +7,8 @@
 
  <span class="k">val</span> <span class="nv">myValidString</span> <span class="k">=</span> <span class="n">notEmptyString</span> <span class="n">and</span> <span class="nf">minimalLengthString</span><span class="o">(</span><span class="mi">8</span><span class="o">)</span>
 <span class="c1">// myValidString: cats.data.NonEmptyList[pl.muninn.simple.validation.ValueValidator[String]] = NonEmptyList(</span>
-<span class="c1">//   head = pl.muninn.simple.validation.ValueValidator$$anon$1@7626f193,</span>
-<span class="c1">//   tail = List(pl.muninn.simple.validation.ValueValidator$$anon$1@57381f0)</span>
+<span class="c1">//   head = pl.muninn.simple.validation.ValueValidator$$anon$1@fdb7d9f,</span>
+<span class="c1">//   tail = List(pl.muninn.simple.validation.ValueValidator$$anon$1@31520a71)</span>
 <span class="c1">// )</span>
 
  <span class="k">val</span> <span class="nv">schema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">Field</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
@@ -33,6 +33,31 @@
 <span class="c1">//       )</span>
 <span class="c1">//     )</span>
 <span class="c1">//   )</span>
+<span class="c1">// )</span>
+</code></pre></div></div>
+
+<h1 id="use-schema-as-validators">Use schema as validators</h1>
+
+<p>You can easily use existing schema as validator for field. For example:</p>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">pl.muninn.simple.validation.all._</span>
+
+ <span class="k">case</span> <span class="k">class</span> <span class="nc">InputValue</span><span class="o">(</span><span class="n">name</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span>
+
+ <span class="k">val</span> <span class="nv">inputSchema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">InputValue</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
+   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">notEmpty</span>
+ <span class="o">}</span>
+<span class="c1">// inputSchema: Schema[InputValue] = &lt;function1&gt;</span>
+
+ <span class="k">case</span> <span class="k">class</span> <span class="nc">RequestClass</span><span class="o">(</span><span class="n">input</span><span class="k">:</span><span class="kt">InputValue</span><span class="o">)</span>
+
+ <span class="k">val</span> <span class="nv">requestSchema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">RequestClass</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
+   <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">input</span><span class="o">).</span><span class="py">withSchema</span><span class="o">(</span><span class="n">inputSchema</span><span class="o">)</span>
+ <span class="o">}</span>
+<span class="c1">// requestSchema: Schema[RequestClass] = &lt;function1&gt;</span>
+
+ <span class="nv">requestSchema</span><span class="o">.</span><span class="py">validate</span><span class="o">(</span><span class="nc">RequestClass</span><span class="o">(</span><span class="nc">InputValue</span><span class="o">(</span><span class="s">""</span><span class="o">)))</span>
+<span class="c1">// res1: cats.data.package.ValidatedNec[pl.muninn.simple.validation.InvalidField, Unit] = Invalid(</span>
+<span class="c1">//   e = Singleton(a = EmptyField(field = "name"))</span>
 <span class="c1">// )</span>
 </code></pre></div></div>
 </section></div></div></div></div><script src="/scala-simple-validation/highlight/highlight.pack.js"></script><script src="/scala-simple-validation/lunr/lunr.js"></script><script>

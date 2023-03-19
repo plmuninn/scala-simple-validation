@@ -27,6 +27,41 @@
       <td>Fails if map doesn’t contains all keys</td>
       <td><code class="language-plaintext highlighter-rouge">key_missing</code> <code class="language-plaintext highlighter-rouge">keys_missing</code></td>
     </tr>
+    <tr>
+      <td>Is not empty</td>
+      <td><code class="language-plaintext highlighter-rouge">notEmpty</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.notEmpty</code></td>
+      <td>Fails if collection is empty</td>
+      <td><code class="language-plaintext highlighter-rouge">empty_field</code></td>
+    </tr>
+    <tr>
+      <td>Is empty</td>
+      <td><code class="language-plaintext highlighter-rouge">empty</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.empty</code></td>
+      <td>Fails if collection is not empty</td>
+      <td><code class="language-plaintext highlighter-rouge">empty_expected</code></td>
+    </tr>
+    <tr>
+      <td>Minimal value</td>
+      <td><code class="language-plaintext highlighter-rouge">minimalLength(8)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.minimalLength(8)</code></td>
+      <td>Fails if length of collection is greater or equal minimal value</td>
+      <td><code class="language-plaintext highlighter-rouge">minimal_length</code></td>
+    </tr>
+    <tr>
+      <td>Maximal value</td>
+      <td><code class="language-plaintext highlighter-rouge">maximumLength(8)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.maximumLength(8)</code></td>
+      <td>Fails if length of collection is lower or equal maximal value</td>
+      <td><code class="language-plaintext highlighter-rouge">maximal_length</code></td>
+    </tr>
+    <tr>
+      <td>Exact length</td>
+      <td><code class="language-plaintext highlighter-rouge">expectedLength(8)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.expectedLength(8)</code></td>
+      <td>Fail if length of collection is not exactly same as defined in function</td>
+      <td><code class="language-plaintext highlighter-rouge">expected_length</code></td>
+    </tr>
   </tbody>
 </table>
 </section></div></div></div></div><script src="/scala-simple-validation/highlight/highlight.pack.js"></script><script src="/scala-simple-validation/lunr/lunr.js"></script><script>

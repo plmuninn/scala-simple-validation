@@ -13,7 +13,7 @@
 
  <span class="nv">schema</span><span class="o">.</span><span class="py">validate</span><span class="o">(</span><span class="nc">Field</span><span class="o">(</span><span class="s">""</span><span class="o">,</span><span class="s">""</span><span class="o">))</span>
 <span class="c1">// res0: cats.data.package.ValidatedNec[pl.muninn.simple.validation.InvalidField, Unit] = Invalid(</span>
-<span class="c1">//   e = Singleton(a = pl.muninn.simple.validation.InvalidField$$anon$1@502dfe2b)</span>
+<span class="c1">//   e = Singleton(a = pl.muninn.simple.validation.InvalidField$$anon$1@6ba9c558)</span>
 <span class="c1">// )</span>
  <span class="nv">schema</span><span class="o">.</span><span class="py">validate</span><span class="o">(</span><span class="nc">Field</span><span class="o">(</span><span class="s">"test"</span><span class="o">,</span><span class="s">""</span><span class="o">))</span>
 <span class="c1">// res1: cats.data.package.ValidatedNec[pl.muninn.simple.validation.InvalidField, Unit] = Valid(</span>
@@ -144,7 +144,7 @@
  <span class="k">val</span> <span class="nv">myOwnValidator</span><span class="k">:</span><span class="kt">ValueValidator</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nv">ValueValidator</span><span class="o">.</span><span class="py">instance</span> <span class="o">{</span> <span class="nf">case</span> <span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">)</span> <span class="k">=&gt;</span>
    <span class="nf">if</span> <span class="o">(</span><span class="nv">value</span><span class="o">.</span><span class="py">contains</span><span class="o">(</span><span class="s">"not error"</span><span class="o">))</span> <span class="n">valid</span> <span class="k">else</span> <span class="nf">invalid</span><span class="o">(</span><span class="nc">MyError</span><span class="o">(</span><span class="n">key</span><span class="o">))</span>
  <span class="o">}</span>
-<span class="c1">// myOwnValidator: ValueValidator[String] = pl.muninn.simple.validation.ValueValidator$$anon$1@4e1ae9bc</span>
+<span class="c1">// myOwnValidator: ValueValidator[String] = pl.muninn.simple.validation.ValueValidator$$anon$1@64db9e42</span>
 
  <span class="k">val</span> <span class="nv">customValidatorSchema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">Field</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
    <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">is</span><span class="o">(</span><span class="n">myOwnValidator</span><span class="o">)</span>
@@ -157,6 +157,37 @@
 <span class="c1">// )</span>
  <span class="nv">customValidatorSchema</span><span class="o">.</span><span class="py">validate</span><span class="o">(</span><span class="nc">Field</span><span class="o">(</span><span class="s">"not error"</span><span class="o">,</span><span class="s">""</span><span class="o">))</span>
 <span class="c1">// res7: cats.data.package.ValidatedNec[InvalidField, Unit] = Valid(a = ())</span>
+</code></pre></div></div>
+
+<h1 id="reuse-existing-validators">Reuse existing validators</h1>
+
+<p>You can reuse existing validators for other types if you can map it value to validator map</p>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">pl.muninn.simple.validation.all._</span>
+  <span class="k">import</span> <span class="nn">pl.muninn.simple.validation.validators.</span><span class="o">{</span><span class="nc">NumberValidators</span><span class="o">,</span> <span class="nc">StringValidators</span><span class="o">}</span>
+
+  <span class="k">sealed</span> <span class="k">trait</span> <span class="nc">Input</span>
+
+  <span class="k">object</span> <span class="nc">Input</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="k">class</span> <span class="nc">StringInput</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Input</span>
+
+    <span class="k">val</span> <span class="nv">nonEmptyStringInput</span> <span class="k">=</span> <span class="nv">StringValidators</span><span class="o">.</span><span class="py">notEmptyString</span><span class="o">.</span><span class="py">contramap</span><span class="o">[</span><span class="kt">StringInput</span><span class="o">](</span><span class="nv">_</span><span class="o">.</span><span class="py">value</span><span class="o">)</span>
+    <span class="k">case</span> <span class="k">class</span> <span class="nc">IntInput</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Input</span>
+
+    <span class="k">val</span> <span class="nv">nonEmptyIntInput</span> <span class="k">=</span> <span class="nv">NumberValidators</span><span class="o">.</span><span class="py">min</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="py">contramap</span><span class="o">[</span><span class="kt">IntInput</span><span class="o">](</span><span class="nv">_</span><span class="o">.</span><span class="py">value</span><span class="o">)</span>
+  <span class="o">}</span>
+
+  <span class="k">case</span> <span class="k">class</span> <span class="nc">InputRequest</span><span class="o">(</span><span class="n">stringValue</span><span class="k">:</span> <span class="kt">Input.StringInput</span><span class="o">,</span> <span class="n">intValue</span><span class="k">:</span> <span class="kt">Input.IntInput</span><span class="o">)</span>
+
+  <span class="k">val</span> <span class="nv">inputSchema</span><span class="k">:</span> <span class="kt">Schema</span><span class="o">[</span><span class="kt">InputRequest</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
+    <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">stringValue</span><span class="o">).</span><span class="py">is</span><span class="o">(</span><span class="nv">Input</span><span class="o">.</span><span class="py">nonEmptyStringInput</span><span class="o">)</span> <span class="o">+</span>
+      <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">intValue</span><span class="o">).</span><span class="py">is</span><span class="o">(</span><span class="nv">Input</span><span class="o">.</span><span class="py">nonEmptyIntInput</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="c1">// inputSchema: Schema[InputRequest] = &lt;function1&gt;</span>
+
+  <span class="nv">inputSchema</span><span class="o">.</span><span class="py">validate</span><span class="o">(</span><span class="nc">InputRequest</span><span class="o">(</span><span class="nv">Input</span><span class="o">.</span><span class="py">StringInput</span><span class="o">(</span><span class="s">""</span><span class="o">),</span> <span class="nv">Input</span><span class="o">.</span><span class="py">IntInput</span><span class="o">(</span><span class="mi">0</span><span class="o">)))</span>
+<span class="c1">// res8: cats.data.package.ValidatedNec[InvalidField, Unit] = Invalid(</span>
+<span class="c1">//   e = Singleton(a = EmptyField(field = "stringValue"))</span>
+<span class="c1">// )</span>
 </code></pre></div></div>
 </section></div></div></div></div><script src="/scala-simple-validation/highlight/highlight.pack.js"></script><script src="/scala-simple-validation/lunr/lunr.js"></script><script>
 // For all code blocks, copy the language from the containing div
