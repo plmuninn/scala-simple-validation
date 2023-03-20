@@ -8,7 +8,7 @@ import pl.muninn.simple.validation.validators.StringValidators
 
 class CustomValidatorsSpec extends munit.FunSuite {
 
-  case class TestWithSchema(value: ValueType, otherValue: String)
+  case class TestWithSchema(valueType: ValueType, otherValue: String)
 
   trait Suit {
     val notEmptyValueValidatorValidator: ValueValidator[ValueType] = StringValidators.notEmptyString.contramap(_.value)
@@ -19,7 +19,7 @@ class CustomValidatorsSpec extends munit.FunSuite {
 
     val classSchema = createSchema[TestWithSchema] { context =>
       context.field(_.otherValue).notEmpty +
-        context.field(_.value).withSchema(valueTypeSchema)
+        context.field(_.valueType).is(valueTypeSchema)
     }
   }
 
@@ -46,6 +46,9 @@ class CustomValidatorsSpec extends munit.FunSuite {
             assertEquals(error.code, "empty_field")
             assertEquals(error.reason, "Non empty value required")
           }
+
+          assertEquals(errors.head.field, "otherValue")
+          assertEquals(errors.last.field, "valueType.value")
       }
     }
   }

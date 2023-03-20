@@ -10,9 +10,9 @@ trait OptionValidators {
 
   private implicit def optionEmptyMagnetic[T]: EmptyMagnetic[Option[T]] = _.isEmpty
 
-  def defined[T]: ValueValidator[Option[T]] = CommonValidators.notEmpty
+  def defined[T]: ValueValidator[Option[T]] = CommonValidators.notEmpty[Option[T]]
 
-  def notDefined[T]: ValueValidator[Option[T]] = CommonValidators.empty
+  def notDefined[T]: ValueValidator[Option[T]] = CommonValidators.empty[Option[T]]
 
   def ifDefined[T](validators: NonEmptyList[ValueValidator[T]]): ValueValidator[Option[T]] = ValueValidator.instance[Option[T]] { (key, value) =>
     value.fold(valid)(value => validators.runAndCombine(key, value))

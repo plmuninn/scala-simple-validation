@@ -19,10 +19,10 @@ trait OptionImplicits {
     def definedAnd(fieldValidator: NonEmptyList[ValueValidator[T]]): ValidationWithValidators[Option[T]] =
       notEmptyAnd(fieldValidator)
 
-    def empty: ValidationWithValidators[Option[T]]      = field.is(OptionValidators.notDefined)
+    def empty: ValidationWithValidators[Option[T]]      = field.is(OptionValidators.notDefined[T])
     def notDefined: ValidationWithValidators[Option[T]] = empty
 
-    def notEmpty: ValidationWithValidators[Option[T]]  = field.is(OptionValidators.defined)
+    def notEmpty: ValidationWithValidators[Option[T]]  = field.is(OptionValidators.defined[T])
     def isDefined: ValidationWithValidators[Option[T]] = notEmpty
   }
 }

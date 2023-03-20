@@ -16,6 +16,8 @@ class ValidationWithValidators[T](field: Validation[T], validators: NonEmptyList
     validators = validators ++ nextValidators.toList
   )
 
+  def withKey(value: String): ValidationWithValidators[T] = new ValidationWithValidators[T](field.withKey(value), validators)
+
   def validate: ValidatedNec[InvalidField, Unit] =
     validators.runAndCombine(field.key, field.value)
 }

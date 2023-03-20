@@ -14,6 +14,13 @@ trait ValidationImplicits {
   implicit def convertValidationWithValidatorsToList[T](result: ValidationWithValidators[T]): NonEmptyList[ValidationWithValidators[T]] =
     NonEmptyList.one(result)
 
+  implicit def convertSchemaToValueValidator[T](schema: ValidationSchema[T]): ValueValidator[T] = ValueValidator.instance[T] { case (key, value) =>
+    schema
+      .apply(ValidationSchemaContext.apply(value))
+      .map(value => value.withKey(key))
+      .run
+  }
+
   implicit class ValueValidatorOps[T](validator: ValueValidator[T]) {
     def and(otherValidator: ValueValidator[T]): NonEmptyList[ValueValidator[T]] = NonEmptyList.of(validator, otherValidator)
 
@@ -45,10 +52,14 @@ trait ValidationImplicits {
 
   implicit class ValueSchemaOps[T](value: T)(implicit schema: ValidationSchema[T]) {
     def validate: ValidatedNec[InvalidField, Unit] = schema.apply(ValidationSchemaContext(value)).run
+
+    def asValidator: ValueValidator[T] = convertSchemaToValueValidator(schema)
   }
 
   implicit class SchemaOps[T](schema: ValidationSchema[T]) {
     def validate(value: T): ValidatedNec[InvalidField, Unit] = schema.apply(ValidationSchemaContext(value)).run
+
+    def asValidator: ValueValidator[T] = convertSchemaToValueValidator(schema)
   }
 
   implicit class CollectionOfValidationOps[T](validators: NonEmptyList[ValueValidator[T]]) {

@@ -43,7 +43,7 @@ def markdown(using MarkdownConfig) = md {
         | case class RequestClass(input:InputValue)
         |
         | val requestSchema:Schema[RequestClass] = createSchema { context =>
-        |   context.field(_.input).withSchema(inputSchema)
+        |   context.field(_.input).is(inputSchema)
         | }
         |
         | requestSchema.validate(RequestClass(InputValue("")))
