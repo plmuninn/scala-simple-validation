@@ -2,12 +2,11 @@ package pl.muninn.simple.validation
 
 import cats.data.Validated
 
-import pl.muninn.simple.validation.all._
 import pl.muninn.simple.validation.test.OptionalTestClass
 
 class CustomSuite extends munit.FunSuite {
   trait Suite {
-    val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
+    val optionalTestClassSchema: ValidationSchema[OptionalTestClass] = createSchema { context =>
       context.field(_.stringValue).notEmpty +
         context.field(_.intValue).notEmpty +
         context.custom { request =>

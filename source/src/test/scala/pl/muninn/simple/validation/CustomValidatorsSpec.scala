@@ -2,9 +2,9 @@ package pl.muninn.simple.validation
 
 import cats.data.Validated
 
-import pl.muninn.simple.validation.all._
 import pl.muninn.simple.validation.test.ValueType
-import pl.muninn.simple.validation.validators.StringValidators
+import pl.muninn.simple.validation.validator.ValueValidator
+import pl.muninn.simple.validation.validator.typed.StringValidators
 
 class CustomValidatorsSpec extends munit.FunSuite {
 

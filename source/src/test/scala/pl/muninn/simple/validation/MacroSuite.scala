@@ -1,40 +1,39 @@
 package pl.muninn.simple.validation
 
-import cats.data.{Validated, ValidatedNec}
+import cats.data.Validated
 
-import pl.muninn.simple.validation.all._
 import pl.muninn.simple.validation.test._
 
 class MacroSuite extends munit.FunSuite {
 
   trait Suite {
-    val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
+    val optionalTestClassSchema: ValidationSchema[OptionalTestClass] = createSchema { context =>
       context.field(_.stringValue).notEmpty +
         context.field(_.intValue).notEmpty
     }
 
-    val simpleCombinedClassSchema: Schema[SimpleCombinedClass] = createSchema { context =>
+    val simpleCombinedClassSchema: ValidationSchema[SimpleCombinedClass] = createSchema { context =>
       context.field(_.innerClass.stringValue).notEmpty +
         context.field(_.innerClass.intValue).notEmpty
     }
 
-    val combinedClassSchema: Schema[CombinedClass] = createSchema { context =>
+    val combinedClassSchema: ValidationSchema[CombinedClass] = createSchema { context =>
       context.field(_.innerClass.flatMap(_.stringValue)).notEmpty +
         context.field(_.innerClass.flatMap(_.intValue)).notEmpty
     }
 
-    val listCombinedClassSchema: Schema[ListCombinedClass] = createSchema { context =>
+    val listCombinedClassSchema: ValidationSchema[ListCombinedClass] = createSchema { context =>
       context.field(_.values.flatMap(_.innerClass).map(_.stringValue)).notEmpty
     }
 
-    val pairTestClassSchema: Schema[PairTestClass] = createSchema { context =>
+    val pairTestClassSchema: ValidationSchema[PairTestClass] = createSchema { context =>
       context.pair(_.value1)(_.value2).fieldsEqual
     }
   }
 
   test("macro for simple test class should generate field names properly") {
     new Suite {
-      val result: ValidatedNec[InvalidField, Unit] = optionalTestClassSchema.validate(OptionalTestClass(None, None))
+      val result: ValidationResult = optionalTestClassSchema.validate(OptionalTestClass(None, None))
       assert(result.isInvalid)
       result match {
         case Validated.Valid(_) => fail("Results should be invalid")
@@ -47,7 +46,7 @@ class MacroSuite extends munit.FunSuite {
 
   test("macro for nested field should generate names properly") {
     new Suite {
-      val result: ValidatedNec[InvalidField, Unit] = simpleCombinedClassSchema.validate(SimpleCombinedClass(OptionalTestClass(None, None)))
+      val result: ValidationResult = simpleCombinedClassSchema.validate(SimpleCombinedClass(OptionalTestClass(None, None)))
       assert(result.isInvalid)
       result match {
         case Validated.Valid(_) => fail("Results should be invalid")
@@ -60,7 +59,7 @@ class MacroSuite extends munit.FunSuite {
 
   test("macro for nested field with function should generate name properly") {
     new Suite {
-      val result: ValidatedNec[InvalidField, Unit] = combinedClassSchema.validate(CombinedClass(None))
+      val result: ValidationResult = combinedClassSchema.validate(CombinedClass(None))
       assert(result.isInvalid)
       result match {
         case Validated.Valid(_) => fail("Results should be invalid")
@@ -73,7 +72,7 @@ class MacroSuite extends munit.FunSuite {
 
   test("macro for nested field in list with function should generate name properly") {
     new Suite {
-      val result: ValidatedNec[InvalidField, Unit] = listCombinedClassSchema.validate(ListCombinedClass(List()))
+      val result: ValidationResult = listCombinedClassSchema.validate(ListCombinedClass(List()))
       assert(result.isInvalid)
       result match {
         case Validated.Valid(_) => fail("Results should be invalid")
@@ -86,7 +85,7 @@ class MacroSuite extends munit.FunSuite {
 
   test("macro for pair names should generate properly") {
     new Suite {
-      val result: ValidatedNec[InvalidField, Unit] = pairTestClassSchema.validate(PairTestClass("test", "test2"))
+      val result: ValidationResult = pairTestClassSchema.validate(PairTestClass("test", "test2"))
       assert(result.isInvalid)
       result match {
         case Validated.Valid(_) => fail("Results should be invalid")

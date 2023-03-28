@@ -13,7 +13,7 @@ def markdown(using MarkdownConfig) =
         br
         m"Then you need to only add in your code:"
         br
-        codeBlock("scala mdoc", "import pl.muninn.simple.validation.all._")
+        codeBlock("scala mdoc", "import pl.muninn.simple.validation._")
         br
         m"And you can start using it"
       }

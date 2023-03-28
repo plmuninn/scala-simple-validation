@@ -8,13 +8,13 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation._
         |
         | case class Field(name:String, otherField:String)
         |
         | val myValidString = notEmptyString and minimalLengthString(8)
         |
-        | val schema:Schema[Field] = createSchema { context =>
+        | val schema:ValidationSchema[Field] = createSchema { context =>
         |   context.field(_.name).is(myValidString) +
         |     context.field(_.otherField).is(myValidString)
         | }
@@ -32,17 +32,17 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation._
         |
         | case class InputValue(name:String)
         |
-        | val inputSchema:Schema[InputValue] = createSchema { context =>
+        | val inputSchema:ValidationSchema[InputValue] = createSchema { context =>
         |   context.field(_.name).notEmpty
         | }
         |
         | case class RequestClass(input:InputValue)
         |
-        | val requestSchema:Schema[RequestClass] = createSchema { context =>
+        | val requestSchema:ValidationSchema[RequestClass] = createSchema { context =>
         |   context.field(_.input).is(inputSchema)
         | }
         |
