@@ -14,7 +14,7 @@
  <span class="nv">schema</span><span class="o">.</span><span class="py">validate</span><span class="o">(</span><span class="nc">Field</span><span class="o">(</span><span class="s">""</span><span class="o">,</span><span class="s">""</span><span class="o">))</span>
 <span class="c1">// res0: ValidationResult = Invalid(</span>
 <span class="c1">//   e = Singleton(</span>
-<span class="c1">//     a = pl.muninn.simple.validation.model.InvalidField$$anon$1@6d1fa69d</span>
+<span class="c1">//     a = pl.muninn.simple.validation.model.InvalidField$$anon$1@7198ca6b</span>
 <span class="c1">//   )</span>
 <span class="c1">// )</span>
  <span class="nv">schema</span><span class="o">.</span><span class="py">validate</span><span class="o">(</span><span class="nc">Field</span><span class="o">(</span><span class="s">"test"</span><span class="o">,</span><span class="s">""</span><span class="o">))</span>
@@ -140,7 +140,7 @@
  <span class="k">val</span> <span class="nv">myOwnValidator</span><span class="k">:</span><span class="kt">ValueValidator</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nv">ValueValidator</span><span class="o">.</span><span class="py">instance</span> <span class="o">{</span> <span class="nf">case</span> <span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">)</span> <span class="k">=&gt;</span>
    <span class="nf">if</span> <span class="o">(</span><span class="nv">value</span><span class="o">.</span><span class="py">contains</span><span class="o">(</span><span class="s">"not error"</span><span class="o">))</span> <span class="n">valid</span> <span class="k">else</span> <span class="nf">invalid</span><span class="o">(</span><span class="nc">MyError</span><span class="o">(</span><span class="n">key</span><span class="o">))</span>
  <span class="o">}</span>
-<span class="c1">// myOwnValidator: ValueValidator[String] = pl.muninn.simple.validation.validator.ValueValidator$$anon$1@1d74a29a</span>
+<span class="c1">// myOwnValidator: ValueValidator[String] = pl.muninn.simple.validation.validator.ValueValidator$$anon$1@2532b58e</span>
 
  <span class="k">val</span> <span class="nv">customValidatorSchema</span><span class="k">:</span><span class="kt">ValidationSchema</span><span class="o">[</span><span class="kt">Field</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
    <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">name</span><span class="o">).</span><span class="py">is</span><span class="o">(</span><span class="n">myOwnValidator</span><span class="o">)</span>
