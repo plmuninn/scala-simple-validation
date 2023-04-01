@@ -6,6 +6,7 @@
   <li>few common validators to use</li>
   <li>simple way of creating your own, custom validators</li>
   <li>designing more complex validation process - where validation depends on some specific value</li>
+  <li>allow to reuse validation schemas as validators</li>
 </ol>
 
 <h1 id="getting-started">Getting started</h1>
@@ -17,11 +18,11 @@
   <span class="nv">Resolver</span><span class="o">.</span><span class="py">sonatypeRepo</span><span class="o">(</span><span class="s">"snapshots"</span><span class="o">)</span>
 <span class="o">)</span>
 
-<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"pl.muninn"</span> <span class="o">%%</span> <span class="s">"scala-simple-validation"</span> <span class="o">%</span> <span class="s">"0.0.7-SNAPSHOT"</span>
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"pl.muninn"</span> <span class="o">%%</span> <span class="s">"scala-simple-validation"</span> <span class="o">%</span> <span class="s">"0.1.1-SNAPSHOT"</span>
 
 </code></pre></div></div>
 <p>Then you need to only add in your code:</p>
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">pl.muninn.simple.validation.all._</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">pl.muninn.simple.validation._</span>
 </code></pre></div></div>
 <p>And you can start using it</p>
 
@@ -29,20 +30,18 @@
 
 <p>Simple example of how to use library</p>
 
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">pl.muninn.simple.validation.all._</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">pl.muninn.simple.validation._</span>
 
  <span class="k">case</span> <span class="k">class</span> <span class="nc">LoginRequest</span><span class="o">(</span><span class="n">login</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span> <span class="n">password</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span>
 
- <span class="k">val</span> <span class="nv">schema</span><span class="k">:</span><span class="kt">Schema</span><span class="o">[</span><span class="kt">LoginRequest</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
+ <span class="k">val</span> <span class="nv">schema</span><span class="k">:</span><span class="kt">ValidationSchema</span><span class="o">[</span><span class="kt">LoginRequest</span><span class="o">]</span> <span class="k">=</span> <span class="n">createSchema</span> <span class="o">{</span> <span class="n">context</span> <span class="k">=&gt;</span>
    <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">login</span><span class="o">).</span><span class="py">notEmpty</span> <span class="o">+</span>
      <span class="nv">context</span><span class="o">.</span><span class="py">field</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">password</span><span class="o">).</span><span class="py">notEmpty</span>
  <span class="o">}</span>
-<span class="c1">// schema: Schema[LoginRequest] = &lt;function1&gt;</span>
+<span class="c1">// schema: ValidationSchema[LoginRequest] = &lt;function1&gt;</span>
 
  <span class="k">val</span> <span class="nv">result</span> <span class="k">=</span> <span class="nv">schema</span><span class="o">.</span><span class="py">validate</span><span class="o">(</span><span class="nc">LoginRequest</span><span class="o">(</span><span class="s">"admin"</span><span class="o">,</span> <span class="s">"admin"</span><span class="o">))</span>
-<span class="c1">// result: cats.data.package.ValidatedNec[pl.muninn.simple.validation.InvalidField, Unit] = Valid(</span>
-<span class="c1">//   a = ()</span>
-<span class="c1">// )</span>
+<span class="c1">// result: ValidationResult = Valid(a = ())</span>
 
  <span class="nv">result</span><span class="o">.</span><span class="py">isValid</span>
 <span class="c1">// res0: Boolean = true</span>
