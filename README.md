@@ -20,5 +20,6 @@ Provides features like:
 * few common validators to use
 * simple way of creating your own, custom validators
 * designing more complex validation process - where validation depends on some specific value
+* allow to reuse validation schemas as validators
 
 For more information - go to [microsite](https://plmuninn.github.io/scala-simple-validation/)

@@ -4,19 +4,18 @@ import scala.language.implicitConversions
 
 import cats.data.{NonEmptyList, ValidatedNec}
 
-import pl.muninn.simple.validation.ValidationSchemaContext.ValidationSchema
-import pl.muninn.simple.validation.model.ValidationWithValidators
+import pl.muninn.simple.validation.model.{FieldValidator, InvalidField, ValidationSchemaContext}
+import pl.muninn.simple.validation.validator.ValueValidator
 
-package object validation {
+package object validation extends ValidationImplicits with TypedValidators with MagneticValidators {
 
-  object all extends ValidationImplicits with Validators with TypeImplicits {
-    type Schema[T] = ValidationSchema[T]
+  type ValidationSchema[T] = ValidationSchemaContext[T] => NonEmptyList[FieldValidator[_]]
 
-    def createSchema[T](f: ValidationSchemaContext[T] => NonEmptyList[ValidationWithValidators[_]]): Schema[T] =
-      ValidationSchemaContext.createSchema(f)
+  type ValidationResult = ValidatedNec[InvalidField, Unit]
+  def createSchema[T](f: ValidationSchemaContext[T] => NonEmptyList[FieldValidator[_]]): ValidationSchema[T] =
+    ValidationSchema.createSchema(f)
 
-    val valid: ValidatedNec[InvalidField, Unit]                   = ValueValidator.valid
-    def invalid: InvalidField => ValidatedNec[InvalidField, Unit] = ValueValidator.invalid
-  }
+  val valid: ValidationResult                   = ValueValidator.valid
+  def invalid: InvalidField => ValidationResult = ValueValidator.invalid
 
 }

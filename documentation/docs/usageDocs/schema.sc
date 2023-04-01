@@ -9,18 +9,18 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation._
         |
         | case class Field(name:String, otherField:String)
         |
-        | val compositionSchema:Schema[Field] = createSchema { context =>
+        | val compositionSchema:ValidationSchema[Field] = createSchema { context =>
         |   context.field(_.name).is(notEmptyString and minimalLengthString(8)) +
         |     context.field(_.otherField).is(notEmptyString)
         | }
         |
         | compositionSchema.validate(Field("",""))
         |
-        | val implicitSchema:Schema[Field] = createSchema { context =>
+        | val implicitSchema:ValidationSchema[Field] = createSchema { context =>
         |   (context.field(_.name).notEmpty and minimalLengthString(8)) +
         |     context.field(_.otherField).notEmpty
         | }

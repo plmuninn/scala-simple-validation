@@ -9,11 +9,11 @@ Simple example of how to use library
 
 ```scala mdoc
 
- import pl.muninn.simple.validation.all._
+ import pl.muninn.simple.validation._
 
  case class LoginRequest(login:String, password:String)
 
- val schema:Schema[LoginRequest] = createSchema { context =>
+ val schema:ValidationSchema[LoginRequest] = createSchema { context =>
    context.field(_.login).notEmpty +
      context.field(_.password).notEmpty
  }

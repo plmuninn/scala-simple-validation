@@ -9,11 +9,11 @@ def usageExample(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation._
         |
         | case class LoginRequest(login:String, password:String)
         |
-        | val schema:Schema[LoginRequest] = createSchema { context =>
+        | val schema:ValidationSchema[LoginRequest] = createSchema { context =>
         |   context.field(_.login).notEmpty +
         |     context.field(_.password).notEmpty
         | }

@@ -2,59 +2,61 @@ package pl.muninn.simple.validation
 
 import scala.language.implicitConversions
 
-import cats.data.{NonEmptyList, ValidatedNec}
+import cats.data.NonEmptyList
 
-import pl.muninn.simple.validation.ValidationSchemaContext.ValidationSchema
-import pl.muninn.simple.validation.model.ValidationWithValidators
+import pl.muninn.simple.validation.model.{FieldValidator, ValidationSchemaContext}
+import pl.muninn.simple.validation.validator.ValueValidator
 
 trait ValidationImplicits {
 
   implicit def convertValidatorToList[T](result: ValueValidator[T]): NonEmptyList[ValueValidator[T]] = NonEmptyList.one(result)
 
-  implicit def convertValidationWithValidatorsToList[T](result: ValidationWithValidators[T]): NonEmptyList[ValidationWithValidators[T]] =
+  implicit def convertValidationWithValidatorsToList[T](result: FieldValidator[T]): NonEmptyList[FieldValidator[T]] =
     NonEmptyList.one(result)
+
+  implicit def convertSchemaToValueValidator[T](schema: ValidationSchema[T]): ValueValidator[T] = ValueValidator.fromSchema[T](schema)
+
+  implicit def convertSchemaToValueValidatorList[T](schema: ValidationSchema[T]): NonEmptyList[ValueValidator[T]] =
+    NonEmptyList.one(convertSchemaToValueValidator(schema))
 
   implicit class ValueValidatorOps[T](validator: ValueValidator[T]) {
     def and(otherValidator: ValueValidator[T]): NonEmptyList[ValueValidator[T]] = NonEmptyList.of(validator, otherValidator)
-
-    def contramap[A](f: A => T): ValueValidator[A] = ValueValidator.instance[A] { case (key, value) =>
-      validator.validate(key, f(value))
-    }
   }
 
   implicit class ValueValidatorListOps[T](validators: NonEmptyList[ValueValidator[T]]) {
     def and(otherValidators: NonEmptyList[ValueValidator[T]]): NonEmptyList[ValueValidator[T]] = validators ::: otherValidators
   }
 
-  implicit class SingleValidationWithValidatorOps(result: ValidationWithValidators[_]) {
-    def +(otherResult: ValidationWithValidators[_]): NonEmptyList[ValidationWithValidators[_]] = NonEmptyList(result, List(otherResult))
-    def +(otherResults: NonEmptyList[ValidationWithValidators[_]]): NonEmptyList[ValidationWithValidators[_]] =
+  implicit class SingleValidationWithValidatorOps(result: FieldValidator[_]) {
+    def +(otherResult: FieldValidator[_]): NonEmptyList[FieldValidator[_]] = NonEmptyList(result, List(otherResult))
+
+    def +(otherResults: NonEmptyList[FieldValidator[_]]): NonEmptyList[FieldValidator[_]] =
       NonEmptyList.one(result).concatNel(otherResults)
   }
 
-  implicit class ValidationWithValidatorsListOps(result: NonEmptyList[ValidationWithValidators[_]]) {
-    def +(otherResult: ValidationWithValidators[_]): NonEmptyList[ValidationWithValidators[_]] = result.concatNel(otherResult)
+  implicit class ValidationWithValidatorsListOps(result: NonEmptyList[FieldValidator[_]]) {
+    def +(otherResult: FieldValidator[_]): NonEmptyList[FieldValidator[_]] = result.concatNel(otherResult)
 
-    def +(otherResults: NonEmptyList[ValidationWithValidators[_]]): NonEmptyList[ValidationWithValidators[_]] = result.concatNel(otherResults)
+    def +(otherResults: NonEmptyList[FieldValidator[_]]): NonEmptyList[FieldValidator[_]] = result.concatNel(otherResults)
 
-    def run: ValidatedNec[InvalidField, Unit] =
+    def validate: ValidationResult =
       result.tail.foldLeft(result.head.validate) { case (acc, validator) =>
         acc.combine(validator.validate)
       }
   }
 
   implicit class ValueSchemaOps[T](value: T)(implicit schema: ValidationSchema[T]) {
-    def validate: ValidatedNec[InvalidField, Unit] = schema.apply(ValidationSchemaContext(value)).run
+    def validate: ValidationResult = schema.apply(ValidationSchemaContext(value)).validate
   }
 
   implicit class SchemaOps[T](schema: ValidationSchema[T]) {
-    def validate(value: T): ValidatedNec[InvalidField, Unit] = schema.apply(ValidationSchemaContext(value)).run
+    def validate(value: T): ValidationResult = schema.apply(ValidationSchemaContext(value)).validate
   }
 
   implicit class CollectionOfValidationOps[T](validators: NonEmptyList[ValueValidator[T]]) {
-    def runAndCombine(key: String, value: T): ValidatedNec[InvalidField, Unit] =
+    def runAndCombine(key: String, value: T): ValidationResult =
       validators.tail.foldLeft(validators.head.validate(key, value))((acc, validator) => acc combine validator.validate(key, value))
   }
 }
 
-private[validation] object ValidationImplicits extends ValidationImplicits
+object ValidationImplicits extends ValidationImplicits

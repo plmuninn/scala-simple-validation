@@ -11,6 +11,7 @@ position: 1
 2. few common validators to use
 3. simple way of creating your own, custom validators
 4. designing more complex validation process - where validation depends on some specific value
+5. allow to reuse validation schemas as validators
 
 # Getting started
 
@@ -27,7 +28,7 @@ libraryDependencies += "pl.muninn" %% "scala-simple-validation" % "@VERSION@"
 ```
 Then you need to only add in your code:
 ```scala mdoc
-import pl.muninn.simple.validation.all._
+import pl.muninn.simple.validation._
 ```
 And you can start using it
 
@@ -37,11 +38,11 @@ Simple example of how to use library
 
 ```scala mdoc
 
- import pl.muninn.simple.validation.all._
+ import pl.muninn.simple.validation._
 
  case class LoginRequest(login:String, password:String)
 
- val schema:Schema[LoginRequest] = createSchema { context =>
+ val schema:ValidationSchema[LoginRequest] = createSchema { context =>
    context.field(_.login).notEmpty +
      context.field(_.password).notEmpty
  }

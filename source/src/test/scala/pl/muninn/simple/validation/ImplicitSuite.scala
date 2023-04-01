@@ -1,25 +1,24 @@
 package pl.muninn.simple.validation
 
-import cats.data.{Validated, ValidatedNec}
+import cats.data.Validated
 
-import pl.muninn.simple.validation.all._
 import pl.muninn.simple.validation.test.{OptionalTestClass, PairTestClass, TypeTestClass}
 
 class ImplicitSuite extends munit.FunSuite {
 
   trait Suit {
-    val typeTestClassSchema: Schema[TypeTestClass] = createSchema { context =>
+    val typeTestClassSchema: ValidationSchema[TypeTestClass] = createSchema { context =>
       context.field("stringValue")(_.stringValue).notEmpty +
         context.field("intValue")(_.intValue).min(10) +
         (context.field("listValue")(_.listValue).notEmpty and all(notEmptyString)) +
         context.field("mapValue")(_.mapValue).containsKey("test")
     }
 
-    val pairTestClassSchema: Schema[PairTestClass] = createSchema { context =>
+    val pairTestClassSchema: ValidationSchema[PairTestClass] = createSchema { context =>
       context.pair("value1")(_.value1)("value2")(_.value2).fieldsEqual
     }
 
-    val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
+    val optionalTestClassSchema: ValidationSchema[OptionalTestClass] = createSchema { context =>
       (context.field("stringValue")(_.stringValue).notEmpty and ifDefined(notEmptyString)) +
         context.field("intValue")(_.intValue).ifDefined(min(10))
     }
@@ -43,7 +42,7 @@ class ImplicitSuite extends munit.FunSuite {
 
   test("classes return list of errors") {
     new Suit {
-      val result: ValidatedNec[InvalidField, Unit] = typeTestClassSchema.validate(TypeTestClass("", 5, List.empty, Map("test2" -> "test")))
+      val result: ValidationResult = typeTestClassSchema.validate(TypeTestClass("", 5, List.empty, Map("test2" -> "test")))
       assert(result.isInvalid)
       result match {
         case Validated.Valid(_) => fail("Results should be invalid")
@@ -57,7 +56,7 @@ class ImplicitSuite extends munit.FunSuite {
 
   test("classes return list of fields in array") {
     new Suit {
-      val result: ValidatedNec[InvalidField, Unit] =
+      val result: ValidationResult =
         typeTestClassSchema.validate(TypeTestClass("test", 11, List("", "test", "", "test2"), Map("test" -> "test")))
       assert(result.isInvalid)
       result match {

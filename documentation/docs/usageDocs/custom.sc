@@ -9,11 +9,11 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation._
         |
         | case class Field(name:String, otherField:String)
         |
-        | val schema:Schema[Field] = createSchema { context =>
+        | val schema:ValidationSchema[Field] = createSchema { context =>
         |   context.field(_.name)
         |     .custom(code = "contains_test", reason = "Should contains test")(_.contains("test"))
         | }
@@ -33,12 +33,12 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation._
         |
         | case class Product(name:String, price:Long)
         | case class Order(totalPrice:Long, products:List[Product])
         |
-        | val orderSchema: Schema[Order] = createSchema { context =>
+        | val orderSchema: ValidationSchema[Order] = createSchema { context =>
         |    context.field(_.totalPrice).min(1) +
         |      context.field(_.products).notEmpty +
         |      context.custom { order =>
@@ -97,9 +97,9 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
-        | import pl.muninn.simple.validation.InvalidField
-        | import pl.muninn.simple.validation.ValueValidator
+        | import pl.muninn.simple.validation._
+        | import pl.muninn.simple.validation.model.InvalidField
+        | import pl.muninn.simple.validation.validator.ValueValidator
         |
         | case class MyError(field:String) extends InvalidField {
         |   override def reason: String = "Because I think this filed is invalid"
@@ -110,7 +110,7 @@ def markdown(using MarkdownConfig) = md {
         |   if (value.contains("not error")) valid else invalid(MyError(key))
         | }
         |
-        | val customValidatorSchema:Schema[Field] = createSchema { context =>
+        | val customValidatorSchema:ValidationSchema[Field] = createSchema { context =>
         |   context.field(_.name).is(myOwnValidator)
         | }
         |
@@ -128,8 +128,8 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
-        |  import pl.muninn.simple.validation.validators.{NumberValidators, StringValidators}
+        | import pl.muninn.simple.validation._
+        |  import pl.muninn.simple.validation.validator.typed.{NumberValidators, StringValidators}
         |
         |  sealed trait Input
         |
@@ -144,7 +144,7 @@ def markdown(using MarkdownConfig) = md {
         |
         |  case class InputRequest(stringValue: Input.StringInput, intValue: Input.IntInput)
         |
-        |  val inputSchema: Schema[InputRequest] = createSchema { context =>
+        |  val inputSchema: ValidationSchema[InputRequest] = createSchema { context =>
         |    context.field(_.stringValue).is(Input.nonEmptyStringInput) +
         |      context.field(_.intValue).is(Input.nonEmptyIntInput)
         |  }

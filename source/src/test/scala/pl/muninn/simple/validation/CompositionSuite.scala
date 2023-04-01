@@ -2,24 +2,24 @@ package pl.muninn.simple.validation
 
 import cats.data.{Validated, ValidatedNec}
 
-import pl.muninn.simple.validation.all._
+import pl.muninn.simple.validation.model.InvalidField
 import pl.muninn.simple.validation.test.{OptionalTestClass, PairTestClass, TypeTestClass}
 
 class CompositionSuite extends munit.FunSuite {
 
   trait Suit {
-    val typeTestClassSchema: Schema[TypeTestClass] = createSchema { context =>
+    val typeTestClassSchema: ValidationSchema[TypeTestClass] = createSchema { context =>
       context.field("stringValue")(_.stringValue).is(notEmptyString) +
         context.field("intValue")(_.intValue).is(min(10)) +
         context.field("listValue")(_.listValue).is(all(notEmptyString) and notEmptyCollection) +
         context.field("mapValue")(_.mapValue).is(containsKey("test"))
     }
 
-    val pairTestClassSchema: Schema[PairTestClass] = createSchema { context =>
+    val pairTestClassSchema: ValidationSchema[PairTestClass] = createSchema { context =>
       context.pair("value1")(_.value1)("value2")(_.value2).is(fieldsEqual)
     }
 
-    val optionalTestClassSchema: Schema[OptionalTestClass] = createSchema { context =>
+    val optionalTestClassSchema: ValidationSchema[OptionalTestClass] = createSchema { context =>
       context.field("stringValue")(_.stringValue).is(ifDefined(notEmptyString) and defined) +
         context.field("intValue")(_.intValue).is(ifDefined(min(10)))
     }

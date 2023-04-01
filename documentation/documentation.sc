@@ -23,6 +23,7 @@ val basePath = os.pwd / "docs"
 val markdowns = List(
   (basePath / "index.md", HomeLayout("home", "Quickstart", "quickstart", 1), index.markdown),
   (basePath / "docs" / "about.md", DocumentLayout("About", "docs/"), about.markdown),
+  (basePath / "docs" / "design.md", DocumentLayout("Design", "design/"), design.markdown),
   (basePath / "docs" / "usage.md", DocumentLayout("Usage", "docs/usage/"), usage.markdown),
   (basePath / "docs" / "usage" / "schema.md", DocumentLayout("Schema definitions", "docs/usage/schema/"), schema.markdown),
   (

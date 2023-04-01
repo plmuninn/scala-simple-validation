@@ -8,18 +8,18 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation._
         |
         | case class Field(name:String, otherField:String)
         |
-        | val macroSchema:Schema[Field] = createSchema { context =>
+        | val macroSchema:ValidationSchema[Field] = createSchema { context =>
         |   context.field(_.name).notEmpty +
         |     context.field(_.otherField).notEmpty
         | }
         |
         | macroSchema.validate(Field("",""))
         |
-        | val customNameSchema:Schema[Field] = createSchema { context =>
+        | val customNameSchema:ValidationSchema[Field] = createSchema { context =>
         |   context.field("name")(_.name).notEmpty +
         |     context.field("myName")(_.otherField).notEmpty
         | }
@@ -37,12 +37,12 @@ def markdown(using MarkdownConfig) = md {
     codeBlock(
       "scala mdoc",
       """
-        | import pl.muninn.simple.validation.all._
+        | import pl.muninn.simple.validation._
         |
         | case class ComplexOtherField(otherField:String)
         | case class ComplexField(field:Option[ComplexOtherField])
         |
-        | val schema:Schema[ComplexField] = createSchema { context =>
+        | val schema:ValidationSchema[ComplexField] = createSchema { context =>
         |   // field name will be `field.otherField`
         |   context.field(_.field.map(_.otherField)).definedAnd(notEmptyString)
         | }
